@@ -1,3 +1,6 @@
+<?php
+include_once '../conexion/php_conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -387,11 +390,10 @@
                                     <input type="text" list="browsers1" name="buscar_cliente" autocomplete="off" class="form-control" required>
                                     <datalist id="browsers1">
                                         <?php
-//                                            $pa=mysql_query("SELECT * FROM clientes 
-//                                            WHERE clientes.id");                
-//                                            while($row=mysql_fetch_array($pa)){
-//                                                echo '<option value="'.$row['nombre'].'">';                                          
-//                                            }
+                                            $pa=mysqli_query($conexion,"SELECT * FROM tb_cliente WHERE tb_cliente.id_cliente");                
+                                            while($row=mysqli_fetch_array($pa)){
+                                                echo '<option value="'.$row['nombre_cliente'].'">';                                          
+                                            }
                                        ?> 
                                     </datalist>
                                     </div>
