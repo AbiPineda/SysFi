@@ -404,7 +404,7 @@ $fecha=date('Y-m-d');
                 </div>
                 <div class="col-md-4">
                          <div class="panel-body" align="center">                                                                                 
-                            <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Cliente"></i>
+                            <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus fa-2x" onclick="location.href='./registroCliente.php'" title="Agregar Nuevo Cliente"></i>
                             </button>
 
                                                                                                         
