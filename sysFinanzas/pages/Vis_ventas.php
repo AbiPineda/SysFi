@@ -1,5 +1,6 @@
 <?php
 include_once '../conexion/php_conexion.php';
+$fecha=date('Y-m-d');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -413,24 +414,24 @@ include_once '../conexion/php_conexion.php';
                     <?php
               
                 
-//                    if(!empty($_POST['buscar_cliente'])){
-//                        $buscarc=limpiar($_POST['buscar_cliente']);
-//                        $poa=mysql_query("SELECT clientes.id, clientes.tel FROM clientes 
-//                        WHERE (clientes.id='$buscarc' or clientes.nombre='$buscarc' or clientes.tel='$buscarc' or clientes.dui='$buscarc' ) GROUP BY clientes.nombre");  
-//                        if($roow=mysql_fetch_array($poa)){
-//                            $codigoo=$roow['id'];
-//                            #$oRuta=new Consultar_Ruta($roow['ruta']);
-//                            $pa=mysql_query("SELECT * FROM cliente_tmp WHERE cliente='$codigoo' and usu='$usu' and rut=''");    
-//                            if($row=mysql_fetch_array($pa)){
-//                                
-//                                mysql_query("UPDATE cliente_tmp SET fecha='$fecha' WHERE cliente='$codigoo' and usu='$usu'");
-//                            }else{
-//                                mysql_query("INSERT INTO cliente_tmp (cliente, fecha, usu) VALUES ('$codigoo','$fecha','$usu')");   
-//                            }
-//                        }else{
-//                            echo mensajes('El Cliente que Busca no se encuentra Registrado en la Base de Datos','rojo');    
-//                        }
-//                    }                                                           
+                    if(!empty($_POST['buscar_cliente'])){
+                        $buscarc= $_POST['buscar_cliente'];
+                        $poa=mysqli_query($conexion,"SELECT tb_cliente.id_cliente FROM tb_cliente
+                       WHERE (tb_cliente.id_cliente='$buscarc' or tb_cliente.nombre_cliente='$buscarc') GROUP BY tb_cliente.nombre_cliente");  
+                        if($roow=mysqli_fetch_array($poa)){
+                            $codigoo=$roow['id_cliente'];
+                            #$oRuta=new Consultar_Ruta($roow['ruta']);
+                            $pa=mysqli_query($conexion,"SELECT * FROM cliente_temp WHERE id_cliente='$codigoo'");    
+                            if($row=mysqli_fetch_array($pa)){
+                                
+                                mysqli_query($conexion,"UPDATE cliente_temp SET fecha='$fecha' WHERE id_cliente='$codigoo'");
+                            }else{
+                                mysqli_query($conexion,"INSERT INTO cliente_temp (id_cliente, fecha) VALUES ('$codigoo','$fecha')");   
+                            }
+                        }else{
+                            echo mensajes('El Cliente que Busca no se encuentra Registrado en la Base de Datos','rojo');    
+                        }
+                    }                                                           
                 ?>
                  <!-- /. ROW  -->
             </div>
@@ -439,54 +440,31 @@ include_once '../conexion/php_conexion.php';
                 <div class="col-md-12">
                
                         <?php 
-//                                $neto=0;$item=0;
-//                                $pa=mysql_query("SELECT * FROM cliente_tmp, clientes WHERE cliente_tmp.usu='$usu' and cliente_tmp.cliente=clientes.id");                
-//                                while($row=mysql_fetch_array($pa)){
-//                                    ############# FECHA ######################
-//                                    if($row['fecha']==NULL){
-//                                        
-//                                        #$oRuta->consultar('nombre');
-//                                        $fecha=$fecha;
-//                                    }else{
-//                                        $fecha=$row['fecha'];
-//                                        
-//                                    }
-//                                    ############# DIR ######################
-//                                    if($row['dir']==NULL){
-//                                        
-//                                         $dir=$row['direcciona'];
-//                                    }else{
-//                                        $dir=$row['dir'];
-//                                        
-//                                    }
-//                                    ############# STATUS BASIC ######################
-//                                    if($row['status']==NULL){
-//                                        
-//                                         $statusx='CONTADO';
-//                                    }else{
-//                                        $statusx=$row['status'];
-//                                        
-//                                    }
-//                                    ############# STATUS FULL ######################
-//                                    if($row['status']==NULL){
-//                                        
-//                                         $status='<a href="#" role="button" class="btn btn-warning" data-toggle="modal" title="Cambiar Status">
-//                                                            <strong>CONTADO</strong>
-//                                                    </a> ';
-//                                    }else{
-//                                        $status=$row['status'];
-//                                        
-//                                    }
-//                                    
-//                                    $pame=strftime( "%Y-%m-%d-%H-%M-%S", time() );                                      
-//                                    if($row['fecha']==$pame){
-//                                                    $status='si';
-//                                                }                                                                                               
-//                                                elseif($row['fecha']>$pame){
-//                                                    $status='<a href="#" role="button" class="btn btn-danger" data-toggle="modal" title="Cambiar Status">
-//                                                                <strong>CREDITO</strong>
-//                                                        </a> ';
-//                                                }
+                        $ocultar=mysqli_query($conexion,"SELECT * FROM cliente_temp");
+                        if (mysqli_num_rows($ocultar)>0) {
+                                $neto=0;$item=0;
+                                $pa=mysqli_query($conexion,"SELECT * FROM cliente_temp, tb_cliente WHERE cliente_temp.id_cliente=tb_cliente.id_cliente");                
+                                while($row=mysqli_fetch_array($pa)){
+                                    ############# FECHA ######################
+                                    if($row['fecha']==NULL){
+                                        
+                                        #$oRuta->consultar('nombre');
+                                        $fecha=$fecha;
+                                    }else{
+                                        $fecha=$row['fecha'];
+                                        
+                                    }
+                                   
+                                    
+                                    $pame=strftime( "%Y-%m-%d-%H-%M-%S", time() );                                      
+                                    if($row['fecha']==$pame){
+                                                    $status='si';
+                                                }                                                                                               
+                                                elseif($row['fecha']>$pame){
+                                                    $status='<a href="#" role="button" class="btn btn-danger" data-toggle="modal" title="Cambiar Status">
+                                                                <strong>CREDITO</strong>
+                                                        </a> ';
+                                                }
                                     
                             ?>
                               <div class="col-md-6">
@@ -495,13 +473,13 @@ include_once '../conexion/php_conexion.php';
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Nombre:</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" readonly="" value="<?php //echo $row['nombre']; ?>">
+                                                <input type="text" class="form-control" readonly="" value="<?php echo $row['nombre_cliente']; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Precedencia:</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" disabled="" value="<?php //echo $dir; ?>" name="dir">
+                                                <input type="text" class="form-control" disabled="" value="<?php echo $row['dir_cliente']; ?>" name="dir">
                                             </div>
                                         </div>
                                     </form>
@@ -512,10 +490,10 @@ include_once '../conexion/php_conexion.php';
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Fecha:</label>
                                                 <div class="input-group m-t-10">
-                                                    <input type="email" id="example-input2-group2" value="<?php //echo fecha($fecha); ?>" name="example-input2-group2" class="form-control" disabled="">
+                                                    <input type="email" id="example-input2-group2" value="<?php echo $row['fecha']; ?>" name="example-input2-group2" class="form-control" disabled="">
                                                     <span class="input-group-btn">
                                             
-                                            <a href="#fecha<?php //echo $row['id']; ?>" role="button" class="btn btn-primary" data-toggle="modal" title="Cambiar Fecha">
+                                            <a href="#fecha<?php echo $row['id_cliente']; ?>" role="button" class="btn btn-primary" data-toggle="modal" title="Cambiar Fecha">
                                                                         <strong>Cambiar</strong>
                                             </a>    
                                             </span>
@@ -524,7 +502,7 @@ include_once '../conexion/php_conexion.php';
                                         </div>
                                         <div class="form-group" align="center">
                                             <div class="col-md-6">
-                                                <a href="index.php?delx=<?php //echo $row['id']; ?>"  class="btn btn-danger" title="Eliminar">
+                                                <a href="index.php?delx=<?php echo $row['id_cliente']; ?>"  class="btn btn-danger" title="Eliminar">
                                                     <i class="fa fa-times" ></i> <strong>Eliminar Cliente</strong>
                                                 </a>
                                             </div>
@@ -600,7 +578,7 @@ include_once '../conexion/php_conexion.php';
                                 </form>
                             </div>
                      <!-- End Modals-->                                                                                               
-                            <?php //} ?>
+                        <?php } }?>
           <div class="col-md-12">              
 <!--######################################## ARTICULOS ############################################################################################## -->
                     <div class="alert alert-success" align="center">                
