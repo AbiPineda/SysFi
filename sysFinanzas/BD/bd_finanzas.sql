@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-12-2018 a las 02:12:19
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 5.6.39
+-- Tiempo de generación: 26-12-2018 a las 19:15:46
+-- Versión del servidor: 10.1.34-MariaDB
+-- Versión de PHP: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -62,6 +62,13 @@ CREATE TABLE `cliente_temp` (
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `cliente_temp`
+--
+
+INSERT INTO `cliente_temp` (`id_cliente_temp`, `id_cliente`, `fecha`) VALUES
+(0, 1, '2018-12-26');
+
 -- --------------------------------------------------------
 
 --
@@ -74,14 +81,14 @@ CREATE TABLE `inventario` (
   `stock` int(11) DEFAULT NULL,
   `stockMinimo` int(11) DEFAULT NULL,
   `pv` float DEFAULT NULL,
-  `cantidad` int(11) DEFAULT NULL
+  `cant` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `inventario`
 --
 
-INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cantidad`) VALUES
+INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
 (1, 2, 10, 5, 1000, 1),
 (2, 1, 15, 5, 1200, 1),
 (3, 3, 15, 10, 950, 1),
@@ -129,6 +136,33 @@ CREATE TABLE `tb_cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Volcado de datos para la tabla `tb_cliente`
+--
+
+INSERT INTO `tb_cliente` (`id_cliente`, `nombre_cliente`, `dir_cliente`, `dui`, `tel`) VALUES
+(1, 'Juan Moz', 'Cedros', '78404023', '56464');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `venta_temp`
+--
+
+CREATE TABLE `venta_temp` (
+  `id_venta` int(10) NOT NULL,
+  `id_articulo` int(10) DEFAULT NULL,
+  `cantidad` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `venta_temp`
+--
+
+INSERT INTO `venta_temp` (`id_venta`, `id_articulo`, `cantidad`) VALUES
+(1, 1, 2),
+(2, 2, 3);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -166,6 +200,12 @@ ALTER TABLE `tb_cliente`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
+-- Indices de la tabla `venta_temp`
+--
+ALTER TABLE `venta_temp`
+  ADD PRIMARY KEY (`id_venta`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -186,6 +226,12 @@ ALTER TABLE `inventario`
 --
 ALTER TABLE `kardex`
   MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `venta_temp`
+--
+ALTER TABLE `venta_temp`
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
