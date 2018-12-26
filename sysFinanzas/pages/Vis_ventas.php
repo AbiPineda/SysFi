@@ -493,19 +493,13 @@ $fecha=date('Y-m-d');
                                                     <input type="email" id="example-input2-group2" value="<?php echo $row['fecha']; ?>" name="example-input2-group2" class="form-control" disabled="">
                                                     <span class="input-group-btn">
                                             
-                                            <a href="#fecha<?php echo $row['id_cliente']; ?>" role="button" class="btn btn-primary" data-toggle="modal" title="Cambiar Fecha">
-                                                                        <strong>Cambiar</strong>
-                                            </a>    
+                                             
                                             </span>
                                             </div>
                                             </div>
                                         </div>
                                         <div class="form-group" align="center">
-                                            <div class="col-md-6">
-                                                <a href="index.php?delx=<?php echo $row['id_cliente']; ?>"  class="btn btn-danger" title="Eliminar">
-                                                    <i class="fa fa-times" ></i> <strong>Eliminar Cliente</strong>
-                                                </a>
-                                            </div>
+                                          
                                         </div>
                                     </form>
                             </div>
