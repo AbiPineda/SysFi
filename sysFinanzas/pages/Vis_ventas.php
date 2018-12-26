@@ -1,5 +1,6 @@
 <?php
 include_once '../conexion/php_conexion.php';
+include_once '../pages/funciones.php';
 $fecha=date('Y-m-d');
 ?>
 <!DOCTYPE html>
@@ -13,7 +14,7 @@ $fecha=date('Y-m-d');
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Finanzas</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -503,75 +504,8 @@ $fecha=date('Y-m-d');
                                         </div>
                                     </form>
                             </div>
-                            
-                                                                                
-                            
-                             <!--  Modals-->
-                                 <div class="modal fade" id="fecha<?php //echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <form name="form1" method="post" action="">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                                                    
-                                                        <h3 align="center" class="modal-title" id="myModalLabel">Cambiar Fecha de Entrega<br>[<?php //echo $row['nombre']; ?>]</h3>
-                                                    </div>
-                                        <div class="panel-body">
-                                        <div class="row" align="center">
-                                            <div class="col-md-3" > 
-                                            
-                                            </div>
-                                            <div class="col-md-6" >                                         
-                                                <input type="hidden" name="ncodigof" value="<?php //echo $row['id']; ?>">
-                                                <strong>Nueva Fecha</strong><br>
-                                                <input type="date" class="form-control" name="fecha" min="1" value="<?php //echo $row['fecha'] ?>" autocomplete="off" required>
-                                            </div>                                                                                                              
-                                        </div> 
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Aceptar</button>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                     <!-- End Modals-->
-                     <!--  Modals-->
-                                 <div class="modal fade" id="status<?php //echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <form name="form1" method="post" action="">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                                                    
-                                                        <h3 align="center" class="modal-title" id="myModalLabel">Cambiar Tipo<br>[<?php //echo $row['nombre']; ?>]</h3>
-                                                    </div>
-                                        <div class="panel-body">
-                                         <div class="alert alert-danger" align="center">
-                                                <h4>¿Esta Seguro de Cambiar esta operación?<br> 
-                                                </h4>
-                                            </div>  
-                                        <div class="row" align="center">
-                                            <div class="col-md-3" > 
-                                            
-                                                </div>
-                                            <div class="col-md-6" >                                             
-                                                <select class="form-control" name="status" value="<?php //echo $row['rut']; ?>">
-                                                    <option value="CREDITO">CREDITO</option>
-                                                    <option value="CONTADO">CONTADO</option>
-                                                </select>                                               
-                                                <input type="hidden" name="ncodigos" value="<?php //echo $row['id']; ?>">                                                                                             
-                                            </div>                                                                                                              
-                                        </div> 
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Aceptar</button>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                     <!-- End Modals-->                                                                                               
+                
+                                                                                                                 
                         <?php } }?>
           <div class="col-md-12">              
 <!--######################################## ARTICULOS ############################################################################################## -->
@@ -583,12 +517,12 @@ $fecha=date('Y-m-d');
                                     <datalist id="browsers">
 
                                         <?php
-//                                            $buscar=$_POST['buscar'];
-//                                            $in=mysql_query("SELECT * FROM inventario, articulos 
-//                                            WHERE articulos.id=inventario.articulo and inventario.almacen='$id_almacen'");               
-//                                            while($row=mysql_fetch_array($in)){
-//                                                echo '<option value="'.$row['nombre'].'">';
-//                                            }
+                                            $buscar=$_POST['buscar'];
+                                            $in=mysqli_query($conexion,"SELECT * FROM inventario, articulos 
+                                            WHERE articulos.idarticulos=inventario.id_articulos");               
+                                            while($row=mysqli_fetch_array($in)){
+                                                echo '<option value="'.$row['nombre'].'">';
+                                            }
                                         ?> 
                                     </datalist>
                                      </div>
@@ -596,132 +530,115 @@ $fecha=date('Y-m-d');
                     </div>
                     <?php
                     ######### ACTUALIZACION DE LA CANTIDAD #############
-//                    if(!empty($_POST['new_cant'])){
-//                        $new_cant=limpiar($_POST['new_cant']);
-//                        $ncodigo=limpiar($_POST['ncodigo']);
-//                        $iv=mysql_query("SELECT * FROM inventario WHERE articulo='$ncodigo'");                
-//                        if($row=mysql_fetch_array($iv)){
-//                            $stock=$row['stock'];
-//                            if ($stock == 0 and $new_cant > $stock){
-//                                 $cantf='0';
-//
-//                            }
-//                            else if ($stock == $row['stock_min'] and $new_cant > $row['stock_min']){
-//                                      $cantf=$stock;
-//                                      $oArticulo=new Consultar_Articulos($ncodigo);
-//                                      echo mensajes('El Articulo '.$oArticulo->consultar('nombre').' se encuentra en Existencia '.$stock.'','rojo');
-//
-//                            }
-//                            else if ($stock >= $row['stock_min'] and $new_cant >= $row['stock']){
-//                                      $cantf=$stock;
-//                                      $oArticulo=new Consultar_Articulos($ncodigo);
-//                                      echo mensajes('El Articulo '.$oArticulo->consultar('nombre').' se encuentra con Existencia '.$stock.'','rojo');
-//
-//                            }  
-//                            else {
-//                                $cantf=$new_cant;
-//
-//                            }
-//                        } 
-//
-//                        if ($stock==0) {
-//                            $cantfx='1';
-//                        }
-//                        else{
-//                             $cantfx=$new_cant;
-//                        }
-//
-//                        mysql_query("UPDATE caja_tmp SET cant='$cantf' WHERE articulo='$ncodigo' and usu='$usu'");
-//                    }
-//                    ##########################################################
-//                    if(!empty($_POST['new_pv'])){
-//                        $new_pv=limpiar($_POST['new_pv']);
-//                        $especial=limpiar($_POST['especial']);
-//                        $pvcodigo=limpiar($_POST['pvcodigo']);
-//                        if ($new_pv=='n') {
-//                            $newp=$especial;
-//                        }
-//                        else{
-//                            $newp=$new_pv;
-//                        }
-//
-//                        mysql_query("UPDATE caja_tmp SET p_mayor='$newp' WHERE articulo='$pvcodigo' and usu='$usu'");
-//                    }
-//                    
-//                    if(!empty($_POST['ncodigo_ref'])){
-//                        $referencia=limpiar($_POST['referencia']);
-//                        $ref_ant=limpiar($_POST['ref_ant']);
-//                        $ncodigo=limpiar($_POST['ncodigo_ref']);
-//                        
-//                        if($referencia==''){
-//                            mysql_query("UPDATE caja_tmp SET ref='' WHERE articulo='$ncodigo' and usu='$usu' and ref='$ref_ant'");
-//                        }else{
-//                            $pa=mysql_query("SELECT * FROM caja_tmp WHERE caja_tmp.ref='$referencia'");             
-//                            if($row=mysql_fetch_array($pa)){
-//                                echo mensajes('El Numero de Referencia "'.$referencia.'" Esta siendo usada','rojo');
-//                            }else{
-//                                mysql_query("UPDATE caja_tmp SET ref='$referencia' WHERE articulo='$ncodigo' and usu='$usu' and ref='$ref_ant'");
-//                            }
-//                        }
-//                        
-//                    } 
-//                    if(!empty($_POST['desc'])){
-//                        $desc=limpiar($_POST['desc']);
-//                        $ncodigod=limpiar($_POST['ncodigod']);
-//                         mysql_query("INSERT INTO desc_tmp (descuento, almacen, usu) VALUES ('$desc','$id_almacen','$usu')");
-//                    } 
-//
-//                    if(!empty($_POST['buscar'])){
-//                        $buscar=limpiar($_POST['buscar']);
-//                        $pro=mysql_query("SELECT * FROM articulos 
-//                        WHERE (articulos.id LIKE '$buscar%' or articulos.nombre LIKE '$buscar%'  or articulos.codigo LIKE '$buscar%') GROUP BY articulos.nombre");   
-//                        if($roow=mysql_fetch_array($pro)){
-//                            $codigo=$roow['id'];
-//
-//                        $i=mysql_query("SELECT * FROM inventario WHERE articulo='$codigo'");
-//                        if ($row=mysql_fetch_array($i)) {
-//                            if ($row['stock'] == 0) {
-//                                 $oArticulo=new Consultar_Articulos($codigo);
-//                                echo mensajes('El Articulo '.$oArticulo->consultar('nombre').' se encuentra con Existencia "0"','rojo');
-//                            }
-//                            else if ($row['stock'] <= $row['stock_min'] ) {
-//                                $oArticulo=new Consultar_Articulos($codigo);
-//                                 echo mensajes('El Articulo '.$oArticulo->consultar('nombre').' se encuentra con Existencia '.$row['stock'].'','rojo');
-//                                $pa=mysql_query("SELECT * FROM caja_tmp WHERE articulo='$codigo' and usu='$usu' and ref=''");   
-//                                    if($row=mysql_fetch_array($pa)){
-//                                        $cant=$row['cant'];
-//                                        mysql_query("UPDATE caja_tmp SET cant='$cant' WHERE articulo='$codigo' and usu='$usu'");
-//                                    }else{
-//                                        mysql_query("INSERT INTO caja_tmp (articulo, cant, usu) VALUES ('$codigo','1','$usu')");    
-//                                    }
-//                            }
-//                            else{
-//                                  $pa=mysql_query("SELECT * FROM caja_tmp WHERE articulo='$codigo' and usu='$usu' and ref=''");   
-//                                    if($row=mysql_fetch_array($pa)){
-//                                        $cant=$row['cant']+1;
-//                                        mysql_query("UPDATE caja_tmp SET cant='$cant' WHERE articulo='$codigo' and usu='$usu'");
-//                                    }else{
-//                                        mysql_query("INSERT INTO caja_tmp (articulo, cant, usu) VALUES ('$codigo','1','$usu')");    
-//                                    }
-//
-//                            }
-//                           
-//                        }
-//
-//                        }else
-//                        {
-//                            echo mensajes('El Producto que Busca no se encuentra Registrado en la Base de Datos','rojo');   
-//                        }
-//                    }                                                           
-//                ?>
-                 <!--//<?php
-//                    $descuento=''; 
-//                    $obs=mysql_query("SELECT * FROM desc_tmp WHERE almacen='$id_almacen'");               
-//                         if(!$rows=mysql_fetch_array($obs)){ 
-//                                    $obs='0';
-//                                }else{
-//                                    $obs=$rows['descuento'];
-//                                }
+                    if(!empty($_POST['new_cantidad'])){
+                        $new_cantidad=$_POST['new_cantidad'];
+                        $ncodigo=$_POST['ncodigo'];
+                        
+                        $iv=mysqli_query($conexion,"SELECT * FROM inventario WHERE id_articulos='$ncodigo'");                
+                        if($row=mysqli_fetch_array($iv)){
+                            $stock=$row['stock'];
+                            if ($stock == 0 and $new_cantidad > $stock){
+                                 $cantidadf='0';
+
+                            }
+                            else if ($stock == $row['stockMinimo'] and $new_cantidad > $row['stockMinimo']){
+                                      $cantidadf=$stock;
+                        $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$ncodigo'");                
+                        while($row=mysqli_fetch_array($consultaAr)){
+                                      echo mensajes('El Articulo '.$row['nombre'].' se encuentra en Existencia '.$stock.'','rojo');
+                        }
+
+                            }
+                            else if ($stock >= $row['stockMinimo'] and $new_cantidad >= $row['stock']){
+                                      $cantidadf=$stock;
+                   $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$ncodigo'");                
+                        while($row=mysqli_fetch_array($consultaAr)){
+                                      echo mensajes('El Articulo '.$row['nombre'].' se encuentra en Existencia '.$stock.'','rojo');
+                        }
+                            }  
+                            else {
+                                $cantidadf=$new_cantidad;
+
+                            }
+                        } 
+
+                        if ($stock==0) {
+                            $cantidadfx='1';
+                        }
+                        else{
+                             $cantidadfx=$new_cantidad;
+                        }
+
+                        mysqli_query($conexion,"UPDATE venta_temp SET cantidad='$cantidadf' WHERE id_articulo='$ncodigo'");
+                    }
+                  
+                    
+                    ///despues veremos si es necesario
+                    if(!empty($_POST['desc'])){
+                        $desc=limpiar($_POST['desc']);
+                        $ncodigod=limpiar($_POST['ncodigod']);
+                         mysql_query("INSERT INTO desc_tmp (descuento, almacen, usu) VALUES ('$desc','$id_almacen','$usu')");
+                    } 
+                    //**************************************
+
+                    if(!empty($_POST['buscar'])){
+                        $buscar=$_POST['buscar'];
+                        $pro=mysqli_query($conexion,"SELECT * FROM articulos 
+                        WHERE (articulos.idarticulos LIKE '$buscar%' or articulos.nombre LIKE '$buscar%'  or articulos.codigo LIKE '$buscar%') GROUP BY articulos.nombre");   
+                        if($roow=mysqli_fetch_array($pro)){
+                            $codigo=$roow['idarticulos'];
+
+                        $i=mysqli_query($conexion,"SELECT * FROM inventario WHERE id_articulos='$codigo'");
+                        if ($row=mysqli_fetch_array($i)) {
+                            if ($row['stock'] == 0) {
+                        $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$ncodigo'");                
+                        while($row=mysqli_fetch_array($consultaAr)){
+                                    echo mensajes('El Articulo '.$row['nombre'].' se encuentra con Existencia "0"','rojo');
+                           }
+                            }   
+                            else if ($row['stock'] <= $row['stockMinimo'] ) {
+                                
+                                $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$ncodigo'");                
+                        while($row=mysqli_fetch_array($consultaAr)){
+                             echo mensajes('El Articulo '.$row['nombre'].' se encuentra con Existencia '.$row['stock'].'','rojo');
+                                      
+                            } 
+                                
+                                 $pa=mysqli_query($conexion,"SELECT * FROM venta_temp WHERE id_articulo='$codigo'");   
+                                    if($row=mysqli_fetch_array($pa)){
+                                        $cantidad=$row['cantidad'];
+                                        mysqli_query($conexion,"UPDATE venta_temp SET cantidadidad='$cantidad' WHERE id_articulo='$codigo'");
+                                    }else{
+                                        mysql_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidadidad) VALUES ('$codigo','1')");    
+                                    }
+                            }
+                            else{
+                                  $pa=mysqli_query($conexion,"SELECT * FROM venta_temp WHERE id_articulo='$codigo'");   
+                                    if($row=mysqli_fetch_array($pa)){
+                                        $cantidad=$row['cantidad']+1;
+                                        mysqli_query($conexion,"UPDATE venta_temp SET cantidadidad='$cantidad' WHERE id_articulo='$codigo'");
+                                    }else{
+                                        mysqli_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidadidad) VALUES ('$codigo','1')");    
+                                    }
+
+                            }
+                           
+                        }
+
+                        }else
+                        {
+                            echo mensajes('El Producto que Busca no se encuentra Registrado en la Base de Datos','rojo');   
+                        }
+                    }                                                           
+                ?>
+                 <!--//////<?php
+//////                    $descuento=''; 
+//////                    $obs=mysql_query("SELECT * FROM desc_tmp WHERE almacen='$id_almacen'");               
+//////                         if(!$rows=mysql_fetch_array($obs)){ 
+//////                                    $obs='0';
+//////                                }else{
+//////                                    $obs=$rows['descuento'];
+//////                                }
                                                                                                     
                 ?>-->
                 <div class="table-responsive">                                
@@ -736,74 +653,72 @@ $fecha=date('Y-m-d');
                                 <td></td>
                             </tr>
                             <?php 
-//                                $neto=0;$item=0;$total=0;
-//                                $pa=mysql_query("SELECT * FROM caja_tmp, inventario WHERE caja_tmp.usu='$usu' and caja_tmp.articulo=inventario.articulo");              
-//                                while($row=mysql_fetch_array($pa)){
-//                                    $item=$item+$row['cant'];                                   
-//                                    $defecto=strtolower($row['pv']);
-//                                    $valor=$row['pv'];
-//
-//                                     ############### manejo de STOCK#########################
-//                                    if ($row['stock'] == 0) {
-//                                        $aviso=' <a href="#m'.$row['articulo'].'" role="button" class="btn btn-danger btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
-//                                            <strong>Sin stock</strong>
-//                                        </a>';
-//                                    }
-//                                    else{
-//                                        $aviso=' <a href="#m'.$row['articulo'].'" role="button" class="btn btn-success btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
-//                                            <strong>'.$row['cant'].'</strong>
-//                                        </a>';
-//                                    }
-//                                    ########################################
-//                                    if($row['ref']==NULL){
-//                                        $referencia='Sin Referencia';
-//                                    }else{
-//                                        $referencia=$row['ref'];
-//                                    }
-//                                     if($row['p_mayor']==NULL){
-//                                        $new=$row['pv'];
-//                                    }else{
-//                                        $new=$row['p_mayor'];
-//                                    }
-//                                    ###############CALCULOS TOTALES#########################
-//                                    $importe=$row['cant']*$new;
-//                                    $neto=$neto+$importe;
-//                                    
-//                                    $oArticulo=new Consultar_Articulos($row['articulo']);
+                                $neto=0;$item=0;$total=0;
+                                $pa=mysqli_query($conexion,"SELECT * FROM venta_temp, inventario WHERE  venta_temp.id_articulo=inventario.id_articulos");              
+                                while($row=mysqli_fetch_array($pa)){
+                                    $item=$item+$row['cantidad'];                                   
+                                    $defecto=strtolower($row['pv']);
+                                    $valor=$row['pv'];
+
+                                     ############### manejo de STOCK#########################
+                                    if ($row['stock'] == 0) {
+                                        $aviso=' <a href="#m'.$row['id_articulo'].'" role="button" class="btn btn-danger btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
+                                            <strong>Sin stock</strong>
+                                        </a>';
+                                    }
+                                    else{
+                                        $aviso=' <a href="#m'.$row['id_articulo'].'" role="button" class="btn btn-success btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
+                                            <strong>'.$row['cantidad'].'</strong>
+                                        </a>';
+                                    }
+                                     ########################################
+                                  
+                                    
+                                        $new=$row['pv'];
+                                   
+                                    ###############CALCULOS TOTALES#########################
+                                    // $importe=$row['cantidad']*$new; no entendia ese new
+                                    $importe=$row['cantidad']*$new;
+                                    $neto=$neto+$importe;
+                                    
+                                   // $oArticulo=new Consultar_Articulos($row['articulo']);
+                                    
+                    $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos=".$row['id_articulo']."");                
+                        while($row=mysqli_fetch_array($consultaAr)){
                             ?>
                             <tr>
                              <td align="center"><span class="label label-info"> <?php echo $row['codigo']; ?></span></td>                                                             
-                                <td><?php //echo $oArticulo->consultar('nombre');  ?></td>
+                                <td><?php echo $row['nombre'];  ?></td>
                                 <td>
                                     <center>
-                                      <?php //echo $aviso; ?>
+                                      <?php echo $aviso; ?>
                                     </center>
                                 </td>
                                 <td>
                                 <div align="right">
-                                        <a  href="#p<?php //echo $row['articulo']; ?>" role="button" class="btn btn-primary btn-mini" data-toggle="modal" title="Cambiar Precio" accesskey="p">
-                                            <strong><?php //echo $s.' '.formato($new); ?></strong>
+                                        <a  href="#p<?php echo $row['idarticulos']; ?>" role="button" class="btn btn-primary btn-mini" data-toggle="modal" title="Cambiar Precio" accesskey="p">
+                                            <strong><?php echo '$ '.formato($new); ?></strong>
                                         </a>
                                 </div>
                                 </td>
-                                <td><div align="right"><strong><?php //echo $s.' '.formato($importe); ?></div></strong></td>                                
+                                <td><div align="right"><strong><?php echo '$'.formato($importe); ?></div></strong></td>                                
                                 <td>
                                     <center>                           
-                                        <a href="index.php?del=<?php //echo $row['articulo']; ?>"  class="btn btn-danger" title="Eliminar">
+                                        <a href="index.php?del=<?php echo $row['id_articulo']; ?>"  class="btn btn-danger" title="Eliminar">
                                             <i class="fa fa-times" ></i>
                                         </a>
                                     </center>
                                 </td>
                             </tr>
-                           
+                        
                       <!--  Modals-->
-                                 <div class="modal fade" id="m<?php //echo $row['articulo']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                 <div class="modal fade" id="m<?php echo $row['idarticulos']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <form name="form1" method="post" action="">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                                                    
-                                                        <h3 align="center" class="modal-title" id="myModalLabel">Actualizar Cantidad<br>[<?php //echo $oArticulo->consultar('nombre');  ?>]</h3>
+                                                        <h3 align="center" class="modal-title" id="myModalLabel">Actualizar Cantidad<br>[<?php echo $row['nombre'];  ?>]</h3>
                                                     </div>
                                         <div class="panel-body">
                                         <div class="row" align="center">
@@ -811,9 +726,9 @@ $fecha=date('Y-m-d');
                                             
                                             </div>
                                             <div class="col-md-4" >                                         
-                                                <input type="hidden" name="ncodigo" value="<?php //echo $row['articulo']; ?>">
+                                                <input type="hidden" name="ncodigo" value="<?php echo $row['idarticulos'];?>">
                                                 <strong>Nueva Cantidad</strong><br>
-                                                <input type="number" class="form-control" name="new_cant" min="1" value="<?php //echo $row['cant'] ?>" autocomplete="off" required>
+                                                <input type="number" class="form-control" name="new_cantidad" min="1" value="<?php echo $row['cantidad'] ?>" autocomplete="off" required>
                                             </div>                                                                                                              
                                         </div> 
                                         </div> 
@@ -825,47 +740,10 @@ $fecha=date('Y-m-d');
                                 </div>
                                 </form>
                             </div>
+                      <?php }?>
                      <!-- End Modals-->
-                     <!--  Modals-->
-                                 <div class="modal fade" id="p<?php //echo $row['articulo']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <form name="form1" method="post" action="">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                                                    
-                                                        <h3 align="center" class="modal-title" id="myModalLabel">Cambiar Precio<br>[<?php //echo $oArticulo->consultar('nombre');  ?>]</h3>
-                                                    </div>
-                                        <div class="panel-body">
-                                        <div class="row" align="center">
-                                            <div class="col-md-6" >                                         
-                                                <input type="hidden" name="pvcodigo" value="<?php //echo $row['articulo']; ?>">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Precios</span>
-                                                        <select class="form-control" name="new_pv" autocomplete="off" required>
-                                                            <option value="n">---SELECCIONE---</option>
-                                                            <option value="<?php //echo $row['pmy'] ?>"><?php //echo $s.' '.formato($row['pmy']) ?> [P.MAYOR]</option>
-                                                            <option value="<?php //echo $row['pv'] ?>"><?php //echo $s.' '.formato($row['pv']) ?> [P.VENTA]</option>                                            
-                                                        </select>                                               
-                                                </div>
-                                            </div>
-                                             <div class="col-md-6" >                                         
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Precio Especial</span>
-                                                        <input type="number" min="0" step="any" class="form-control" name="especial" autocomplete="off"><br>                                             
-                                                </div>
-                                            </div>                                                                                                                    
-                                        </div> 
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Actualizar Precio</button>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                     <!-- End Modals-->                                                                                             
-                            <?php //} ?>
+                                                                                                               
+                            <?php } ?>
                         </table>                                
                     </div>
                     <!-- COBROS -->
@@ -874,22 +752,22 @@ $fecha=date('Y-m-d');
                         <table border="0" class="table">
                              <tr>
                                 <td colspan="4"><div align="right"><strong>Sub Total</strong></div></td>
-                                <td><div align="right"><strong>$ <?php //echo formato($neto); ?></strong></div></td>
+                                <td><div align="right"><strong>$ <?php echo formato($neto); ?></strong></div></td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td colspan="3"><div align="right">
                                      <?php
-//                                     $d=0;
-//                                     if(!empty($_GET['ddes'])){
-//                                        $ddes=limpiar($_GET['ddes']);
-//                                            if($ddes>=0){
-//                                                $d=$_GET['ddes'];    
-//                                            }
-//                                        }
-//
-//                                            $descuento=$neto*$d/100;
-//                                            $total=$neto-$descuento;
+                                     $d=0;
+                                     if(!empty($_GET['ddes'])){
+                                        $ddes=limpiar($_GET['ddes']);
+                                            if($ddes>=0){
+                                                $d=$_GET['ddes'];    
+                                            }
+                                        }
+
+                                            $descuento=$neto*$d/100;
+                                            $total=$neto-$descuento;
                                         ?>
                                      <form name="form3" method="get" action="index.php">
                                                 <button type="submit" class="btn btn-default">Aplicar Descuento</button></div>
@@ -906,15 +784,15 @@ $fecha=date('Y-m-d');
                             <tr>
                                     <td colspan="3"><div align="right">
                                      <?php
-//                                     $iv=0;
-//                                     if(!empty($_GET['iva'])){
-//                                        $iva=limpiar($_GET['iva']);
-//                                            if($iva>=0){
-//                                                $iv=$_GET['iva'];    
-//                                            }
-//                                        }
-//
-//                                            $impuesto=$neto*$iv/100;
+                                     $iv=0;
+                                     if(!empty($_GET['iva'])){
+                                        $iva=$_GET['iva'];
+                                            if($iva>=0){
+                                                $iv=$_GET['iva'];    
+                                            }
+                                        }
+
+                                            $impuesto=$neto*$iv/100;
                                             
                                         ?>
                                      <form name="form3" method="get" action="index.php">
@@ -938,7 +816,7 @@ $fecha=date('Y-m-d');
                             <tr>
                                 <td>
                                     <center><strong>TOTAL</strong>
-                                    <pre><h2 class="text-success" align="center">$ <?php //echo formato($total+$impuesto); ?></h2></pre>
+                                    <pre><h2 class="text-success" align="center">$ <?php echo formato($total+$impuesto); ?></h2></pre>
                                     
                                 </td>
                             </tr>
