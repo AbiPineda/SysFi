@@ -10,8 +10,8 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
         if ($_GET['pago']=='CONTADO') {
             # code...
         }else{
-        $intereR=limpiar($_GET['interes']);
-        $mesR=limpiar($_GET['mes']);
+        $intereR=$_GET['interes'];
+        $mesR=$_GET['mes'];
          }
 
         $fecha=date('Y-m-d');
@@ -22,6 +22,16 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
             header('Location: index.php');
         }
 }
+
+######### SACAMOS EL VALOR MAXIMO DE LA FACTURA Y LE SUMAMOS UNO ##########
+        $pa=mysqli_query($conexion,"SELECT MAX(factura)as maximo FROM factura");               
+        if($row=mysqli_fetch_array($pa)){
+            if($row['maximo']==NULL){
+                $factura='12548741';
+            }else{
+                $factura=$row['maximo']+1;
+            }
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -524,6 +534,8 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                                                 $item=0;
                                                 $neto=0;
                                                 $neto_full=0;
+                                                mysqli_query($conexion,"INSERT INTO factura (factura,valor,fecha) VALUE ('$factura','$netoO','$fecha')");
+                                                    
                                                 $pa=mysqli_query($conexion,"SELECT * FROM venta_temp, inventario 
                                                 WHERE  venta_temp.id_articulo=inventario.id_articulos");             
                                                 while($row=mysqli_fetch_array($pa)){                                             
@@ -556,21 +568,22 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                                                     $cost_total=$row['cantidad']*$costo;
                                                     
                                                     ########################################
-//                                                   $detalle_sql="INSERT INTO detalle (factura, articulo, codigo, cantidad, valor, importe, tipo, fecha, categoria, almacen)
-//                                                    VALUES ('$factura','$id_art','$codigo','$cantidad','$new','$importe_dos','VENTA','$fecha','$cat','$id_almacen')";
-//                                                    mysql_query($detalle_sql);
-//                                                    
-//                                                    #########DESCONTAR INVENTARIO################################################################
-//                                                     $pwa=mysql_query("SELECT * FROM inventario WHERE articulo='$codigo' and almacen='$id_almacen'");             
-//                                                    if($roww=mysql_fetch_array($pwa)){
-//                                                        $stock=$roww['stock'];  
-//                                                        $new_cant=$roww['stock']-$cantidad;
-//                                                        mysql_query("UPDATE inventario SET stock='$new_cant' WHERE articulo='$codigo' and almacen='$id_almacen'");
-//                                                    } 
-//                                                    ############### GUARDAMOS EN LA TABLA KARDEX#########################
-//                                                    $detalle_sql="INSERT INTO kardex (factura, tipo, id_articulo, cant, costok, importe, stockk, fecha, sucursal, usu)
-//                                                                          VALUES ('$factura','VENTA','$id_art','$cantidad','$costo','$cost_total','$new_cant','$fecha','$id_almacen','$usu')";
-//                                                    mysql_query($detalle_sql);                                                                                                                                                                                                            
+                                                      
+                                                   $detalles_sql='';
+                                                    mysqli_query($conexion,"INSERT INTO detalle (factura, articulo, codigo, cantidad, valor, importe, tipo, fecha)
+                                                                              VALUES ('$factura','$id_art','$codigo','$cantidad','$new','$importe_dos','VENTA','$fecha')");
+                                                    
+                                                    #########DESCONTAR INVENTARIO################################################################
+                                                     $pwa=mysqli_query($conexion,"SELECT * FROM inventario WHERE id_articulos='$codigo'");             
+                                                    if($roww=mysqli_fetch_array($pwa)){
+                                                        $stock=$roww['stock'];  
+                                                        $new_cant=$roww['stock']-$cantidad;
+                                                        mysqli_query($conexion,"UPDATE inventario SET stock='$new_cant' WHERE id_articulos='$codigo'");
+                                                    } 
+                                                    ############### GUARDAMOS EN LA TABLA KARDEX#########################
+                                                    $detalle_sql="INSERT INTO kardex (factura, tipo, id_articulos, cantidad, costoK, importe, stockk, fecha)
+                                                                          VALUES ('$factura','VENTA','$id_art','$cantidad','$costo','$cost_total','$new_cant','$fecha')";
+                                                    mysqli_query($conexion,$detalle_sql);                                                                                                                                                                                                            
                                             ?>
                                             <tr>
                                                 <td width="5%" align="left"><?php echo $cantidad; ?></td>                                                
@@ -617,7 +630,47 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                     <!--End Advanced Tables -->
                 </div>
             </div>
-                
+                <?php 
+        ######## GUARDAMOS LA INFORMACION DE LA FACTURA EN LAS TABLAS
+        $fecha=date('Y-m-d');                   
+        $hora=date('H:i:s');
+        $mensaje='Venta al "'.$pago.'"';
+      
+       mysqli_query($conexion,"INSERT INTO resumen (id_clientes,concepto,factura,clase,valor,tipo,fecha,hora,status) 
+                                  VALUES ('$id_cliente','$mensaje','$factura','VENTA','$netoO','VENTA','$fecha','$hora','$pago')");
+        if ($pago == 'CREDITO'){  
+             $guardax=$netoO-$valor_recibido;
+             $interesG=($intereR/100)/12;
+        $mx=round(($guardax*$interesG*(pow((1+$interesG),($mesR))))/((pow((1+$interesG),($mesR)))-1),2);
+             $totalint=0;
+        for($i=1;$i<=$mesR;$i++)
+        {
+                $totalint=round($totalint+($guardax*$interesG),2);
+                number_format($guardax*$interesG,2,",",".");
+                number_format($mx-($guardax*$interesG),2,",",".");
+ 
+                $guardax=$guardax-($mx-($guardax*$interesG));
+        }
+
+
+        $guarda=$netoO-$valor_recibido;
+        $interesG=($intereR/100)/12;
+        $interesAg=round($guarda*$interesG,2);
+        $m=round(($guarda*$interesG*(pow((1+$interesG),($mesR))))/((pow((1+$interesG),($mesR)))-1),2);
+
+           
+            mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,interes,cuota,to_interes) 
+                                       VALUES ('$id_cliente','$factura','CXC','$guarda','$fecha','$hora','$intereR','$m','$totalint')");          
+        }
+            else
+            {
+                mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora) 
+                                           VALUES ('$mensaje','$factura','ENTRADA','$netoO','$fecha','$hora')");
+            } 
+
+       mysqli_query($conexion,"DELETE FROM venta_temp");
+       mysqli_query($conexion,"DELETE FROM cliente_temp");
+    ?>    
             
                
            

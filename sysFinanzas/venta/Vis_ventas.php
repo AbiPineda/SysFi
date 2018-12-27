@@ -609,16 +609,16 @@ $fecha=date('Y-m-d');
                                         $cantidad=$row['cantidad'];
                                         mysqli_query($conexion,"UPDATE venta_temp SET cantidadidad='$cantidad' WHERE id_articulo='$codigo'");
                                     }else{
-                                        mysql_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidadidad) VALUES ('$codigo','1')");    
+                                        mysql_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidad) VALUES ('$codigo','1')");    
                                     }
                             }
                             else{
                                   $pa=mysqli_query($conexion,"SELECT * FROM venta_temp WHERE id_articulo='$codigo'");   
                                     if($row=mysqli_fetch_array($pa)){
                                         $cantidad=$row['cantidad']+1;
-                                        mysqli_query($conexion,"UPDATE venta_temp SET cantidadidad='$cantidad' WHERE id_articulo='$codigo'");
+                                        mysqli_query($conexion,"UPDATE venta_temp SET cantidad='$cantidad' WHERE id_articulo='$codigo'");
                                     }else{
-                                        mysqli_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidadidad) VALUES ('$codigo','1')");    
+                                        mysqli_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidad) VALUES ('$codigo','1')");    
                                     }
 
                             }
@@ -836,15 +836,7 @@ $fecha=date('Y-m-d');
                                             <i class="fa fa-list icon-white"></i> <strong>CREDITO</strong>
                                         </a>
                                     </div>
-                                    <div class="col-md-6">
-                                      <i class="fa fa-plus icon-white"></i> <strong>FORMA DE PAGO TIKET</strong><br>
-                                       <a href="#ticket" role="button" class="btn btn-warning btn-lg" data-toggle="modal">
-                                            <i class="fa fa-shopping-cart icon-white"></i> <strong>CONTADO</strong>
-                                        </a> 
-                                        <a href="#ticket2" role="button" class="btn btn-warning btn-lg" data-toggle="modal">
-                                            <i class="fa fa-shopping-cart icon-white"></i> <strong>CREDITO</strong>
-                                        </a> 
-                                    </div>
+                                    
                                         
                                     </div>
                                         
@@ -926,7 +918,7 @@ $fecha=date('Y-m-d');
                                                     TOTAL FACTURA
                                                 </div>
                                                 <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo $s.' '.formato($total+$impuesto); ?></div>
+                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($total+$impuesto); ?></div>
                                                 </div>                           
                                             </div>
                                         </div>                                       
@@ -936,7 +928,7 @@ $fecha=date('Y-m-d');
                                                </div>
                                               <div class="col-md-6">
                                              <div class="input-group">
-                                                <span class="input-group-addon"><?php echo $s; ?></span>
+                                                <span class="input-group-addon"><?php echo '$'; ?></span>
                                                 <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
                                                 <span class="input-group-addon">.00</span>
                                              </div><br>
@@ -982,126 +974,7 @@ $fecha=date('Y-m-d');
                                 </form>
                             </div>
                      <!-- End Modals para contado-->
-                      <!--  Modals-->
-                                 <div class="modal fade" id="ticket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <form name="contado" action="pro_ticket.php" method="get">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    </div>
-                                        <div class="panel-body">
-                                        <div class="row" align="center">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="panel panel-primary text-center no-boder bg-color-red">
-                                                <div class="panel-footer back-footer-red">
-                                                    TOTAL TICKET
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo $s.' '.formato($total+$impuesto); ?></div>
-                                                </div>                           
-                                            </div>
-                                        </div>                                       
-                                            <br>
-                                             <strong>Dinero Recibido</strong><br>
-                                              <div class="col-md-3">
-                                               </div>
-                                              <div class="col-md-6">
-                                             <div class="input-group">
-                                                <span class="input-group-addon"><?php echo $s; ?></span>
-                                                <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
-                                                <span class="input-group-addon">.00</span>
-                                             </div><br>
-                                              <div class="input-group">
-                                                <span class="input-group-addon">Forma de Pago</span>
-                                               <select class="form-control" name="pago">
-                                                    <option value="CONTADO">CONTADO</option>
-                                                </select>                                               
-                                             </div><br>                                               
-                                            <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
-                                            <input type="hidden" value="<?php echo $total+$impuesto; ?>" name="neto">  
-                                           </div>                                                                                                              
-                                        </div> 
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Procesar</button>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                     <!-- End Modals-->
-                     <!--  Modals-->
-                                 <div class="modal fade" id="ticket2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <form name="contado" action="pro_ticket.php" method="get">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    </div>
-                                        <div class="panel-body">
-                                        <div class="row" align="center">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="panel panel-primary text-center no-boder bg-color-red">
-                                                <div class="panel-footer back-footer-red">
-                                                    TOTAL TICKET
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo $s.' '.formato($total+$impuesto); ?></div>
-                                                </div>                           
-                                            </div>
-                                        </div>                                       
-                                            <br>
-                                             <strong>Dinero Recibido</strong><br>
-                                              <div class="col-md-3">
-                                               </div>
-                                              <div class="col-md-6">
-                                             <div class="input-group">
-                                                <span class="input-group-addon"><?php echo $s; ?></span>
-                                                <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
-                                                <span class="input-group-addon">.00</span>
-                                             </div><br>
-                                              
-                                              <div class="input-group">
-                                                <span class="input-group-addon">Forma de Pago</span>
-                                               <select class="form-control" name="pago">
-                                                    <option value="CREDITO">CREDITO</option>
-                                                </select>                                               
-                                             </div>
-                                             <br>
-                                              <div class="input-group">
-                                                <span class="input-group-addon">MESES</span>
-                                               <select class="form-control" name="mes">
-                                                    <option value="6">6 MESES</option>
-                                                     <option value="12">12 MESES</option>
-                                                      <option value="18">18 MESES</option>
-                                                       <option value="24">24 MESES</option>
-                                                        <option value="30">30 MESES</option>
-                                                         <option value="42">42 MESES</option>
-                                                </select>                                              
-                                             </div>
-                                             <br>
-                                              <div class="input-group">
-                                              <span class="input-group-addon">INTERES</span>
-                                                 <input type="number" class="form-control input-lg" name="interes" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required>                                         
-                                                <span class="input-group-addon">.00</span>
-                                              </div>
-                                                                                            
-                                            <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
-                                            <input type="hidden" value="<?php echo $total+$impuesto; ?>" name="neto">  
-                                           </div>                                                                                                              
-                                        </div> 
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Procesar</button>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
-                     <!-- End Modals-->
+                    
                 </div>
             </div>   
                        

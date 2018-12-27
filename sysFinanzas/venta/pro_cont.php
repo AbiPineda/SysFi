@@ -32,14 +32,14 @@
         
         
         ######### SACAMOS EL VALOR MAXIMO DE LA FACTURA Y LE SUMAMOS UNO ##########
-//        $pa=mysql_query("SELECT MAX(factura)as maximo FROM factura");               
-//        if($row=mysql_fetch_array($pa)){
-//            if($row['maximo']==NULL){
-//                $factura='100000001';
-//            }else{
-//                $factura=$row['maximo']+1;
-//            }
-//        }
+        $pa=mysql_query("SELECT MAX(factura)as maximo FROM factura");               
+        if($row=mysql_fetch_array($pa)){
+            if($row['maximo']==NULL){
+                $factura='100000001';
+            }else{
+                $factura=$row['maximo']+1;
+            }
+        }
   }
 ?>
 <!DOCTYPE html>
@@ -409,10 +409,9 @@ font-size: 16px;">Fecha de Acceso : <?php echo fecha(date('Y-m-d')); ?>
         $hora=date('H:i:s');
         $mensaje='Venta al "'.$pago.'"';
        mysql_query("INSERT INTO factura (factura,valor,fecha,estado,almacen,usu) VALUE ('$factura','$netoO','$fecha','s','$id_almacen','$usu')");
-             mysql_query("INSERT INTO resumen (cliente,concepto,factura,clase,valor,tipo,fecha,hora,status,usu,almacen,estado) 
+       mysql_query("INSERT INTO resumen (cliente,concepto,factura,clase,valor,tipo,fecha,hora,status,usu,almacen,estado) 
                                   VALUES ('$id_cliente','$mensaje','$factura','VENTA','$netoO','VENTA','$fecha','$hora','$pago','$usu','$id_almacen','s')");
-        if ($pago == 'CREDITO')
-        {  
+        if ($pago == 'CREDITO'){  
              $guardax=$netoO-$valor_recibido;
              $interesG=($intereR/100)/12;
         $mx=round(($guardax*$interesG*(pow((1+$interesG),($mesR))))/((pow((1+$interesG),($mesR)))-1),2);
