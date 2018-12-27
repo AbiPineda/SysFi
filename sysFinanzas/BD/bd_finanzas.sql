@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-12-2018 a las 19:15:46
+-- Tiempo de generación: 27-12-2018 a las 07:21:10
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.2.7
 
@@ -67,7 +67,58 @@ CREATE TABLE `cliente_temp` (
 --
 
 INSERT INTO `cliente_temp` (`id_cliente_temp`, `id_cliente`, `fecha`) VALUES
-(0, 1, '2018-12-26');
+(1, 1, '2018-12-26');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contable`
+--
+
+CREATE TABLE `contable` (
+  `id_contable` int(11) NOT NULL,
+  `concepto1` varchar(40) DEFAULT NULL,
+  `concepto2` varchar(50) DEFAULT NULL,
+  `tipo` varchar(20) DEFAULT NULL,
+  `valor` varchar(20) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `clase` varchar(20) DEFAULT NULL,
+  `interes` float DEFAULT NULL,
+  `cuota` float DEFAULT NULL,
+  `to_interes` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle`
+--
+
+CREATE TABLE `detalle` (
+  `id_detalle` int(11) NOT NULL,
+  `factura` varchar(50) DEFAULT NULL,
+  `articulo` int(11) DEFAULT NULL,
+  `codigo` varchar(20) DEFAULT NULL,
+  `cantidad` varchar(10) DEFAULT NULL,
+  `valor` varchar(20) DEFAULT NULL,
+  `importe` varchar(20) DEFAULT NULL,
+  `tipo` varchar(20) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `factura`
+--
+
+CREATE TABLE `factura` (
+  `id_fac` int(10) NOT NULL,
+  `factura` varchar(50) DEFAULT NULL,
+  `valor` varchar(40) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -124,11 +175,30 @@ INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `resumen`
+--
+
+CREATE TABLE `resumen` (
+  `id_resumen` int(11) NOT NULL,
+  `id_clientes` int(11) DEFAULT NULL,
+  `concepto` varchar(50) DEFAULT NULL,
+  `factura` varchar(50) DEFAULT NULL,
+  `clase` varchar(50) DEFAULT NULL,
+  `valor` varchar(50) DEFAULT NULL,
+  `tipo` varchar(50) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tb_cliente`
 --
 
 CREATE TABLE `tb_cliente` (
-  `id_cliente` int(10) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
   `nombre_cliente` varchar(40) DEFAULT NULL,
   `dir_cliente` varchar(100) DEFAULT NULL,
   `dui` varchar(15) DEFAULT NULL,
@@ -180,6 +250,28 @@ ALTER TABLE `cliente_temp`
   ADD KEY `fk_cliente` (`id_cliente`);
 
 --
+-- Indices de la tabla `contable`
+--
+ALTER TABLE `contable`
+  ADD PRIMARY KEY (`id_contable`),
+  ADD KEY `fk_facturas` (`concepto2`);
+
+--
+-- Indices de la tabla `detalle`
+--
+ALTER TABLE `detalle`
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `fk_articulos` (`articulo`),
+  ADD KEY `fk_fac` (`factura`);
+
+--
+-- Indices de la tabla `factura`
+--
+ALTER TABLE `factura`
+  ADD PRIMARY KEY (`id_fac`),
+  ADD KEY `factura` (`factura`);
+
+--
 -- Indices de la tabla `inventario`
 --
 ALTER TABLE `inventario`
@@ -194,6 +286,14 @@ ALTER TABLE `kardex`
   ADD KEY `fk_kardex_articulos1_idx` (`id_articulos`);
 
 --
+-- Indices de la tabla `resumen`
+--
+ALTER TABLE `resumen`
+  ADD PRIMARY KEY (`id_resumen`),
+  ADD KEY `fk_clie` (`id_clientes`),
+  ADD KEY `fk_factu` (`factura`);
+
+--
 -- Indices de la tabla `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
@@ -203,7 +303,8 @@ ALTER TABLE `tb_cliente`
 -- Indices de la tabla `venta_temp`
 --
 ALTER TABLE `venta_temp`
-  ADD PRIMARY KEY (`id_venta`);
+  ADD PRIMARY KEY (`id_venta`),
+  ADD KEY `fk_venTem` (`id_articulo`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -216,6 +317,30 @@ ALTER TABLE `articulos`
   MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT de la tabla `cliente_temp`
+--
+ALTER TABLE `cliente_temp`
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `contable`
+--
+ALTER TABLE `contable`
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle`
+--
+ALTER TABLE `detalle`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `factura`
+--
+ALTER TABLE `factura`
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
@@ -226,6 +351,18 @@ ALTER TABLE `inventario`
 --
 ALTER TABLE `kardex`
   MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `resumen`
+--
+ALTER TABLE `resumen`
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tb_cliente`
+--
+ALTER TABLE `tb_cliente`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_temp`
@@ -241,7 +378,20 @@ ALTER TABLE `venta_temp`
 -- Filtros para la tabla `cliente_temp`
 --
 ALTER TABLE `cliente_temp`
-  ADD CONSTRAINT `fk_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_clienteTem` FOREIGN KEY (`id_cliente`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `contable`
+--
+ALTER TABLE `contable`
+  ADD CONSTRAINT `fk_facturas` FOREIGN KEY (`concepto2`) REFERENCES `factura` (`factura`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `detalle`
+--
+ALTER TABLE `detalle`
+  ADD CONSTRAINT `fk_articulos` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_fac` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `inventario`
@@ -254,6 +404,19 @@ ALTER TABLE `inventario`
 --
 ALTER TABLE `kardex`
   ADD CONSTRAINT `fk_kardex_articulos1` FOREIGN KEY (`id_articulos`) REFERENCES `articulos` (`idarticulos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `resumen`
+--
+ALTER TABLE `resumen`
+  ADD CONSTRAINT `fk_clie` FOREIGN KEY (`id_clientes`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_factu` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `venta_temp`
+--
+ALTER TABLE `venta_temp`
+  ADD CONSTRAINT `fk_venTem` FOREIGN KEY (`id_articulo`) REFERENCES `articulos` (`idarticulos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
