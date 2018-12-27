@@ -1,6 +1,6 @@
 <?php
 include_once '../conexion/php_conexion.php';
-include_once '../pages/funciones.php';
+include_once '../funciones.php';
 $fecha=date('Y-m-d');
 ?>
 <!DOCTYPE html>
@@ -872,7 +872,7 @@ $fecha=date('Y-m-d');
                                                     TOTAL FACTURA
                                                 </div>
                                                 <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo $s.' '.formato($total+$impuesto); ?></div>
+                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($total+$impuesto); ?></div>
                                                 </div>                           
                                             </div>
                                         </div>                                       
@@ -882,7 +882,7 @@ $fecha=date('Y-m-d');
                                                </div>
                                               <div class="col-md-6">
                                              <div class="input-group">
-                                                <span class="input-group-addon"><?php echo $s; ?></span>
+                                                <span class="input-group-addon"><?php echo '$'; ?></span>
                                                 <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
                                                 <span class="input-group-addon">.00</span>
                                              </div><br>
