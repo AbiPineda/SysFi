@@ -75,8 +75,7 @@ include_once '../funciones.php';
                         </div>
                         <div class="panel-body">
                         <center><button onclick="imprimir();" class="btn btn-default"><i class=" fa fa-print "></i> Imprimir</button></center><br>
-
-                         <a class="btn btn-primary" href="exportar.php"><i class="fa fa-download"></i> Descargar archivo PDF</a>
+                         
                             <div class="table-responsive">  
                                     <table  width="100%" style="border: 1px solid #660000; -moz-border-radius: 12px;-webkit-border-radius: 12px;padding: 10px;">
                                      <tr>
@@ -222,20 +221,13 @@ Domicilio:
 include_once '../Plantilla/inferior.php';
 ?>
  
- <script>
-     
-function fechaCastellano ($fecha) {
-  $fecha = substr($fecha, 0, 10);
-  $numeroDia = date('d', strtotime($fecha));
-  $dia = date('l', strtotime($fecha));
-  $mes = date('F', strtotime($fecha));
-  $anio = date('Y', strtotime($fecha));
-  $dias_ES = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
-  $dias_EN = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-  $nombredia = str_replace($dias_EN, $dias_ES, $dia);
-$meses_ES = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-  $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-  $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
-  return $nombredia." ".$numeroDia." de ".$nombreMes." de ".$anio;
-}
- </script>
+<script>
+        function imprimir(){
+          var objeto=document.getElementById('imprimeme');  //obtenemos el objeto a imprimir
+          var ventana=window.open('','_blank');  //abrimos una ventana vacía nueva
+          ventana.document.write(objeto.innerHTML);  //imprimimos el HTML del objeto en la nueva ventana
+          ventana.document.close();  //cerramos el documento
+          ventana.print();  //imprimimos la ventana
+          ventana.close();  //cerramos la ventana
+        }
+    </script>
