@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-12-2018 a las 07:21:10
+-- Tiempo de generación: 27-12-2018 a las 08:45:48
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.2.7
 
@@ -62,13 +62,6 @@ CREATE TABLE `cliente_temp` (
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `cliente_temp`
---
-
-INSERT INTO `cliente_temp` (`id_cliente_temp`, `id_cliente`, `fecha`) VALUES
-(1, 1, '2018-12-26');
-
 -- --------------------------------------------------------
 
 --
@@ -89,6 +82,17 @@ CREATE TABLE `contable` (
   `to_interes` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `contable`
+--
+
+INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`, `fecha`, `hora`, `clase`, `interes`, `cuota`, `to_interes`) VALUES
+(1, 'Venta al \"CONTADO\"', '12548742', 'ENTRADA', '5400', '2018-12-27', '08:34:21', NULL, NULL, NULL, NULL),
+(2, 'Venta al \"CONTADO\"', '12548743', 'ENTRADA', '5400', '2018-12-27', '08:35:49', NULL, NULL, NULL, NULL),
+(3, 'Venta al \"CONTADO\"', '12548744', 'ENTRADA', '5400', '2018-12-27', '08:36:28', NULL, NULL, NULL, NULL),
+(4, 'Venta al \"CONTADO\"', '12548745', 'ENTRADA', '5400', '2018-12-27', '08:36:56', NULL, NULL, NULL, NULL),
+(5, '1', '12548746', 'CXC', '2300', '2018-12-27', '08:43:00', NULL, 10, 202.21, 126.47);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +111,23 @@ CREATE TABLE `detalle` (
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `detalle`
+--
+
+INSERT INTO `detalle` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`, `valor`, `importe`, `tipo`, `fecha`) VALUES
+(47, '12548741', 2, '2', '3', '1000', '3000', 'VENTA', '2018-12-27'),
+(48, '12548741', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
+(49, '12548742', 2, '2', '3', '1000', '3000', 'VENTA', '2018-12-27'),
+(50, '12548742', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
+(51, '12548743', 2, '2', '3', '1000', '3000', 'VENTA', '2018-12-27'),
+(52, '12548743', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
+(53, '12548744', 2, '2', '3', '1000', '3000', 'VENTA', '2018-12-27'),
+(54, '12548744', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
+(55, '12548745', 2, '2', '3', '1000', '3000', 'VENTA', '2018-12-27'),
+(56, '12548745', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
+(57, '12548746', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27');
+
 -- --------------------------------------------------------
 
 --
@@ -119,6 +140,18 @@ CREATE TABLE `factura` (
   `valor` varchar(40) DEFAULT NULL,
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
+(8, '12548741', '5400', '2018-12-27'),
+(9, '12548742', '5400', '2018-12-27'),
+(10, '12548743', '5400', '2018-12-27'),
+(11, '12548744', '5400', '2018-12-27'),
+(12, '12548745', '5400', '2018-12-27'),
+(13, '12548746', '2400', '2018-12-27');
 
 -- --------------------------------------------------------
 
@@ -140,8 +173,8 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 10, 5, 1000, 1),
-(2, 1, 15, 5, 1200, 1),
+(1, 2, 937, 5, 1000, 1),
+(2, 1, 956, 5, 1200, 1),
 (3, 3, 15, 10, 950, 1),
 (4, 3, 15, 10, 1000, 1),
 (5, 5, 15, 10, 1000, 1);
@@ -160,7 +193,7 @@ CREATE TABLE `kardex` (
   `cantidad` int(11) DEFAULT NULL,
   `costoK` float DEFAULT NULL,
   `importe` float DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL,
+  `stockk` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -168,9 +201,22 @@ CREATE TABLE `kardex` (
 -- Volcado de datos para la tabla `kardex`
 --
 
-INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`, `costoK`, `importe`, `stock`, `fecha`) VALUES
+INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`, `costoK`, `importe`, `stockk`, `fecha`) VALUES
 (1, '100000001', 'VENTA', 5, 1, 900, 900, 4, '2018-12-24'),
-(2, '100000008', 'COMPRA', 2, 1, 200, 200, 5, '2018-12-25');
+(2, '100000008', 'COMPRA', 2, 1, 200, 200, 5, '2018-12-25'),
+(53, '12548741', 'VENTA', 2, 3, 900, 2700, 952, '2018-12-27'),
+(54, '12548741', 'VENTA', 1, 2, 900, 1800, 968, '2018-12-27'),
+(55, '12548741', 'VENTA', 2, 3, 900, 2700, 949, '2018-12-27'),
+(56, '12548741', 'VENTA', 1, 2, 900, 1800, 966, '2018-12-27'),
+(57, '12548742', 'VENTA', 2, 3, 900, 2700, 946, '2018-12-27'),
+(58, '12548742', 'VENTA', 1, 2, 900, 1800, 964, '2018-12-27'),
+(59, '12548743', 'VENTA', 2, 3, 900, 2700, 943, '2018-12-27'),
+(60, '12548743', 'VENTA', 1, 2, 900, 1800, 962, '2018-12-27'),
+(61, '12548744', 'VENTA', 2, 3, 900, 2700, 940, '2018-12-27'),
+(62, '12548744', 'VENTA', 1, 2, 900, 1800, 960, '2018-12-27'),
+(63, '12548745', 'VENTA', 2, 3, 900, 2700, 937, '2018-12-27'),
+(64, '12548745', 'VENTA', 1, 2, 900, 1800, 958, '2018-12-27'),
+(65, '12548746', 'VENTA', 1, 2, 900, 1800, 956, '2018-12-27');
 
 -- --------------------------------------------------------
 
@@ -190,6 +236,18 @@ CREATE TABLE `resumen` (
   `hora` time DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `resumen`
+--
+
+INSERT INTO `resumen` (`id_resumen`, `id_clientes`, `concepto`, `factura`, `clase`, `valor`, `tipo`, `fecha`, `hora`, `status`) VALUES
+(6, 1, 'Venta al \"CONTADO\"', '12548741', 'VENTA', '5400', 'VENTA', '2018-12-27', '08:32:25', 'CONTADO'),
+(7, 1, 'Venta al \"CONTADO\"', '12548742', 'VENTA', '5400', 'VENTA', '2018-12-27', '08:34:21', 'CONTADO'),
+(8, 1, 'Venta al \"CONTADO\"', '12548743', 'VENTA', '5400', 'VENTA', '2018-12-27', '08:35:49', 'CONTADO'),
+(9, 1, 'Venta al \"CONTADO\"', '12548744', 'VENTA', '5400', 'VENTA', '2018-12-27', '08:36:28', 'CONTADO'),
+(10, 1, 'Venta al \"CONTADO\"', '12548745', 'VENTA', '5400', 'VENTA', '2018-12-27', '08:36:56', 'CONTADO'),
+(11, 1, 'Venta al \"CREDITO\"', '12548746', 'VENTA', '2400', 'VENTA', '2018-12-27', '08:43:00', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -225,14 +283,6 @@ CREATE TABLE `venta_temp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `venta_temp`
---
-
-INSERT INTO `venta_temp` (`id_venta`, `id_articulo`, `cantidad`) VALUES
-(1, 1, 2),
-(2, 2, 3);
-
---
 -- Índices para tablas volcadas
 --
 
@@ -254,7 +304,7 @@ ALTER TABLE `cliente_temp`
 --
 ALTER TABLE `contable`
   ADD PRIMARY KEY (`id_contable`),
-  ADD KEY `fk_facturas` (`concepto2`);
+  ADD KEY `fk_factuu` (`concepto2`);
 
 --
 -- Indices de la tabla `detalle`
@@ -262,7 +312,7 @@ ALTER TABLE `contable`
 ALTER TABLE `detalle`
   ADD PRIMARY KEY (`id_detalle`),
   ADD KEY `fk_articulos` (`articulo`),
-  ADD KEY `fk_fac` (`factura`);
+  ADD KEY `fk_facturassss` (`factura`);
 
 --
 -- Indices de la tabla `factura`
@@ -320,25 +370,25 @@ ALTER TABLE `articulos`
 -- AUTO_INCREMENT de la tabla `cliente_temp`
 --
 ALTER TABLE `cliente_temp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario`
@@ -350,13 +400,13 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cliente`
@@ -368,7 +418,7 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT de la tabla `venta_temp`
 --
 ALTER TABLE `venta_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -384,14 +434,14 @@ ALTER TABLE `cliente_temp`
 -- Filtros para la tabla `contable`
 --
 ALTER TABLE `contable`
-  ADD CONSTRAINT `fk_facturas` FOREIGN KEY (`concepto2`) REFERENCES `factura` (`factura`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_factuu` FOREIGN KEY (`concepto2`) REFERENCES `factura` (`factura`);
 
 --
 -- Filtros para la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  ADD CONSTRAINT `fk_articulos` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_fac` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_articulos` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`),
+  ADD CONSTRAINT `fk_facturassss` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
 
 --
 -- Filtros para la tabla `inventario`
@@ -403,14 +453,14 @@ ALTER TABLE `inventario`
 -- Filtros para la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  ADD CONSTRAINT `fk_kardex_articulos1` FOREIGN KEY (`id_articulos`) REFERENCES `articulos` (`idarticulos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_kardex_articulos1` FOREIGN KEY (`id_articulos`) REFERENCES `articulos` (`idarticulos`);
 
 --
 -- Filtros para la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  ADD CONSTRAINT `fk_clie` FOREIGN KEY (`id_clientes`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_factu` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_clie` FOREIGN KEY (`id_clientes`) REFERENCES `tb_cliente` (`id_cliente`),
+  ADD CONSTRAINT `fk_factu` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
 
 --
 -- Filtros para la tabla `venta_temp`
