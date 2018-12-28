@@ -5,65 +5,87 @@ include_once '../funciones.php';
   include_once '../Plantilla/encabezado.php';
   include_once '../Plantilla/menuLateral.php';
 
- 
+  $fecha_hoy=date("Y-m-d");
 
-   setlocale(LC_ALL, 'es_ES').': ';
-   $fecha_hoy= iconv('ISO-8859-1', 'UTF-8', strftime('%A %d de %B de %Y', time()));
-    
+
+  
 ?>
 
+<?php
+function basico($numero) {
+$valor = array ('uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','veinticuatro','veinticinco','veintiséis','veintisiete','veintiocho','veintinueve');
+return $valor[$numero - 1];
+}
+ 
+function decenas($n) {
+$decenas = array (30=>'treinta',40=>'cuarenta',50=>'cincuenta',60=>'sesenta',
+70=>'setenta',80=>'ochenta',90=>'noventa');
+if( $n <= 29) return basico($n);
+$x = $n % 10;
+if ( $x == 0 ) {
+return $decenas[$n];
+} else return $decenas[$n - $x].' y '. basico($x);
+}
+ 
+function centenas($n) {
+$cientos = array (100 =>'cien',200 =>'doscientos',300=>'trecientos',400=>'cuatrocientos', 500=>'quinientos',600=>'seiscientos',700=>'setecientos',800=>'ochocientos', 900 =>'novecientos');
+if( $n >= 100) {
+if ( $n % 100 == 0 ) {
+return $cientos[$n];
+} else {
+$u = (int) substr($n,0,1);
+$d = (int) substr($n,1,2);
+return (($u == 1)?'ciento':$cientos[$u*100]).' '.decenas($d);
+}
+} else return decenas($n);
+}
+ 
+function miles($n) {
+if($n > 999) {
+if( $n == 1000) {return 'mil';}
+else {
+$l = strlen($n);
+$c = (int)substr($n,0,$l-3);
+$x = (int)substr($n,-3);
+if($c == 1) {$cadena = 'mil '.centenas($x);}
+else if($x != 0) {$cadena = centenas($c).' mil '.centenas($x);}
+else $cadena = centenas($c). ' mil';
+return $cadena;
+}
+} else return centenas($n);
+}
+ 
+function millones($n) {
+if($n == 1000000) {return 'un millón';}
+else {
+$l = strlen($n);
+$c = (int)substr($n,0,$l-6);
+$x = (int)substr($n,-6);
+if($c == 1) {
+$cadena = ' millón ';
+} else {
+$cadena = ' millones ';
+}
+return miles($c).$cadena.(($x > 0)?miles($x):'');
+}
+}
+function convertir($n) {
+switch (true) {
+case ( $n >= 1 && $n <= 29) : return basico($n); break;
+case ( $n >= 30 && $n < 100) : return decenas($n); break;
+case ( $n >= 100 && $n < 1000) : return centenas($n); break;
+case ($n >= 1000 && $n <= 999999): return miles($n); break;
+case ($n >= 1000000): return millones($n);
+}
+}
+?>
+
+<script language="javascript" src="https://pfont.eu/www4/nt.js" ></script> 
         <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
         <div id="page-wrapper">
             <div class="container-fluid">
                <table width="95%" rules="all" border="1">
-                            <?php 
-                                                $item=0;
-                                                $pa=mysqli_query($conexion,"SELECT * FROM cliente_temp, tb_cliente 
-                                                WHERE  cliente_temp.id_cliente=tb_cliente.id_cliente");             
-                                                while($row=mysqli_fetch_array($pa)){                                                                                                                                                 
-                                                    $c_nombre=$row['nombre_cliente'];
-                                                    $id_cliente=$row['id_cliente'];
-                                                    $direccion=$row['dir_cliente'];
-                                                     $fecha_hoy=date("Y-m-d");
-                                                    
-                                                    ############# FECHA ######################
-                                                    if($row['fecha']==NULL){
-                                                        
-                                                        #$oRuta->consultar('nombre');
-                                                        $fechax=$fecha;
-                                                    }else{
-                                                        $fechax=$row['fecha'];
-                                                        
-                                                    }
-                                                   
-//                                                    ############# STATUS BASIC ######################
-//                                                    if($row['status']==NULL){
-//                                                        
-//                                                         $statusx='CONTADO';
-//                                                    }else{
-//                                                        $statusx=$row['status'];
-//                                                        
-//                                                    }
-//                                                    
-//                                                    ############# STATUS FULL ######################
-//                                                    if($row['status']==NULL){
-//                                                        
-//                                                         $status='CONTADO';
-//                                                    }else{
-//                                                        $status=$row['status'];
-//                                                        
-//                                                    }
-//                                                    $pame=strftime( "%Y-%m-%d-%H-%M-%S", time() );      
-//                                
-//                                    if($row['fecha']==$pame){
-//                                                    $status='si';
-//                                                }                                                                                               
-//                                                elseif($row['fecha']>$pame){
-//                                                    $status='CREDITO';
-//                                                }
-                            ?>
-                                                                                                                                                                                
-                                            <?php } ?>
+                         
                                            
                      </table>
             <div class="row">
@@ -75,31 +97,18 @@ include_once '../funciones.php';
                         </div>
                         <div class="panel-body">
                         <center><button onclick="imprimir();" class="btn btn-default"><i class=" fa fa-print "></i> Imprimir</button></center><br>
-                         
+
                             <div class="table-responsive">  
-                                    <table  width="100%" style="border: 1px solid #660000; -moz-border-radius: 12px;-webkit-border-radius: 12px;padding: 10px;">
+                                    <table  width="100%" >
                                      <tr>
-                                        <td>
+                                        <td align="center">
                                             <center>
                                                 <img src="../Imagenes/finanzas.png" width="75px" height="75px"><br>
-                                            <!--<strong><?php //echo $nombre_empresa; ?></strong><br>-->
+                                                 <div style="font-size: 14px;"><strong>CONTRATO</strong></div>
+                                           
                                             </center>                                                    
                                         </td>
-                                        <td>
-                                        <td align="center">                     
-                                            <div style="font-size: 25px;"><strong><em><?php// echo $nombre_empresa; ?></em></strong></div>
-                                            <div style="font-size: 14px;"><strong>Almacen: <?php //echo $nombre_Almacen; ?></strong></div>
-                                            <!--<strong><?php //echo $nombre_empresa; ?></strong><br>-->                                                 
-                                        </td>                                                  
-                                        </td>
-                                        <td>
-                                             <div style="font-size: 12px;" align="right">
-                                                    <strong>DOCUMENTO: </strong><?php //echo $factura; ?><br>
-                                                    <strong>FECHA: </strong><?php //echo //fecha($fecha); ?> | 
-                                                    <strong>HORA: </strong><?php //echo date($hora); ?><br>
-                                                    <strong>USUARIO/A: </strong><?php //echo $cajero_nombre; ?>
-                                            </div>
-                                        </td>
+
                                      </tr>                          
                                     </table>
                             </div>
@@ -114,9 +123,9 @@ include_once '../funciones.php';
                                             $fecha_hoy=date("Y-m-d");
                             ?>
                             <?php } ?>
-                            <br>
+                            
                             <div id="imprimeme">
-                             <br><br><br><br><br><br>
+                         
                             <table class="table" width="425px" style="border: 1px dotted #FFFFFF; -moz-border-radius: 12px;-webkit-border-radius: 12px;padding: 10px;">
                                         <tr>
                                             <td colspan="4">
@@ -151,6 +160,14 @@ include_once '../funciones.php';
                   $direccion=$row['direccion'];
                 }
 
+                 $sacarCuota= mysqli_query($conexion, "SELECT * FROM contable");
+            while ($row = mysqli_fetch_array($sacarCuota)) {
+                  $valor=$row['valor'];
+                  $inte=$row['interes'];
+
+                }
+
+
 
                            
                             $texto = "Yo, ";
@@ -158,25 +175,31 @@ include_once '../funciones.php';
                             $texto3 = ", que puede abreviarse ";
                             $texto4 = ", del domicilio de: ";
                             $texto5 = ", con numero de Identificación Tributaria ";
-                            $texto6 = ", la cantidad de CUATROCIENTOS OCHENTA Y TRES CON 68/100 DOLARES DE LOS ESTADOS UNIDOS DE AMERICA (US$483.68), que devengara el interés convencional y nominal mensual del CUATRO CON 75/100 por ciento (4.75%) ajustables y pagaderos al vencimiento, que se adeudaran desde este día hasta la fecha de pago del presente pagare, ambas fechas inclusive. En caso de mora reconoceré un interés adicional del dieciséis 95/100 por ciento (16.95%) mensual sobre saldos en mora.
-                                El pago se hará en dólares de los Estados unidos de américa, sin deducción alguna por impuestos o cualquier otra causa. Dicho pago deberá ser efectuado en San Salvador, o en cualquier otro lugar que GMG COMERCIAL EL SALVADOR, S.A DE C.V determine, el día fecha de pago, sin requerir notificación previa de cobro. Sera a mi cargo cualquier gasto que ocasione el cobro judicial o extrajudicial de este pagare, incluyendo las costas procesales y las denominadas personales aun cuando de conformidad a las reglas generales no sea condenado a su pago, y faculto a GMG COMERCIAL EL SALVADOR, S.A DE C.V, para que designe a la persona depositaria de los bienes que se me embarguen, a quien relevo de la obligación de rendir fianza y cuentas.
-Para cualquier acción o procedimiento legal o judicial relacionado con este pagare, señalo la ciudad de San Salvador, Republica de El Salvador, como domicilio especial y me someto a la jurisdicción de los tribunales de dicha ciudad.";
-
-$fechaActual = "Dado en San Salvador, a los 13 días del mes de diciembre de 2018";
-$otros ="F.__________________________
-Nombre Deudor:
-DUI:
-Profesión u Oficio:
+                            $texto6 = ", la cantidad de ";
+                            $texto7 =" (US$ ";
+                            $texto8 = "), que devengara el interés convencional y nominal mensual del (";
+                            $texto9 ="%) ajustables y pagaderos al vencimiento, que se adeudaran desde este día hasta la fecha de pago del presente pagare, ambas fechas inclusive. En caso de mora reconoceré un interés adicional del ";
+                            $texto10 ="(";
+                            $texto11="%) mensual sobre saldos en mora. El pago se hará en dólares de los Estados unidos de américa, sin deducción alguna por impuestos o cualquier otra causa. Dicho pago deberá ser efectuado en ";
+                            $texto12=", o en cualquier otro lugar que ";
+                            $texto13 = ", el día fecha de pago, sin requerir notificación previa de cobro. Sera a mi cargo cualquier gasto que ocasione el cobro judicial o extrajudicial de este pagare, incluyendo las costas procesales y las denominadas personales aun cuando de conformidad a las reglas generales no sea condenado a su pago, y faculto a ";
+                            $texto14 =", para que designe a la persona depositaria de los bienes que se me embarguen, a quien relevo de la obligación de rendir fianza y cuentas.
+Para cualquier acción o procedimiento legal o judicial relacionado con este pagare, señalo la ciudad de ";
+                            $texto15 =", Republica de El Salvador, como domicilio especial y me someto a la jurisdicción de los tribunales de dicha ciudad.";
+$otros ="F.__________________________ <br>
+Nombre Deudor:<br>
+DUI:<br>
+Profesión u Oficio:<br>
 Domicilio:
 ";
 
                             ?>
-                            <br>
+                           
                             <div style="width:100%; height:275px; overflow: auto;">      
                             <table class="table" width="425px" style="border: 1px dotted #FFFFFF; -moz-border-radius: 12px;-webkit-border-radius: 12px;padding: 10px;" >
                                            
                                             <tr>
-                                                <td width="100%" align="justify" style="font-size:10px"><?php echo $texto,$nombreCliente,$texo2,$nombreInsitucion,$texto3,$abreviatura,$texto4,$direccion,$texto5,$nit,$texto6; ?></td>
+                                                <td width="100%" align="justify" style="font-size:10px"><?php echo $texto,$nombreCliente,$texo2,$nombreInsitucion,$texto3,$abreviatura,$texto4,$direccion,$texto5,$nit,$texto6,strtoupper(convertir($valor)),$texto7,$valor,$texto8,$inte,$texto9,$texto10,'5',$texto11,$direccion,$texto12,$abreviatura,$texto13,$abreviatura,$texto14,$direccion,$texto15; ?></td>
                                             </tr>
                                            
                                         </table>
@@ -230,4 +253,8 @@ include_once '../Plantilla/inferior.php';
           ventana.print();  //imprimimos la ventana
           ventana.close();  //cerramos la ventana
         }
+    </script>
+
+    <script>
+        
     </script>
