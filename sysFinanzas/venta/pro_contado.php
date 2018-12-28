@@ -465,6 +465,8 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                         </div>
                         <div class="panel-body">
                         <center><button onclick="imprimir();" class="btn btn-default"><i class=" fa fa-print "></i> Imprimir</button></center><br>
+
+                        <center> <button type="submit" class="btn btn-primary" onclick="location.href='./contrato.php'">Contrato</button></center><br>
                         
                             <div class="table-responsive">  
                                     <table  width="100%" style="border: 1px solid #660000; -moz-border-radius: 12px;-webkit-border-radius: 12px;padding: 10px;">
