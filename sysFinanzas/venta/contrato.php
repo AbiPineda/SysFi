@@ -7,7 +7,9 @@ include_once '../funciones.php';
 
   $fecha_hoy=date("Y-m-d");
 
-
+//variable que mando para sacar el cliente que  emos guardado en la tabla contable
+  $clientecito=$_GET['ir'];
+  $facturita=$_GET['fac'];
   
 ?>
 
@@ -146,10 +148,12 @@ case ($n >= 1000000): return millones($n);
                             </table>
                             <?php
 
-            $sacarCliente = mysqli_query($conexion, "SELECT * FROM tb_cliente");
+            $sacarCliente = mysqli_query($conexion, "SELECT*FROM tb_cliente INNER JOIN contable ON tb_cliente.id_cliente=contable.concepto1 WHERE contable.concepto2='$facturita' AND contable.concepto1='$clientecito'");
             while ($row = mysqli_fetch_array($sacarCliente)) {
                   $nombreCliente=$row['nombre_cliente'];
                   $idcliente=$row['id_cliente'];
+                  $valor=$row['valor'];
+                  $inte=$row['interes'];
                 }
                  $sacarInstitucion = mysqli_query($conexion, "SELECT * FROM institucion");
             while ($row = mysqli_fetch_array($sacarInstitucion)) {
@@ -160,12 +164,12 @@ case ($n >= 1000000): return millones($n);
                   $direccion=$row['direccion'];
                 }
 
-                 $sacarCuota= mysqli_query($conexion, "SELECT * FROM contable");
-            while ($row = mysqli_fetch_array($sacarCuota)) {
-                  $valor=$row['valor'];
-                  $inte=$row['interes'];
-
-                }
+//                 $sacarCuota= mysqli_query($conexion, "SELECT * FROM contable");
+//            while ($row = mysqli_fetch_array($sacarCuota)) {
+//                  $valor=$row['valor'];
+//                  $inte=$row['interes'];
+//
+//                }
 
 
 
