@@ -604,7 +604,6 @@ $fecha=date('Y-m-d');
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                             <button type="submit" class="btn btn-primary">Procesar</button>
 
-                                             <button type="submit" class="btn btn-primary" onclick="location.href='./contrato.php'">Contrato</button>
                                         </div>                                       
                                     </div>
                                 </div>

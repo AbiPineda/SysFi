@@ -98,6 +98,111 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                         <div class="panel-heading">
                              INFORMACION DE FACTURA
                         </div>
+                        <!--Prueba-->
+                        <br/>
+                       <div class="row">
+                           <div class="col-lg-1 col-md-1"></div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-print fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"></div>
+                                    <div>Total</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <div class="panel-body">
+                            <div style=" bg-color: red;font-size:20px"><?php echo '$'.formato($neto); ?> </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                  <?php  if ($_GET['pago']=='CONTADO') {?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-angellist fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"></div>
+                                    <div>Recibido</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <br/>
+                                 <div style=" bg-color: blue;font-size:20px"><?php echo '$'.formato($valor_recibido); ?> </div>
+                              
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                  <?php }else{?>
+                           <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"></div>
+                                    <div>Prima</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <br/>
+                                 <div style=" bg-color: blue;font-size:20px"><?php echo '$'.formato($valor_recibido); ?> </div>
+                              
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                  <?php }?>
+                           <?php  if ($_GET['pago']=='CONTADO') {?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"></div>
+                                    <div>Vuelto</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <div style=" bg-color: green;font-size:20px"><?php echo '$'.formato($valor_recibido-$neto); ?> </div>
+                                
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                           <?php }?>
+                <div class="col-lg-3 col-md-6">
+                  
+                </div>
+            </div>
+                        <!--fin pureba-->
                         <div class="panel-body">
                         <center><button onclick="imprimir();" class="btn btn-default"><i class=" fa fa-print "></i> Imprimir</button></center><br>
                         <?php if ($_GET['pago']=='CONTADO') { }else{?>
