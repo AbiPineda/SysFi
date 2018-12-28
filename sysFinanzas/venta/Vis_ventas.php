@@ -583,6 +583,7 @@ $fecha=date('Y-m-d');
 
                     if(!empty($_POST['buscar'])){
                         $buscar=$_POST['buscar'];
+                        
                         $pro=mysqli_query($conexion,"SELECT * FROM articulos 
                         WHERE (articulos.idarticulos LIKE '$buscar%' or articulos.nombre LIKE '$buscar%'  or articulos.codigo LIKE '$buscar%') GROUP BY articulos.nombre");   
                         if($roow=mysqli_fetch_array($pro)){
@@ -591,16 +592,16 @@ $fecha=date('Y-m-d');
                         $i=mysqli_query($conexion,"SELECT * FROM inventario WHERE id_articulos='$codigo'");
                         if ($row=mysqli_fetch_array($i)) {
                             if ($row['stock'] == 0) {
-                        $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$ncodigo'");                
+                        $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$codigo'");                
                         while($row=mysqli_fetch_array($consultaAr)){
                                     echo mensajes('El Articulo '.$row['nombre'].' se encuentra con Existencia "0"','rojo');
                            }
                             }   
                             else if ($row['stock'] <= $row['stockMinimo'] ) {
                                 
-                                $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$ncodigo'");                
-                        while($row=mysqli_fetch_array($consultaAr)){
-                             echo mensajes('El Articulo '.$row['nombre'].' se encuentra con Existencia '.$row['stock'].'','rojo');
+                                $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$codigo'");                
+                        while($row1=mysqli_fetch_array($consultaAr)){
+                             echo mensajes('El Articulo '.$row1['nombre'].' se encuentra con Existencia '.$row['stock'].'','rojo');
                                       
                             } 
                                 
@@ -609,7 +610,7 @@ $fecha=date('Y-m-d');
                                         $cantidad=$row['cantidad'];
                                         mysqli_query($conexion,"UPDATE venta_temp SET cantidadidad='$cantidad' WHERE id_articulo='$codigo'");
                                     }else{
-                                        mysql_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidad) VALUES ('$codigo','1')");    
+                                        mysqli_query($conexion,"INSERT INTO venta_temp (id_articulo, cantidad) VALUES ('$codigo','1')");    
                                     }
                             }
                             else{
