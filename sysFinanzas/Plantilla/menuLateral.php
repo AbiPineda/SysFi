@@ -16,10 +16,10 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="Vista_venta.html">Flot Charts</a>
+                                    <a href="../venta/Vis_ventas.php">Consumidor Final</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Morris.js Charts</a>
@@ -34,10 +34,10 @@
                             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Cuentas por Cobrar<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="panels-wells.html">Panels and Wells</a>
+                                    <a href="../cxc/cobros.php">Cobros a clientes</a>
                                 </li>
                                 <li>
                                     <a href="buttons.html">Buttons</a>
