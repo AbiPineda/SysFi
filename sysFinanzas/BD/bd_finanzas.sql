@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-12-2018 a las 08:45:48
--- Versión del servidor: 10.1.34-MariaDB
--- Versión de PHP: 7.2.7
+-- Tiempo de generación: 28-12-2018 a las 02:49:29
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 5.6.39
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -91,7 +91,23 @@ INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`
 (2, 'Venta al \"CONTADO\"', '12548743', 'ENTRADA', '5400', '2018-12-27', '08:35:49', NULL, NULL, NULL, NULL),
 (3, 'Venta al \"CONTADO\"', '12548744', 'ENTRADA', '5400', '2018-12-27', '08:36:28', NULL, NULL, NULL, NULL),
 (4, 'Venta al \"CONTADO\"', '12548745', 'ENTRADA', '5400', '2018-12-27', '08:36:56', NULL, NULL, NULL, NULL),
-(5, '1', '12548746', 'CXC', '2300', '2018-12-27', '08:43:00', NULL, 10, 202.21, 126.47);
+(5, '1', '12548746', 'CXC', '2300', '2018-12-27', '08:43:00', NULL, 10, 202.21, 126.47),
+(6, 'Venta al \"CONTADO\"', '12548747', 'ENTRADA', '3150', '2018-12-27', '16:26:39', NULL, NULL, NULL, NULL),
+(7, 'Venta al \"CONTADO\"', '12548748', 'ENTRADA', '3150', '2018-12-27', '16:27:23', NULL, NULL, NULL, NULL),
+(8, 'Venta al \"CONTADO\"', '12548749', 'ENTRADA', '', '2018-12-27', '16:29:21', NULL, NULL, NULL, NULL),
+(9, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:43:08', NULL, NULL, NULL, NULL),
+(10, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:46:22', NULL, NULL, NULL, NULL),
+(11, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:46:59', NULL, NULL, NULL, NULL),
+(12, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:47:18', NULL, NULL, NULL, NULL),
+(13, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:48:00', NULL, NULL, NULL, NULL),
+(14, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:50:26', NULL, NULL, NULL, NULL),
+(15, 'Venta al \"CONTADO\"', '', 'ENTRADA', '', '2018-12-27', '16:52:14', NULL, NULL, NULL, NULL),
+(16, 'Venta al \"CONTADO\"', '12548750', 'ENTRADA', '1200', '2018-12-27', '20:37:44', NULL, NULL, NULL, NULL),
+(17, 'Venta al \"CONTADO\"', '12548751', 'ENTRADA', '1000', '2018-12-27', '21:35:10', NULL, NULL, NULL, NULL),
+(18, 'Venta al \"CONTADO\"', '12548752', 'ENTRADA', '1000', '2018-12-27', '23:10:18', NULL, NULL, NULL, NULL),
+(19, 'Venta al \"CONTADO\"', '12548753', 'ENTRADA', '1000', '2018-12-27', '23:11:19', NULL, NULL, NULL, NULL),
+(20, 'Venta al \"CONTADO\"', '12548754', 'ENTRADA', '1000', '2018-12-27', '23:12:07', NULL, NULL, NULL, NULL),
+(21, 'Venta al \"CONTADO\"', '12548755', 'ENTRADA', '2200', '2018-12-27', '23:13:25', NULL, 6.75, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -126,7 +142,17 @@ INSERT INTO `detalle` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`
 (54, '12548744', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
 (55, '12548745', 2, '2', '3', '1000', '3000', 'VENTA', '2018-12-27'),
 (56, '12548745', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
-(57, '12548746', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27');
+(57, '12548746', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-27'),
+(58, '12548747', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-27'),
+(59, '12548747', 3, '3', '1', '950', '950', 'VENTA', '2018-12-27'),
+(60, '12548747', 3, '3', '1', '1000', '1000', 'VENTA', '2018-12-27'),
+(61, '', 5, '5', '1', '1000', '1000', 'VENTA', '0000-00-00'),
+(62, '12548750', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-27'),
+(63, '12548751', 2, '2', '1', '1000', '1000', 'VENTA', '2018-12-27'),
+(64, '12548752', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-27'),
+(65, '12548753', 2, '2', '1', '1000', '1000', 'VENTA', '2018-12-27'),
+(66, '12548755', 2, '2', '1', '1000', '1000', 'VENTA', '2018-12-27'),
+(67, '12548755', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-27');
 
 -- --------------------------------------------------------
 
@@ -151,7 +177,39 @@ INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
 (10, '12548743', '5400', '2018-12-27'),
 (11, '12548744', '5400', '2018-12-27'),
 (12, '12548745', '5400', '2018-12-27'),
-(13, '12548746', '2400', '2018-12-27');
+(13, '12548746', '2400', '2018-12-27'),
+(14, '12548747', '3150', '2018-12-27'),
+(15, '12548748', '3150', '2018-12-27'),
+(16, '12548749', '', '0000-00-00'),
+(17, '', '', '0000-00-00'),
+(18, '12548750', '1200', '2018-12-27'),
+(19, '12548751', '1000', '2018-12-27'),
+(20, '12548752', '1000', '2018-12-27'),
+(21, '12548753', '1000', '2018-12-27'),
+(22, '12548754', '1000', '2018-12-27'),
+(23, '12548755', '2200', '2018-12-27');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `institucion`
+--
+
+CREATE TABLE `institucion` (
+  `idInstitucion` int(10) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `abreviatura` varchar(60) NOT NULL,
+  `ideTributaria` varchar(25) NOT NULL,
+  `direccion` varchar(50) NOT NULL,
+  `telefono` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `institucion`
+--
+
+INSERT INTO `institucion` (`idInstitucion`, `nombre`, `abreviatura`, `ideTributaria`, `direccion`, `telefono`) VALUES
+(1, 'GMG COMERCIAL EL SALVADOR, SOCIEDAD ANONIMA DE CAPITAL VARIABLE', 'GMG COMERCIAL EL SALVADOR, S.A DE C.V', '0614-100805-106-7', 'San Salvador, departamento de San Salvador', '2353-2343');
 
 -- --------------------------------------------------------
 
@@ -173,11 +231,11 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 937, 5, 1000, 1),
-(2, 1, 956, 5, 1200, 1),
-(3, 3, 15, 10, 950, 1),
-(4, 3, 15, 10, 1000, 1),
-(5, 5, 15, 10, 1000, 1);
+(1, 2, 934, 5, 1000, 1),
+(2, 1, 953, 5, 1200, 1),
+(3, 3, 13, 10, 950, 1),
+(4, 3, 13, 10, 1000, 1),
+(5, 5, 13, 10, 1000, 1);
 
 -- --------------------------------------------------------
 
@@ -216,7 +274,17 @@ INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`,
 (62, '12548744', 'VENTA', 1, 2, 900, 1800, 960, '2018-12-27'),
 (63, '12548745', 'VENTA', 2, 3, 900, 2700, 937, '2018-12-27'),
 (64, '12548745', 'VENTA', 1, 2, 900, 1800, 958, '2018-12-27'),
-(65, '12548746', 'VENTA', 1, 2, 900, 1800, 956, '2018-12-27');
+(65, '12548746', 'VENTA', 1, 2, 900, 1800, 956, '2018-12-27'),
+(66, '12548747', 'VENTA', 1, 1, 900, 900, 955, '2018-12-27'),
+(67, '12548747', 'VENTA', 3, 1, 700, 700, 14, '2018-12-27'),
+(68, '12548747', 'VENTA', 3, 1, 700, 700, 13, '2018-12-27'),
+(69, '', 'VENTA', 5, 1, 300, 300, 14, '0000-00-00'),
+(70, '12548750', 'VENTA', 1, 1, 900, 900, 954, '2018-12-27'),
+(71, '12548751', 'VENTA', 2, 1, 900, 900, 936, '2018-12-27'),
+(72, '12548752', 'VENTA', 5, 1, 300, 300, 13, '2018-12-27'),
+(73, '12548753', 'VENTA', 2, 1, 900, 900, 935, '2018-12-27'),
+(74, '12548755', 'VENTA', 2, 1, 900, 900, 934, '2018-12-27'),
+(75, '12548755', 'VENTA', 1, 1, 900, 900, 953, '2018-12-27');
 
 -- --------------------------------------------------------
 
@@ -322,6 +390,12 @@ ALTER TABLE `factura`
   ADD KEY `factura` (`factura`);
 
 --
+-- Indices de la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  ADD PRIMARY KEY (`idInstitucion`);
+
+--
 -- Indices de la tabla `inventario`
 --
 ALTER TABLE `inventario`
@@ -370,25 +444,31 @@ ALTER TABLE `articulos`
 -- AUTO_INCREMENT de la tabla `cliente_temp`
 --
 ALTER TABLE `cliente_temp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT de la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  MODIFY `idInstitucion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario`
@@ -400,7 +480,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen`
@@ -418,7 +498,7 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT de la tabla `venta_temp`
 --
 ALTER TABLE `venta_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
