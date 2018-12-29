@@ -43,7 +43,7 @@
                                     <a href="../Registros/registroArticulo.php">Registro de Articulo</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Inventario</a>
+                                    <a href="../Inventario/InventarioArticulos.php">Inventario</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Notifications</a>
