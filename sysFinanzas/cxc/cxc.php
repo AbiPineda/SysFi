@@ -101,7 +101,9 @@ if ($row = mysqli_fetch_array($sql)) {
     $total_inter=0;
 }
 ?>
-
+<script type="text/javascript">
+ $('#factura1').modal('show');
+</script>
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
 <script type="text/javascript" src="../Highcharts-4.1.5/js/jquery-1.7.1.min.js"></script>
@@ -316,28 +318,6 @@ input[type=text] {
 
         </div>
 
-        <!-- intereses-->
-        <div class="row-fluid">
-            <div class="col-md-4 text-danger" align="center" style="font-size:16px">
-                <strong>Total de interes</strong><br>
-                <strong> <?php echo $s . ' ' . formato($interesT); ?></strong>
-            </div>
-            <div class="col-md-4 text-info" align="center" style="font-size:16px">
-                <strong>Total Abonado</strong><br>
-                <strong><?php echo $s . ' ' . formato(abonos_interes($id)); ?></strong>
-            </div>
-            <div class="col-md-4 text-success" align="center" style="font-size:16px">
-                <strong>Saldo Faltante</strong><br>
-                <strong><?php echo $s . ' ' . formato($interesT - abonos_interes($id)); ?></strong>
-            </div>
-        </div><br><br><br>
-<?php
-$por = abonos_interes($id) * 100 / $interesT;
-?>
-        <strong><center><?php echo 'Total Abonado: ' . formato($por) . '% || Total Saldo ' . formato(100 - $por) . '%'; ?></center></strong>
-        <div class="progress progress-striped active">
-            <div class="progress-bar" role="progressbar" style="width: <?php echo $por; ?>%;"></div>
-        </div>
         <!--fin de interese-->
         <div class="col-md-3">                                                                                          
             <label>Mora</label>
@@ -346,20 +326,24 @@ $por = abonos_interes($id) * 100 / $interesT;
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <div class="panel-body" align="center">                                                                                 
-                <a href="index.php">
+                <a href="../cxc/cobros.php">
                     <button type="button" class="btn btn-primary btn-circle"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
                     </button></a>
+                <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#factura1"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+                                      </button>
 <?php
-if ($deuda - abonos_saldo($id) <> 0) {
-    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+if ($deuda-$abonos <> 0) {
+    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#factura1"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
 }
-?>                                                                                                              
+?>        
+                
             </div>
         </div>
         <div class="col-md-4"></div>    
         <!--  Modals-->
-        <div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal fade" id="m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!--<div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
             <form name="forms" method="post" action="">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -372,11 +356,11 @@ if ($deuda - abonos_saldo($id) <> 0) {
                             <div class="row">                                       
                                 <div class="col-md-6">                                          
                                     <label>Valor del Abono:</label>                                             
-                                    <input type="text" name="valor" value="1" min="1" max="<?php echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
+                                    <input type="text" name="valor" value="1" min="1" max="<?php //echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
                                 </div>
                                 <div class="col-md-6">                                          
                                     <label>Proximo pago:</label>                                             
-                                    <input type="date" name="proximo" value="1" min="1" max="<?php echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
+                                    <input type="date" name="proximo" value="1" min="1" max="<?php //echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
                                 </div>
                                 <div class="col-md-6">                                                                                          
                                     <label>Observaciones</label>
@@ -396,8 +380,99 @@ if ($deuda - abonos_saldo($id) <> 0) {
                 </div>
             </form>
         </div>
-        <!-- End Modals-->
+        <!--factura 1 para el contado-->
+                                <div class="modal fade" id="factura1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <form name="contado" action="pro_contado.php" method="get">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    </div>
+                                        <div class="panel-body">
+                                        <div class="row" align="center">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="panel panel-primary text-center no-boder bg-color-red">
+                                                <div class="panel-footer back-footer-red">
+                                                    TOTAL FACTURA
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($total+$impuesto); ?></div>
+                                                </div>                           
+                                            </div>
+                                        </div>                                       
+                                            <br>
+                                             <strong>Dinero Recibido</strong><br>
+                                              <div class="col-md-3">
+                                               </div>
+                                              <div class="col-md-6">
+                                             <div class="input-group">
+                                                <span class="input-group-addon"><?php echo '$'; ?></span>
+                                                <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
+                                                <span class="input-group-addon">.00</span>
+                                             </div><br>
 
+                                              <div class="input-group">
+                                                <span class="input-group-addon">Forma de Pago</span>
+                                               <select class="form-control" name="pago">
+                                                    <option value="CONTADO">CONTADO</option>
+                                                </select>                                               
+                                             </div><br>
+
+                                            <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
+                                            <input type="hidden" value="<?php echo $total+$impuesto; ?>" name="neto">  
+                                            <input type="hidden" value="<?php echo $impuesto; ?>" name="impuesto">  
+                                           </div>                                                                                                              
+                                        </div> 
+                                        </div> 
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Procesar</button>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+        <!-- End Modals-->
+ <!-- MODAL-->
+            <div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" id="MiModal" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h4>¡No hay datos almacenados!</h4>
+                            
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div class="modal-body">
+                                <div class="center-margin">
+                                    <div class="row mb-12"  style="text-align:center">
+
+                                        <img src="../Imagenes/datos.jpg" width="200" height="200" style="text-align:center">
+                                    
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                 <div class="row mb-12" style="float: right;margin-right: 20px; margin-top: 15px;">
+                                   
+                                     <a href="../Reportes/Vista_nivel_pozoSensor.php" class="btn">
+                                    <input type="submit" class="btn btn-warning" value="Cancelar" name="modGuardar">
+                                      </a>
+                                </div>
+                                <br>
+                               
+                                </div>
+                            
+                                </div>   
+                                <!--ERROR COMUN Y LO DEJARE AQUI PARA QUE VEAS
+                                LA ETIQUETA </form> DETRO DE ELLA SIEMPRE TEIENE QUE ESTAR LOS BOTONES-->
+
+                                
+                           
+                        </div>
+
+
+                    </div>
+                </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -442,6 +517,9 @@ while ($row = mysql_fetch_array($sql)) {
         <!-- /. ROW  --> 
         <!-- /. ROW  -->
     </div>
+    <script type="text/javascript">
+ $('#MiModal').modal('show');
+</script>
 </div>
 <!-- /#page-wrapper FIN CONTENIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
