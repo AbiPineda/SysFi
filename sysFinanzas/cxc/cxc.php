@@ -266,16 +266,45 @@ if (!empty($_POST['valor'])) {
     echo mensajes("El Abono a la Cuenta por Cobrar No. " . $id . " por valor de " . $s . " " . formato($valor) . " ha sido registrado con exito", "verde");
 }
 ?>
-        <table class="table table-bordered">
-            <tr class="info">
-            <br/>
-            <td><strong>Cuenta por Cobrar: </strong> <span class="badge"><?php echo $id; ?></span><br></td>
-            <td><strong>Cuota mensual: </strong> <span class="badge"><?php echo '$' . $cuota; ?></span><br></td>
-            <td><strong>Cliente: </strong> <?php echo $c_nombre; ?><br></td>
-            <td><strong>Fecha: </strong> <?php echo $fecha . ' ' . $hora; ?></td>
-            </tr>
-        </table>
-        <br><br><br>
+<head>
+    <style> 
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid rgb(25, 158, 218);
+  border-radius: 10px;
+
+
+}
+</style>
+</head>
+ <div class="row">
+     <div class="col-md-12 text-info" style="font-size:16px">
+    <br>
+<strong class="col-md-3">Cuenta por Cobrar:</strong>
+<div class="col-md-2">
+<input class="form-control" id="" type="text" value="<?php echo $id;?>" disabled> 
+</div>
+<strong class="col-md-2">Cuota mensual: </strong>
+<div class="col-md-2">
+<input class="form-control" id="" type="text" value="<?php echo '$' . $cuota;?>" disabled>
+</div>
+</div>
+<div class="col-md-12 text-info" style="font-size:16px">
+<strong class="col-md-1">Cliente: </strong>
+<div class="col-md-5">
+<input class="form-control" id="" type="text" value="<?php echo $c_nombre;?>" disabled>
+</div>
+<strong class="col-md-1">Fecha: </strong>
+<div class="col-md-3">
+<input class="form-control" id="" type="text" value="<?php echo $fecha . ' ' . $hora;?>" disabled>
+</div>
+</div>
+</div>
+        
+        
         <div class="row">
             <div class="col-md-6 text-info" align="center" style="font-size:16px">
                 <div id="container" style="min-width:200px; height: 350px; max-width: 500px; margin: 0 auto"></div>
@@ -420,3 +449,4 @@ while ($row = mysql_fetch_array($sql)) {
 <?php
 include_once '../Plantilla/inferior.php';
 ?>
+
