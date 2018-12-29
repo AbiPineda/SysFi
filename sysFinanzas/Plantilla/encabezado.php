@@ -14,8 +14,8 @@
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <script src="jquery.maskedinput.min.js" type="text/javascript"></script>
-
-
+    
+    <script type="text/javascript" src="../Highcharts-4.1.5/js/jquery.min.js"></script>
 
 <body>
 

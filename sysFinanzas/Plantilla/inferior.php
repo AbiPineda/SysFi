@@ -1,7 +1,8 @@
 </div>
     </div>
     <!-- /#wrapper -->
-
+    <script src="../Highcharts-4.1.5/js/highcharts.js"></script>
+            <script src="../Highcharts-4.1.5/js/exporting.js"></script>
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 

@@ -12,9 +12,10 @@ $fecha=date('Y-m-d');
                <div class="row">
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
-                    <div class="panel panel-primary">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
-                             VENTAS, COMPRAS, CXC Y CXP
+<!--                             VENTAS, COMPRAS, CXC Y CXP-->
+                 VENTAS,Cuenta por Cobrar
                         </div>
                         <div class="panel-body">
                          <table class="table table-bordered">
@@ -60,13 +61,13 @@ $fecha=date('Y-m-d');
                                             <th>TIPO</th>                                                                                     
                                             <th>FECHA REGISTRO</th>
                                             <th>VALOR</th>
-                                            <th>RESPONSABLE</th>
+                                            
                                             <th></th>                                         
                                         </tr>
                                     </thead>
                                     <tbody>
                                    <?php 
-                                                $sql=mysqli_query($conexion,"SELECT * FROM contable ".$where);
+                                                $sql=mysqli_query($conexion,"SELECT * FROM contable");
                                                 while($row=mysqli_fetch_array($sql)){
                                                     if($row['tipo']=='ENTRADA'){
                                                         $tipo='<span class="label label-success">Entrada</span>';
@@ -77,13 +78,20 @@ $fecha=date('Y-m-d');
                                                     }elseif($row['tipo']=='CXP'){
                                                         $tipo='<span class="label label-warning">Cuentas por Pagar</span>';
                                                     }
-                                                    $oCliente=new Consultar_Clientes($row['concepto1']);
-                                                    $oProveedor=new Consultar_Proveedor($row['concepto1']);
+//                                                    $oCliente=new Consultar_Clientes($row['concepto1']);
+//                                                    $oProveedor=new Consultar_Proveedor($row['concepto1']);
+                                                    $conCliente=(int)$row['concepto1'];
+                                              $cliente = mysqli_query($conexion, "SELECT*FROM tb_cliente WHERE id_cliente='$conCliente'");
+                                                   
+                                              while ($roww = mysqli_fetch_array($cliente)) {
+                                                          $c_nombre=$roww['nombre_cliente'];
+                                                          
+                                                        
                                                     if($row['tipo']=='CXC'){
-                                                       $c_nombre=$oCliente->consultar('nombre');
+                                                      $c_nombre;
                                                     }
                                                     elseif($row['tipo']=='CXP'){
-                                                        $c_nombre=$oProveedor->consultar('nombre');
+                                                        //$c_nombre=$oProveedor->consultar('nombre');
                                                     }
                                                     else
                                                     {
@@ -91,13 +99,12 @@ $fecha=date('Y-m-d');
                                                     }                                                  
                                             ?>
                                         <tr class="odd gradeX">
-                                            <td><?php echo $row['id'] ?></td>
+                                            <td><?php echo $row['id_contable'] ?></td>
                                             <td><?php echo $c_nombre; ?></td>
                                             <td><center><?php echo $tipo; ?></center></td>
-                                            <td><center><?php echo fecha($row['fecha']).' '.$row['hora']; ?></center></td>
-                                            <td><div align="right"><?php echo $s.' '.formato($row['valor']); ?></div></td>
-                                            <td><?php echo consultar('nom','persona',' doc='.$row['usu']); ?></td>
-                                            <td>
+                                            <td><center><?php echo $row['fecha']; ?></center></td>
+                                            <td><div align="right"><?php echo '$'.formato($row['valor']); ?></div></td>
+                                                <td><?php ?>
                                                 <center>
                                                 <?php if($row['tipo']=='CXC'){ ?>
                                                     <a href="cxc.php?id=<?php echo $row[0]; ?>" class="btn btn btn-danger btn-xs"><strong>Abonar</strong></a>
@@ -107,7 +114,7 @@ $fecha=date('Y-m-d');
                                                 </center>
                                             </td>
                                         </tr> 
-                                        <?php } ?>                                                                             
+                                                    <?php }} ?>                                                                             
                                     </tbody>
                                 </table>
                             </div>
@@ -118,6 +125,8 @@ $fecha=date('Y-m-d');
                 </div>
             </div>
                 <!-- /. ROW  -->
+                </div>
+        </div>
         <!-- /#page-wrapper FIN CONTENIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
       
