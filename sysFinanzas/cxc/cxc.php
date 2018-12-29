@@ -329,11 +329,11 @@ input[type=text] {
                 <a href="../cxc/cobros.php">
                     <button type="button" class="btn btn-primary btn-circle"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
                     </button></a>
-                <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#factura1"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+                <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#m"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>
 <?php
 if ($deuda-$abonos <> 0) {
-    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#factura1"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#m"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
 }
 ?>        
