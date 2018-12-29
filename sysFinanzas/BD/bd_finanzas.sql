@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2018 a las 01:38:36
--- Versión del servidor: 10.1.34-MariaDB
--- Versión de PHP: 7.2.7
+-- Tiempo de generación: 29-12-2018 a las 23:42:16
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 5.6.39
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,7 +46,10 @@ CREATE TABLE `abono` (
 
 INSERT INTO `abono` (`id_abono`, `cuenta`, `valor`, `fecha`, `hora`, `nota`, `total_interes`, `proximo_pago`, `mora`) VALUES
 (1, 22, '20', NULL, NULL, NULL, '5', NULL, NULL),
-(2, 22, '500', NULL, NULL, NULL, '10', NULL, NULL);
+(2, 22, '500', NULL, NULL, NULL, '10', NULL, NULL),
+(3, 22, '495.16666666667', '2018-12-29', '18:03:33', 'abone $500', '4.8333333333333', '2018-12-31', 86526.2),
+(4, 22, '24.293055555556', '2018-01-02', '18:15:38', 'Sin Observaciones', '0.70694444444442', '2018-01-03', 0),
+(5, 22, '139.49549768519', '2018-01-14', '18:28:25', 'Sin Observaciones', '0.50450231481478', '2018-01-15', 53.19);
 
 -- --------------------------------------------------------
 
@@ -62,19 +65,20 @@ CREATE TABLE `articulos` (
   `valor` float DEFAULT NULL,
   `marca` varchar(45) DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL,
-  `unidad` int(11) DEFAULT NULL
+  `unidad` int(11) DEFAULT NULL,
+  `idproveedor` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `articulos`
 --
 
-INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`, `marca`, `estado`, `unidad`) VALUES
-(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1),
-(2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1),
-(3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1),
-(4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1),
-(5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1);
+INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`, `marca`, `estado`, `unidad`, `idproveedor`) VALUES
+(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1, 1),
+(2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 1),
+(3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1, 1),
+(4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1, 1),
+(5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -371,6 +375,30 @@ INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `proveedor`
+--
+
+CREATE TABLE `proveedor` (
+  `idproveedor` int(10) NOT NULL,
+  `proveedor` varchar(50) DEFAULT NULL,
+  `contacto` varchar(50) DEFAULT NULL,
+  `direccion` varchar(50) DEFAULT NULL,
+  `dui` varchar(15) DEFAULT NULL,
+  `nit` varchar(25) DEFAULT NULL,
+  `telefono` varchar(10) DEFAULT NULL,
+  `estado` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`idproveedor`, `proveedor`, `contacto`, `direccion`, `dui`, `nit`, `telefono`, `estado`) VALUES
+(1, 'SONY', 'Isabel Mejia Hernandez', 'colonia san benito, san salvador', '12345678-9', '1221-234212-123-1', '2342-2321', 's');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `resumen`
 --
 
@@ -477,7 +505,8 @@ ALTER TABLE `abono`
 -- Indices de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  ADD PRIMARY KEY (`idarticulos`);
+  ADD PRIMARY KEY (`idarticulos`),
+  ADD KEY `idproveedor` (`idproveedor`);
 
 --
 -- Indices de la tabla `cliente_temp`
@@ -530,6 +559,12 @@ ALTER TABLE `kardex`
   ADD KEY `fk_kardex_articulos1_idx` (`id_articulos`);
 
 --
+-- Indices de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`idproveedor`);
+
+--
 -- Indices de la tabla `resumen`
 --
 ALTER TABLE `resumen`
@@ -558,7 +593,7 @@ ALTER TABLE `venta_temp`
 -- AUTO_INCREMENT de la tabla `abono`
 --
 ALTER TABLE `abono`
-  MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `articulos`
@@ -576,7 +611,7 @@ ALTER TABLE `cliente_temp`
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
@@ -635,6 +670,12 @@ ALTER TABLE `venta_temp`
 --
 ALTER TABLE `abono`
   ADD CONSTRAINT `fk_abono` FOREIGN KEY (`cuenta`) REFERENCES `contable` (`id_contable`);
+
+--
+-- Filtros para la tabla `articulos`
+--
+ALTER TABLE `articulos`
+  ADD CONSTRAINT `idproveedor` FOREIGN KEY (`idproveedor`) REFERENCES `proveedor` (`idproveedor`);
 
 --
 -- Filtros para la tabla `cliente_temp`

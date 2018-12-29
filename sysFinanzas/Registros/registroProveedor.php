@@ -5,6 +5,11 @@
     include_once '../Plantilla/menuLateral.php';
     ?>
         <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -30,17 +35,17 @@
                 <div class="col-md-14" >
                
                               <div class="col-md-12">
-                                    <form class="form-horizontal" role="form">
+                                    <form class="form-horizontal" role="form" autocomplete="off">
 
                                         
                                             <label class="col-md-1 control-label">Proveedor:</label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control" name="codigo">
+                                                <input type="text" class="form-control" name="proveedor" onkeypress="return soloLetras(event);" id="fnamep" required="" >
                                             </div>
 
                                             <label class="col-md-1 control-label">Contacto:</label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control" name="nombre">
+                                                <input type="text" class="form-control" name="contacto" onkeypress="return soloLetras(event);" id="fnamep" required="">
                                             </div>
 
 
@@ -49,7 +54,7 @@
                                                <label class="col-md-2 control-label">Dirección:</label>
                                             <div class="col-md-9">
                                                 
-                                                <input type="text"  class="form-control" name="unidad">
+                                                <input type="text"  class="form-control" name="direccion" required="">
                                             </div>
                              
 
@@ -66,21 +71,21 @@
 
                                             <label class="col-md-2 control-label">DUI:</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control" name="marca">
+                                                <input type="text" class="form-control" name="dui" id="dui" placeholder="99999999-9" required="">
                                             </div>
                                         
 
 
                                            <label class="col-md-1 control-label">NIT:</label>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 
-                                                <input type="text"  class="form-control" name="cantidad">
+                                                <input type="text"  class="form-control" name="nit" id="nit" placeholder="9999-999999-999-9" required="">
                                             </div>
 
                                              <label class="col-md-1 control-label">Telefono:</label>
                                             <div class="col-md-2">
                                                 
-                                                <input type="text" class="form-control" name="valor">
+                                                <input type="text" class="form-control" name="telefono" id="telefono"  placeholder="9999-9999" required="">
                                             </div>
 
                                           
@@ -124,20 +129,55 @@
     if (isset($_REQUEST['btnGuardar'])) {
     include_once '../conexion/php_conexion.php';
 
-    $codigo = $_REQUEST['codigo'];
-    $nombre = $_REQUEST['nombre'];
-    $marca = $_REQUEST['marca'];
-    $cantidad = $_REQUEST['cantidad'];
-    $valor = $_REQUEST['valor'];
-    $unidad = $_REQUEST['unidad'];
+    $proveedor = $_REQUEST['proveedor'];
+    $contacto = $_REQUEST['contacto'];
+    $direccion = $_REQUEST['direccion'];
+    $dui = $_REQUEST['dui'];
+    $nit = $_REQUEST['nit'];
+    $telefono = $_REQUEST['telefono'];
       
    $estado = "s";
   
    
-    mysqli_query($conexion, "INSERT INTO articulos(codigo,nombre,cantidad,valor,marca,estado,unidad) VALUES('$codigo','$nombre','$cantidad','$valor','$marca','$estado','$unidad')");
+    mysqli_query($conexion, "INSERT INTO proveedor(proveedor,contacto,direccion,dui,nit,telefono,estado) VALUES('$proveedor','$contacto','$direccion','$dui','$nit','$telefono','$estado')");
     
 } 
 ?>
+
+
+ <script type="text/javascript">
+    $("#telefono").mask("0000-0000");
+    $("#nit").mask("0000-000000-000-0");
+    $("#dui").mask("00000000-0");
+    
+</script>
+
+ <script>
+        function soloLetras(e) {
+            textoArea = document.getElementById("fnamep").value;
+            var total = textoArea.length;
+            if (total == 0) {
+                key = e.keyCode || e.which;
+                tecla = String.fromCharCode(key).toString();
+                letras = " áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ"; //Se define todo el abecedario que se quiere que se muestre.
+                especiales = [8, 9, 37, 39, 46, 6]; //Es la validación del KeyCodes, que teclas recibe el campo de texto.
+
+                tecla_especial = false
+                for (var i in especiales) {
+                    if (key == especiales[i]) {
+                        tecla_especial = true;
+                        break;
+                    }
+                }
+
+                if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+                    return false;
+                    alert('No puedes comenzar escribiendo numeros');
+                }
+            }
+        }
+    </script>
+
 
 <?php
 
