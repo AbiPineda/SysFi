@@ -39,7 +39,7 @@ $fecha=date('Y-m-d');
                 </div>
                 <div class="col-md-4">
                          <div class="panel-body" align="center">                                                                                 
-                            <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus fa-2x" onclick="location.href='./registroCliente.php'" title="Agregar Nuevo Cliente"></i>
+                            <button type="button" class="btn btn-outline btn-success" data-toggle="modal" data-target="#myModal"><i onclick="location.href='../Registros/registroCliente.php'">Registrar Cliente</i>
                             </button>
 
                                                                                                         
@@ -461,14 +461,14 @@ $fecha=date('Y-m-d');
                             <tr>
                                 <td>
                                     <div align="center">
-                                    <div class="row">
-                                    <div class="col-md-6">
-                                     <i class="fa fa-plus icon-white"></i> <strong>FORMA DE PAGO FACTURA</strong><br>
-                                        <a href="#factura1" role="button" class="btn btn-primary btn-lg" data-toggle="modal">
-                                            <i class="fa fa-list icon-white"></i> <strong>CONTADO</strong>
+                                    <div class="row" align="center">
+                                    <div class="col-md-12" align="center">
+                                     <strong>FORMA DE PAGO FACTURA</strong><br>
+                                        <a href="#factura1" role="button" class="btn btn-outline btn-success btn-lg btn-block" data-toggle="modal">
+                                             <strong>CONTADO</strong>
                                         </a>
-                                        <a href="#factura2" role="button" class="btn btn-primary btn-lg" data-toggle="modal">
-                                            <i class="fa fa-list icon-white"></i> <strong>CREDITO</strong>
+                                        <a href="#factura2" role="button" class="btn btn-outline btn-success btn-lg btn-block" data-toggle="modal">
+                                             <strong>CREDITO</strong>
                                         </a>
                                     </div>
                                     

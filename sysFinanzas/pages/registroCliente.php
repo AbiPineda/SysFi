@@ -33,8 +33,8 @@
                                     <form class="form-horizontal" role="form">
 
                                         
-                                            <label class="col-md-1 control-label">Nombre:</label>
-                                            <div class="col-md-11">
+                                            <label class="col-md-2 control-label">Nombre Completo:</label>
+                                            <div class="col-md-10">
                                                 <input type="text" class="form-control" name="nombreCliente">
                                             </div>
 
@@ -63,15 +63,12 @@
 
                                     
 
-                                     
                                         <div class="form-group" align="center" >
                                             <div class="col-md-12">
                                             <br>
                                 <button type="submit" class="btn btn-primary btn-lg" name="btnGuardar">Guardar Cliente</button>
                                             </div>
                                         </div>
-
-
                                     </form>
                             </div>
                             

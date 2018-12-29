@@ -13,7 +13,7 @@
                         <br/>
                          <div class="panel panel-green">
                         <div class="panel-heading">
-                             Registrar Cliente
+                             Registrar Articulo
                         </div>
                         <div class="panel-body">
              <div class="col-md-8">
@@ -33,45 +33,66 @@
                                     <form class="form-horizontal" role="form">
 
                                         
-                                            <label class="col-md-1 control-label">Nombre:</label>
-                                            <div class="col-md-11">
-                                                <input type="text" class="form-control" name="nombreCliente">
+                                            <label class="col-md-1 control-label">Código:</label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" name="codigo">
                                             </div>
 
-                                        <br>
-                                        <br>
-                                             <br>
-                                            <label class="col-md-1 control-label">Dirección:</label>
+                                            <label class="col-md-1 control-label">Nombre:</label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control" name="dir">
+                                                <input type="text" class="form-control" name="nombre">
                                             </div>
 
                                        
-                                            <label class="col-md-1 control-label">DUI:</label>
+                                            <label class="col-md-1 control-label">Marca:</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control" name="dui">
+                                                <input type="text" class="form-control" name="marca">
                                             </div>
                                         
 
                                        
-                                            <label class="col-md-1 control-label">Telefono:</label>
+                                        <div class="col-md-12">
+                        <br>
+                         <div class="panel panel-green">
+                         <br>
+
+                                           <label class="col-md-2 control-label">Cantidad:</label>
                                             <div class="col-md-2">
                                                 
-                                                <input type="text" class="form-control" name="tel">
+                                                <input type="number" min="0" class="form-control" name="cantidad">
                                             </div>
+
+                                             <label class="col-md-1 control-label">Valor:</label>
+                                            <div class="col-md-2">
+                                                
+                                                <input type="number" min="0" class="form-control" name="valor">
+                                            </div>
+
+                                             <label class="col-md-2 control-label">Unidad:</label>
+                                            <div class="col-md-2">
+                                                
+                                                <input type="number" min="0" class="form-control" name="unidad">
+                                            </div>
+                             
+                          <br>
+                           <br>
+                            
+                         </div>
+                       
+                                           
+                                            </div>
+                                            </div>
+                                           
                                       
 
                                     
 
-                                     
                                         <div class="form-group" align="center" >
                                             <div class="col-md-12">
                                             <br>
-                                <button type="submit" class="btn btn-primary btn-lg" name="btnGuardar">Guardar Cliente</button>
+                                <button type="submit" class="btn btn-primary btn-lg" name="btnGuardar">Guardar Articulo</button>
                                             </div>
                                         </div>
-
-
                                     </form>
                             </div>
                             
@@ -93,14 +114,17 @@
     if (isset($_REQUEST['btnGuardar'])) {
     include_once '../conexion/php_conexion.php';
 
-    $nombre = $_REQUEST['nombreCliente'];
-    $direccion = $_REQUEST['dir'];
-    $dui = $_REQUEST['dui'];
-    $telefono = $_REQUEST['tel'];
-  
+    $codigo = $_REQUEST['codigo'];
+    $nombre = $_REQUEST['nombre'];
+    $marca = $_REQUEST['marca'];
+    $cantidad = $_REQUEST['cantidad'];
+    $valor = $_REQUEST['valor'];
+    $unidad = $_REQUEST['unidad'];
+      
+   $estado = "s";
   
    
-    mysqli_query($conexion, "INSERT INTO tb_cliente(nombre_cliente,dir_cliente,dui,tel) VALUES('$nombre','$direccion','$dui','$telefono')");
+    mysqli_query($conexion, "INSERT INTO articulos(codigo,nombre,cantidad,valor,marca,estado,unidad) VALUES('$codigo','$nombre','$cantidad','$valor','$marca','$estado','$unidad')");
     
 } 
 ?>
