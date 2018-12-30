@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-12-2018 a las 23:42:16
+-- Tiempo de generación: 30-12-2018 a las 06:06:36
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -66,19 +66,44 @@ CREATE TABLE `articulos` (
   `marca` varchar(45) DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL,
   `unidad` int(11) DEFAULT NULL,
-  `idproveedor` int(10) DEFAULT NULL
+  `idproveedor` int(10) DEFAULT NULL,
+  `idcategoria` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `articulos`
 --
 
-INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`, `marca`, `estado`, `unidad`, `idproveedor`) VALUES
-(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1, 1),
-(2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 1),
-(3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1, 1),
-(4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1, 1),
-(5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1, 1);
+INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`, `marca`, `estado`, `unidad`, `idproveedor`, `idcategoria`) VALUES
+(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1, 1, 1),
+(2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 1, 1),
+(3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1, 1, 6),
+(4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1, 1, 7),
+(5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1, 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `idcategoria` int(10) NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`idcategoria`, `nombre`) VALUES
+(1, 'Electrodomesticos'),
+(2, 'Muebles'),
+(3, 'Videojuegos'),
+(4, 'Audio'),
+(5, 'Accesorios'),
+(6, 'Video'),
+(7, 'Electronica');
 
 -- --------------------------------------------------------
 
@@ -506,7 +531,14 @@ ALTER TABLE `abono`
 --
 ALTER TABLE `articulos`
   ADD PRIMARY KEY (`idarticulos`),
-  ADD KEY `idproveedor` (`idproveedor`);
+  ADD KEY `idproveedor` (`idproveedor`),
+  ADD KEY `idcategoria` (`idcategoria`);
+
+--
+-- Indices de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`idcategoria`);
 
 --
 -- Indices de la tabla `cliente_temp`
@@ -599,7 +631,13 @@ ALTER TABLE `abono`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `idcategoria` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente_temp`
@@ -644,6 +682,12 @@ ALTER TABLE `kardex`
   MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
+-- AUTO_INCREMENT de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `idproveedor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
@@ -675,6 +719,7 @@ ALTER TABLE `abono`
 -- Filtros para la tabla `articulos`
 --
 ALTER TABLE `articulos`
+  ADD CONSTRAINT `idcategoria` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`idcategoria`),
   ADD CONSTRAINT `idproveedor` FOREIGN KEY (`idproveedor`) REFERENCES `proveedor` (`idproveedor`);
 
 --
