@@ -56,10 +56,10 @@
                             <a href="#"><i class="fa fa-shopping-cart "></i> Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="../venta/Vis_ventas.php">Realizar Venta</a>
+                                    <a href="../venta/Vis_ventas.php">Consumidor Final</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Morris.js Charts</a>
+                                    <a href="../venta/credito.php">Credito Fiscal</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

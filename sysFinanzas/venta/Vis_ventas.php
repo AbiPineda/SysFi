@@ -339,7 +339,7 @@ $fecha=date('Y-m-d');
                                 <td><div align="right"><strong><?php echo '$'.formato($importe); ?></div></strong></td>                                
                                 <td>
                                     <center>                           
-                                        <a href="index.php?del=<?php echo $row['id_articulo']; ?>"  class="btn btn-danger" title="Eliminar">
+                                        <a href="Vis_ventas.php.php?del=<?php echo $row['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
                                             <i class="fa fa-times" ></i>
                                         </a>
                                     </center>

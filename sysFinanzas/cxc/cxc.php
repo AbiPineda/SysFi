@@ -132,7 +132,7 @@ if ($row = mysqli_fetch_array($sql)) {
     $diferencia = $fecha2 - $fecha1;
     $diasSinMora = $diferencia / (60 * 60 * 24);
     if ($diasSinMora<0) {
-        $PagoMora="SIN MORA";
+        $PagoMora='SIN MORA';
     } else {
         $uno=$cuota*0.05;
         $valor= round($uno*$diasSinMora,2);
@@ -144,7 +144,48 @@ if ($row = mysqli_fetch_array($sql)) {
         
         
     }
+}else{
+    
+    $mora_ultima=mysqli_query($conexion, "SELECT*FROM contable WHERE id_contable='$id'");
+     while ($m= mysqli_fetch_array($mora_ultima)){
+         $fechaCompro=$m['fecha'];
+     }
+     
+ $nuevafecha = strtotime('+1 month', strtotime($fechaCompro));
+ $nuevafecha = date('Y-m-d', $nuevafecha);
+ 
+  $fecha = date('Y-m-d');
+    $x = explode("-", $fecha);
+    $añox = $x[0];
+    $mesx = $x[1];
+    $diax = $x[2];
+    
+     $y = explode("-", $nuevafecha);
+    $añoy = $y[0];
+    $mesy = $y[1];
+    $diay = $y[2];
+
+    $fecha1 = mktime(0, 0, 0, "$mesy", "$diay", "$añoy");
+    $fecha2 = mktime(0, 0, 0, "$mesx", "$diax", "$añox");
+
+    $diferencia = $fecha2 - $fecha1;
+    $diasSinMora = $diferencia / (60 * 60 * 24);
+    if ($diasSinMora<0) {
+        $PagoMora='SIN MORA';
+    } else {
+        $uno=$cuota*0.05;
+        $valor= round($uno*$diasSinMora,2);
+        if ($valor==0) {
+            $PagoMora=0;
+        }else{
+           $PagoMora=$valor;
+        }
+ 
+    
+    
 }
+}
+
    
 ?>
 
@@ -293,11 +334,11 @@ if (!empty($_POST['valor'])) {
     $validar = mysqli_query($conexion,"SELECT * FROM abono WHERE cuenta='$id'");
     if (mysqli_num_rows($validar) > 0) {
         # code...
-        $calculoValor = ($valor - (($monto - $abonos) * (($intCalculo / 100) / 12)));
-        $aboInteres = (($monto - $abonos) * (($intCalculo / 100) / 12));
+        $calculoValor = round(($valor - (($monto - $abonos) * (($intCalculo / 100) / 12))),3);
+        $aboInteres = round((($monto - $abonos) * (($intCalculo / 100) / 12)),3);
     } else {
-        $calculoValor = $valor - (($monto) * (($intCalculo / 100) / 12));
-        $aboInteres = (($monto) * (($intCalculo / 100) / 12));
+        $calculoValor = round($valor - (($monto) * (($intCalculo / 100) / 12)),3);
+        $aboInteres = round((($monto) * (($intCalculo / 100) / 12)),3);
     }
     $fecha = date('Y-m-d');
     $hora = date('H:i:s');
