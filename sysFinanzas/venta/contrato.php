@@ -100,6 +100,8 @@ case ($n >= 1000000): return millones($n);
                         <div class="panel-body">
                         <center><button onclick="imprimir();" class="btn btn-default"><i class=" fa fa-print "></i> Imprimir</button></center><br>
 
+                         <center><button onclick="location.href='Vis_ventas.php'" class="btn btn-info btn-circle btn-lg"><i class=" fa fa-undo"></i></button></center><br>
+
                             <div class="table-responsive">  
                                     <table  width="100%" >
                                      <tr>
