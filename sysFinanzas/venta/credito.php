@@ -187,7 +187,7 @@ $fecha=date('Y-m-d');
                              $cantfx=$new_cant;
                         }
 
-                        mysqli_query("UPDATE cajac_tmp SET cant='$cantf' WHERE articulo='$ncodigo' and usu='$usu'");
+                        mysqli_query("UPDATE ventaC_temp SET cant='$cantf' WHERE articulo='$ncodigo' and usu='$usu'");
                     }
                     if(!empty($_POST['new_pv'])){
                         $new_pv=limpiar($_POST['new_pv']);
@@ -200,7 +200,7 @@ $fecha=date('Y-m-d');
                             $newp=$new_pv;
                         }
 
-                        mysqli_query("UPDATE cajac_tmp SET p_mayor='$newp' WHERE articulo='$pvcodigo' and usu='$usu'");
+                        mysqli_query("UPDATE ventaC_temp SET p_mayor='$newp' WHERE articulo='$pvcodigo' and usu='$usu'");
                     }
                     
                     if(!empty($_POST['ncodigo_ref'])){
@@ -209,13 +209,13 @@ $fecha=date('Y-m-d');
                         $ncodigo=limpiar($_POST['ncodigo_ref']);
                         
                         if($referencia==''){
-                            mysqli_query("UPDATE cajac_tmp SET ref='' WHERE articulo='$ncodigo' and usu='$usu' and ref='$ref_ant'");
+                            mysqli_query("UPDATE ventaC_temp SET ref='' WHERE articulo='$ncodigo' and usu='$usu' and ref='$ref_ant'");
                         }else{
-                            $pa=mysqli_query("SELECT * FROM cajac_tmp WHERE cajac_tmp.ref='$referencia'");             
+                            $pa=mysqli_query("SELECT * FROM ventaC_temp WHERE ventaC_temp.ref='$referencia'");             
                             if($row=mysqli_fetch_array($pa)){
                                 echo mensajes('El Numero de Referencia "'.$referencia.'" Esta siendo usada','rojo');
                             }else{
-                                mysqli_query("UPDATE cajac_tmp SET ref='$referencia' WHERE articulo='$ncodigo' and usu='$usu' and ref='$ref_ant'");
+                                mysqli_query("UPDATE ventaC_temp SET ref='$referencia' WHERE articulo='$ncodigo' and usu='$usu' and ref='$ref_ant'");
                             }
                         }
                         
@@ -227,25 +227,28 @@ $fecha=date('Y-m-d');
                     } 
 
                    if(!empty($_POST['buscar'])){
-                        $buscar=limpiar($_POST['buscar']);
-                        $pro=mysqli_query("SELECT * FROM articulos 
-                        WHERE (articulos.id LIKE '$buscar%' or articulos.nombre LIKE '$buscar%'  or articulos.codigo LIKE '$buscar%') GROUP BY articulos.nombre");   
+                        $buscar=$_POST['buscar'];
+                        $pro=mysqli_query($conexion,"SELECT * FROM articulos 
+                        WHERE (articulos.idarticulos LIKE '$buscar%' or articulos.nombre LIKE '$buscar%') GROUP BY articulos.nombre");   
                         if($roow=mysqli_fetch_array($pro)){
-                            $codigo=$roow['id'];
+                            $codigo=$roow['idarticulos'];
 
-                        $i=mysqli_query("SELECT * FROM inventario WHERE articulo='$codigo'");
+                        $i=mysqli_query($conexion,"SELECT * FROM inventario WHERE id_articulos='$codigo'");
                         if ($row=mysqli_fetch_array($i)) {
                             if ($row['stock'] == 0) {
-                                 $oArticulo=new Consultar_Articulos($codigo);
-                                echo mensajes('El Articulo '.$oArticulo->consultar('nombre').' se encuentra en Existencia "0"','naranja');
-                            }
+                                $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos='$codigo'");                
+                        while($row1=mysqli_fetch_array($consultaAr)){
+                        echo mensajes('El Articulo '.$row1['nombre'].' se encuentra en Existencia "0"','naranja');
+                        }
+                                
+                        }
                             else{
-                                  $pa=mysqli_query("SELECT * FROM cajac_tmp WHERE articulo='$codigo' and usu='$usu' and ref=''");   
+                                  $pa=mysqli_query($conexion,"SELECT * FROM ventaC_temp WHERE id_articulo='$codigo'");   
                                     if($row=mysqli_fetch_array($pa)){
-                                        $cant=$row['cant']+1;
-                                        mysqli_query("UPDATE cajac_tmp SET cant='$cant' WHERE articulo='$codigo' and usu='$usu'");
+                                        $cant=$row['cantidad']+1;
+                                        mysqli_query($conexion,"UPDATE ventaC_temp SET cantidad='$cant' WHERE id_articulo='$codigo'");
                                     }else{
-                                        mysqli_query("INSERT INTO cajac_tmp (articulo, cant, usu) VALUES ('$codigo','1','$usu')");    
+                                        mysqli_query($conexion,"INSERT INTO ventaC_temp (id_articulo, cantidad) VALUES ('$codigo','1')");    
                                     }
 
                             }
@@ -286,48 +289,42 @@ $fecha=date('Y-m-d');
                             <?php 
                                     
                                 $neto=0;$item=0;$total=0;$iva=0;$xy=0;
-                                $pa=mysqli_query("SELECT * FROM cajac_tmp, inventario WHERE cajac_tmp.usu='$usu' and cajac_tmp.articulo=inventario.articulo");              
+                                $pa=mysqli_query($conexion,"SELECT * FROM ventaC_temp, inventario WHERE  ventaC_temp.id_articulo=inventario.id_articulos");              
                                 while($row=mysqli_fetch_array($pa)){
-                                    $item=$item+$row['cant'];                                   
+                                    $item=$item+$row['cantidad'];                                   
                                     $defecto=strtolower($row['pv']);
                                     $valor=$row['pv'];
 
                                      ############### manejo de STOCK#########################
                                     if ($row['stock'] == 0) {
-                                        $aviso=' <a href="#m'.$row['articulo'].'" role="button" class="btn btn-danger btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
+                                        $aviso=' <a href="#m'.$row['id_articulo'].'" role="button" class="btn btn-danger btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
                                             <strong>Sin stock</strong>
                                         </a>';
                                     }
                                     else{
-                                        $aviso=' <a href="#m'.$row['articulo'].'" role="button" class="btn btn-success btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
-                                            <strong>'.$row['cant'].'</strong>
+                                        $aviso=' <a href="#m'.$row['id_articulo'].'" role="button" class="btn btn-success btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
+                                            <strong>'.$row['cantidad'].'</strong>
                                         </a>';
                                     }
                                     ########################################
-                                    if($row['ref']==NULL){
-                                        $referencia='Sin Referencia';
-                                    }else{
-                                        $referencia=$row['ref'];
-                                    }
-                                     if($row['p_mayor']==NULL){
+                                    
                                         $new=$row['pv'];
-                                    }else{
-                                        $new=$row['p_mayor'];
-                                    }
+                                    
                                     ############### IVA #########################
-                                   $xy=$iva_emp/100;
+                                   $xy=13/100;
 
 
                                     ###############CALCULOS TOTALES#########################
-                                    $importe=$row['cant']*$new;
+                                    $importe=$row['cantidad']*$new;
                                     $neto=$neto+$importe;
                                     $iva=$neto*$xy;
                                     
-                                    $oArticulo=new Consultar_Articulos($row['articulo']);
+                                   $consultaAr=mysqli_query($conexion,"SELECT * FROM articulos WHERE idarticulos=".$row['id_articulo']."");                
+                        while($row=mysqli_fetch_array($consultaAr)){
                             ?>
                             <tr>
                              <td align="center"><span class="label label-info"> <?php echo $row['codigo']; ?></span></td>                                                             
-                                <td><?php echo $oArticulo->consultar('nombre');  ?></td>
+                                <td><?php echo $row['nombre'];  ?></td>
                                 <td>
                                     <center>
                                       <?php echo $aviso; ?>
@@ -335,15 +332,15 @@ $fecha=date('Y-m-d');
                                 </td>
                                 <td>
                                 <div align="right">
-                                        <a  href="#p<?php echo $row['articulo']; ?>" role="button" class="btn btn-primary btn-mini" data-toggle="modal" title="Cambiar Precio" accesskey="p">
-                                            <strong><?php echo $s.' '.formato($new); ?></strong>
-                                        </a>
+                                       
+                                            <strong><?php echo '$'.formato($new); ?></strong>
+                                     
                                 </div>
                                 </td>
-                                <td><div align="right"><strong><?php echo $s.' '.formato($importe); ?></div></strong></td>                                
+                                <td><div align="right"><strong><?php echo '$'.formato($importe); ?></div></strong></td>                                
                                 <td>
                                     <center>                           
-                                        <a href="credito.php?del=<?php echo $row['articulo']; ?>"  class="btn btn-danger" title="Eliminar">
+                                        <a href="credito.php?del=<?php echo $row['id_articulo']; ?>"  class="btn btn-danger" title="Eliminar">
                                             <i class="fa fa-times" ></i>
                                         </a>
                                     </center>
@@ -351,13 +348,13 @@ $fecha=date('Y-m-d');
                             </tr>
                            
                       <!--  Modals-->
-                                 <div class="modal fade" id="m<?php echo $row['articulo']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal fade" id="m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <form name="form1" method="post" action="">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                                                    
-                                                        <h3 align="center" class="modal-title" id="myModalLabel">Actualizar Cantidad<br>[<?php echo $oArticulo->consultar('nombre');  ?>]</h3>
+                                                        <h3 align="center" class="modal-title" id="myModalLabel">Actualizar Cantidad<br>[<?php echo $row['nombre'];  ?>]</h3>
                                                     </div>
                                         <div class="panel-body">
                                         <div class="row" align="center">
@@ -365,9 +362,9 @@ $fecha=date('Y-m-d');
                                             
                                             </div>
                                             <div class="col-md-4" >                                         
-                                                <input type="hidden" name="ncodigo" value="<?php echo $row['articulo']; ?>">
+                                                <input type="hidden" name="ncodigo" value="<?php echo $row['idarticulos'];?>">
                                                 <strong>Nueva Cantidad</strong><br>
-                                                <input type="number" class="form-control" name="new_cant" min="1" value="<?php echo $row['cant'] ?>" autocomplete="off" required>
+                                                <input type="number" class="form-control" name="new_cantidad" min="1" value="<?php echo $row['cantidad'] ?>" autocomplete="off" required>
                                             </div>                                                                                                              
                                         </div> 
                                         </div> 
@@ -381,45 +378,9 @@ $fecha=date('Y-m-d');
                             </div>
                      <!-- End Modals-->
                      <!--  Modals-->
-                                 <div class="modal fade" id="p<?php echo $row['articulo']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <form name="form1" method="post" action="">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                                                    
-                                                        <h3 align="center" class="modal-title" id="myModalLabel">Cambiar Precio<br>[<?php echo $oArticulo->consultar('nombre');  ?>]</h3>
-                                                    </div>
-                                        <div class="panel-body">
-                                        <div class="row" align="center">
-                                            <div class="col-md-6" >                                         
-                                                <input type="hidden" name="pvcodigo" value="<?php echo $row['articulo']; ?>">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Precios</span>
-                                                        <select class="form-control" name="new_pv" autocomplete="off" required>
-                                                            <option value="n">---SELECCIONE---</option>
-                                                            <option value="<?php echo $row['pmy'] ?>"><?php echo $s.' '.formato($row['pmy']) ?> [P.MAYOR]</option>
-                                                            <option value="<?php echo $row['pv'] ?>"><?php echo $s.' '.formato($row['pv']) ?> [P.VENTA]</option>                                            
-                                                        </select>                                               
-                                                </div>
-                                            </div>
-                                             <div class="col-md-6" >                                         
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Precio Especial</span>
-                                                        <input type="number" min="0" step="any" class="form-control" name="especial" autocomplete="off"><br>                                             
-                                                </div>
-                                            </div>                                                                                                                    
-                                        </div> 
-                                        </div> 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Actualizar Precio</button>
-                                        </div>                                       
-                                    </div>
-                                </div>
-                                </form>
-                            </div>
+                                
                      <!-- End Modals-->                                                                                             
-                            <?php } ?>
+                                <?php } } ?>
                         </table>                                
                     </div>
                     <!-- COBROS -->
@@ -451,38 +412,7 @@ $fecha=date('Y-m-d');
                                 <td><div align="right"><strong>$ <?php echo formato(0); ?></strong></div></td>
                                 <td></td>
                             </tr>
-                            <tr>
-                                <td colspan="4"><div align="right"><strong>Total</strong></div></td>
-                                  <?php
-                                     $d=0;
-                                     if(!empty($_GET['ddes'])){
-                                        $ddes=limpiar($_GET['ddes']);
-                                            if($ddes>=0){
-                                                $d=$_GET['ddes'];    
-                                            }
-                                        }
-
-                                            $descuento=$neto*$d/100;
-                                            $total=$neto-$descuento;
-                                        ?>
-                                <td><div align="right"><strong>$ <?php echo formato($total+$iva); ?></strong></div></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><div align="right">
-                                   
-                                     <form name="form3" method="get" action="index.php">
-                                                <button type="submit" class="btn btn-default">Aplicar Descuento</button></div>
-                                </td>
-                                 <td colspan="2" width="15%"><div align="right">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">%</span>
-                                                    <input type="number" class="form-control" min="0" max="99" name="ddes" id="ddes" value="<?php echo $_SESSION['ddes']; ?>">
-                                                </div></div>
-                                    </form>
-                                </td>
-                                <td></td>
-                            </tr>
+                            
                             </div>
                         </table>
                     </div>
@@ -527,7 +457,7 @@ $fecha=date('Y-m-d');
                                                     TOTAL FACTURA
                                                 </div>
                                                 <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo $s.' '.formato($total+$iva); ?></div>
+                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($neto+$iva); ?></div>
                                                 </div>                           
                                             </div>
                                         </div>                                       
@@ -537,7 +467,7 @@ $fecha=date('Y-m-d');
                                                </div>
                                               <div class="col-md-6">
                                              <div class="input-group">
-                                                <span class="input-group-addon"><?php echo $s; ?></span>
+                                                <span class="input-group-addon"><?php echo '$'; ?></span>
                                                 <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
                                                 <span class="input-group-addon">.00</span>
                                              </div><br>
@@ -549,9 +479,9 @@ $fecha=date('Y-m-d');
                                                 </select>                                               
                                              </div><br>                                                
                                             <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
-                                            <input type="hidden" value="<?php echo $total; ?>" name="neto">  
+                                            <input type="hidden" value="<?php echo $neto+$iva; ?>" name="neto">  
                                             <input type="hidden" value="<?php echo $iva; ?>" name="iva">  
-                                            <input type="hidden" value="<?php echo $impuesto; ?>" name="impuesto">  
+                                            <!--<input type="hidden" value="<?php echo $impuesto; ?>" name="impuesto">-->  
                                            </div>                                                                                                              
                                         </div> 
                                         </div> 

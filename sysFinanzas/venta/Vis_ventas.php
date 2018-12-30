@@ -391,29 +391,7 @@ $fecha=date('Y-m-d');
                                 <td></td>
                             </tr>
                             <tr>
-                                <td colspan="3"><div align="right">
-                                     <?php
-                                     $d=0;
-                                     if(!empty($_GET['ddes'])){
-                                        $ddes=limpiar($_GET['ddes']);
-                                            if($ddes>=0){
-                                                $d=$_GET['ddes'];    
-                                            }
-                                        }
-
-                                            $descuento=$neto*$d/100;
-                                            $total=$neto-$descuento;
-                                        ?>
-                                     <form name="form3" method="get" action="index.php">
-                                                <button type="submit" class="btn btn-default">Aplicar Descuento</button></div>
-                                </td>
-                                 <td colspan="2" width="15%"><div align="right">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">%</span>
-                                                    <input type="number" class="form-control" min="0" max="99" name="ddes" id="ddes" value="<?php //echo $_SESSION['ddes']; ?>">
-                                                </div></div>
-                                    </form>
-                                </td>
+              
                                 <td></td>
                             </tr>
                             <tr>
@@ -428,9 +406,10 @@ $fecha=date('Y-m-d');
                                         }
 
                                             $impuesto=$neto*$iv/100;
+                                           // $total=$neto+$impuesto;
                                             
                                         ?>
-                                     <form name="form3" method="get" action="index.php">
+                                            <form name="form3" method="get" action="Vis_ventas.php">
                                                 <button type="submit" class="btn btn-default">Aplicar IVA</button></div>
                                 </td>
                                  <td colspan="2" width="15%"><div align="right">
@@ -451,7 +430,7 @@ $fecha=date('Y-m-d');
                             <tr>
                                 <td>
                                     <center><strong>TOTAL</strong>
-                                    <pre><h2 class="text-success" align="center">$ <?php echo formato($total+$impuesto); ?></h2></pre>
+                                    <pre><h2 class="text-success" align="center">$ <?php echo formato($neto+$impuesto); ?></h2></pre>
                                     
                                 </td>
                             </tr>
@@ -499,7 +478,7 @@ $fecha=date('Y-m-d');
                                                     TOTAL FACTURA
                                                 </div>
                                                 <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($total+$impuesto); ?></div>
+                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($neto+$impuesto); ?></div>
                                                 </div>                           
                                             </div>
                                         </div>                                       
@@ -522,7 +501,7 @@ $fecha=date('Y-m-d');
                                              </div><br>
 
                                             <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
-                                            <input type="hidden" value="<?php echo $total+$impuesto; ?>" name="neto">  
+                                            <input type="hidden" value="<?php echo $neto+$impuesto; ?>" name="neto">  
                                             <input type="hidden" value="<?php echo $impuesto; ?>" name="impuesto">  
                                            </div>                                                                                                              
                                         </div> 
@@ -553,7 +532,7 @@ $fecha=date('Y-m-d');
                                                     TOTAL FACTURA
                                                 </div>
                                                 <div class="panel-body">
-                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($total+$impuesto); ?></div>
+                                                    <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($neto+$impuesto); ?></div>
                                                 </div>                           
                                             </div>
                                         </div>                                       
@@ -595,7 +574,7 @@ $fecha=date('Y-m-d');
                                              
 
                                             <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
-                                            <input type="hidden" value="<?php echo $total+$impuesto; ?>" name="neto">  
+                                            <input type="hidden" value="<?php echo $neto+$impuesto; ?>" name="neto">  
                                             <input type="hidden" value="<?php echo $impuesto; ?>" name="impuesto">  
                                            </div>                                                                                                              
                                         </div> 
