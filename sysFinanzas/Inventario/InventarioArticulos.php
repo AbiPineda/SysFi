@@ -2,6 +2,7 @@
  include_once '../conexion/php_conexion.php';
     include_once '../Plantilla/encabezado.php';
     include_once '../Plantilla/menuLateral.php';
+
 ?>
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
@@ -59,69 +60,57 @@
                                     </thead>
                                     <tbody class="buscar">
                                     	<?php
-        $sacar = mysqli_query($conexion, "SELECT articulos.codigo, articulos.nombre, inventario.pv,inventario.stock FROM inventario INNER JOIN articulos ON inventario.id_articulos = articulos.idarticulos");
+        $sacar = mysqli_query($conexion, "SELECT
+articulos.idarticulos,
+articulos.codigo,
+articulos.nombre,
+inventario.pv,
+inventario.stock
+FROM
+articulos
+INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos
+");
             while ($fila = mysqli_fetch_array($sacar)) {
-                 
+               $modificar=$fila['idarticulos']; 
                  $codigo=$fila['codigo'];  
                  $nombre=$fila['nombre'];  
                  $pv=$fila['pv'];  
                  $stock=$fila['stock'];  
        ?>
+
+
        <tr>
         <th><?php echo $codigo;?></th>
         <td><?php echo $nombre;?></td>
         <td><?php echo $pv;?></td>
         <td><?php echo $stock;?></td>
         <td class="center">
-                                                <a href="#edit" role="button" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
-                                                
-                                            </td>
+           <a href="modificarInventario.php?ir=<?php echo $modificar; ?>"class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
         </td>
+                                       
+        
 
        <?php  }?>
       
       </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+    </tbody>
+  </table>
 </div>
 
+</form>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 <button type="button" class="btn btn-warning btn-circle btn-lg" onClick="window.location='PDFinventario.php'"><i class="fa fa-print fa-2" title="Inventario PDF"></i>
-                            </button>     
-
+                            </button> 
 </div>
 </div>
 </div>
 </div>
 </div>
-
- <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("buscador");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tabla");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-</script>                           
-
 
 
 
