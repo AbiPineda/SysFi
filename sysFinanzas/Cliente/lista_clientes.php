@@ -26,7 +26,7 @@
                     <!-- Advanced Tables -->
                     <div class="panel panel-green">
                         <div class="panel-heading" align="center">
-                             INVENTARIO
+                             CLIENTES REGISTRADOS
                         </div>
                         <div class="panel-body" align="center">
                             <div class="table-responsive">
@@ -51,41 +51,32 @@
                                 <table id="tabla" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>CODIGO</th>
-                                            <th>ARTICULO</th>
-                                            <th>PRECIO DE VENTA</th>                                           
-                                            <th>STOCK</th>
+                                            <th>NOMBRE COMPLETO</th>
+                                            <th>DIRECCION</th>
+                                            <th>DUI</th>                                           
+                                            <th>TELEFONO</th>
                                             <th></th>                                          
                                         </tr>
                                     </thead>
                                     <tbody class="buscar">
                                     	<?php
-        $sacar = mysqli_query($conexion, "SELECT
-articulos.idarticulos,
-articulos.codigo,
-articulos.nombre,
-inventario.pv,
-inventario.stock
-FROM
-articulos
-INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos
-");
+        $sacar = mysqli_query($conexion, "SELECT * FROM tb_cliente");
             while ($fila = mysqli_fetch_array($sacar)) {
-               $modificar=$fila['idarticulos']; 
-                 $codigo=$fila['codigo'];  
-                 $nombre=$fila['nombre'];  
-                 $pv=$fila['pv'];  
-                 $stock=$fila['stock'];  
+               $modificar=$fila['id_cliente']; 
+                 $nombre=$fila['nombre_cliente'];  
+                 $direccion=$fila['dir_cliente'];  
+                 $dui=$fila['dui'];
+                 $telefono=$fila['tel'];  
        ?>
 
 
        <tr>
-        <th><?php echo $codigo;?></th>
-        <td><?php echo $nombre;?></td>
-        <td><?php echo $pv;?></td>
-        <td><?php echo $stock;?></td>
+        <th><?php echo $nombre;?></th>
+        <td><?php echo $direccion;?></td>
+        <td><?php echo $dui;?></td>
+        <td><?php echo $telefono;?></td>
         <td class="center">
-           <a href="modificarInventario.php?ir=<?php echo $modificar; ?>"class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+           <a href="verCliente.php?ir=<?php echo $modificar; ?>"class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
         </td>
                                        
         

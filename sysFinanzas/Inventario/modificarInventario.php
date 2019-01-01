@@ -46,6 +46,13 @@
                                         $valor = $fila['valor'];
                                         $marca = $fila['marca'];
                                         $unidad = $fila['unidad'];
+
+
+                                         $sacar1 = mysqli_query($conexion, "SELECT*FROM inventario, articulos WHERE idinventario='$modi' and id_articulos=idarticulos");
+                                    while ($fila = mysqli_fetch_array($sacar1)) {
+                                        $modificar = $fila['idinventario'];
+                                        $stock = $fila['stock'];
+                                       
                                         
                                         ?>
                                             <label class="col-md-1 control-label">Código:</label>
@@ -86,6 +93,12 @@
                                                 
                                                 <input type="number" min="0" class="form-control" name="unidad" value="<?php echo $unidad; ?>">
                                             </div>
+
+                                            <label class="col-md-1 control-label">Stock:</label>
+                                            <div class="col-md-2">
+                                                
+                                                <input type="number" min="0" class="form-control" name="stock" value="<?php echo $stock; ?>">
+                                            </div>
                              
                           <br>
                            <br>
@@ -108,6 +121,7 @@
                                         </div>
                                          <?php
                                 }
+                            }
                                 ?>
                                     </form>
                             </div>
@@ -143,21 +157,17 @@ if (isset($_REQUEST['btnEnviar'])) {
      $valor = $_REQUEST['valor'];
      $marca = $_REQUEST['marca'];
      $unidad = $_REQUEST['unidad'];
+      $stock = $_REQUEST['stock'];
+
 
 
     mysqli_query($conexion, "UPDATE articulos SET codigo='$codigo',nombre='$nombre',cantidad='$cantidad',valor='$valor',marca='$marca',unidad='$unidad' WHERE idarticulos='$modi'");
+
+   mysqli_query($conexion, "UPDATE inventario SET stock='$stock' WHERE idinventario='$modi'");
    
-        echo '<script>swal({
-                    title: "Registro Modificado",
-                    text: "Guardado!",
-                    type: "success",
-                    confirmButtonText: "Aceptar",
-                    closeOnConfirm: false
-                },
-                function () {
-                    location.href="InventarioArticulos.php";
-                    
-                });</script>';
+        echo "<script>
+          location.href ='InventarioArticulos.php';
+        </script>";
 } 
 
 ?>
