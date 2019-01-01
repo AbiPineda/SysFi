@@ -4,7 +4,6 @@
     include_once '../Plantilla/menuLateral.php';
 
      $modi = $_GET['ir'];
-     
 
 
  ?>
@@ -17,7 +16,7 @@
                         <br/>
                          <div class="panel panel-green">
                         <div class="panel-heading">
-                             HISTORIAL DE CREDITOS A CLIENTES
+                             HISTORIAL DE CREDITOS DE CLIENTE
                         </div>
                         <div class="panel-body">
              <div class="col-md-8">
@@ -62,44 +61,41 @@
                           <table id="tabla" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>TIPO DE VENTA</th>
-                                            <th>FECHA DE CREDITO</th>
-                                            <th>VALOR</th>
-                                            <th>INTERES</th>
-                                            <th>TOTAL INTERESES</th>
-                                            
-                                            <th>HISTORIAL</th>                                          
+                                           <tr>
+                                            <th>ABONO</th>
+                                            <th>FECHA</th>
+                                            <th>NOTA</th>
+                                            <th>MORA</th>                                        
+                                        </tr>                                      
                                         </tr>
                                     </thead>
                                     <tbody class="buscar">
                                       <?php
-        $sacar = mysqli_query($conexion, "SELECT*FROM tb_cliente INNER JOIN contable ON tb_cliente.id_cliente=contable.concepto1 WHERE contable.concepto1='$modi'");
-            while ($fila = mysqli_fetch_array($sacar)) {
-             
-                 $tipo=$fila['tipo'];  
+        $sacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta=22");
+            while ($fila = mysqli_fetch_array($sacar)) {          
                  $fecha=$fila['fecha'];
                  $valor=$fila['valor'];  
-                  $interes=$fila['interes'];
-                    $total_interes=$fila['to_interes']; 
-                     $id=$fila['id_contable']; 
+                  $nota=$fila['nota'];
+                    $mora=$fila['mora']; 
+ 
                          
        ?>
 
 
        <tr>
-        <th><?php echo $tipo;?></th>
+        <th><?php echo $valor;?></th>
         <td><?php echo $fecha;?></td>
-        <td><?php echo $valor;?></td>
-        <td><?php echo $interes;?></td>
-       
-        <td><?php echo $total_interes;?></td>
-        <td class="center">
-            <a href="abonos.php?x=<?php echo $id; ?>&ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
-        </td>                                    
+        <td><?php echo $nota;?></td>
+        <?php if ($mora==0) {
+                ?>
+        <td>NO PAGO MORA</td>
+        <?php }else{?>
+        <td>PAGO MORA</td>
+        <?php }?>
+                                           
         
 
        <?php  }?>
-      
       </tr>
     </tbody>
   </table>
