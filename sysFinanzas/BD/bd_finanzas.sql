@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2019 a las 06:38:39
+-- Tiempo de generación: 02-01-2019 a las 20:28:34
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -663,6 +663,27 @@ INSERT INTO `tb_cliente` (`id_cliente`, `nombre_cliente`, `dir_cliente`, `dui`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `idusuario` int(10) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(50) NOT NULL,
+  `tipoUsuario` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idusuario`, `nombre`, `usuario`, `contrasena`, `tipoUsuario`) VALUES
+(1, 'Abigail', 'financiero', 'financiero', 'administrador');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ventac_temp`
 --
 
@@ -831,6 +852,12 @@ ALTER TABLE `tb_cliente`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idusuario`);
+
+--
 -- Indices de la tabla `ventac_temp`
 --
 ALTER TABLE `ventac_temp`
@@ -870,7 +897,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `clientcred_tmp`
 --
 ALTER TABLE `clientcred_tmp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente_temp`
@@ -888,7 +915,7 @@ ALTER TABLE `compra_tmp`
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
@@ -948,19 +975,25 @@ ALTER TABLE `prov_tmp`
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen_compra`
 --
 ALTER TABLE `resumen_compra`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `idusuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ventac_temp`
