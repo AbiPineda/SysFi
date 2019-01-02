@@ -65,6 +65,12 @@
                             <!-- /.nav-second-level -->
                         </li>
                         
+                        <li>
+
+                            <a href="../compra/compra.php"><i class="fa fa-shopping-cart fa-fw"></i>Compra</a>
+
+                        </li>
+                        
                         
                         <li>
 

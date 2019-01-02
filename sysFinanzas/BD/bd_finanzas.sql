@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-12-2018 a las 21:43:29
+-- Tiempo de generación: 02-01-2019 a las 06:38:39
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -72,8 +72,8 @@ CREATE TABLE `articulos` (
 --
 
 INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`, `marca`, `estado`, `unidad`, `idproveedor`, `idcategoria`) VALUES
-(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1, 1, 1),
-(2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 1, 1),
+(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1, 2, 1),
+(2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 2, 1),
 (3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1, 1, 6),
 (4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1, 1, 7),
 (5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1, 1, 3);
@@ -129,6 +129,25 @@ CREATE TABLE `cliente_temp` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `compra_tmp`
+--
+
+CREATE TABLE `compra_tmp` (
+  `id` int(10) NOT NULL,
+  `id_articulo` int(10) DEFAULT NULL,
+  `cant` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `compra_tmp`
+--
+
+INSERT INTO `compra_tmp` (`id`, `id_articulo`, `cant`) VALUES
+(8, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `contable`
 --
 
@@ -165,7 +184,10 @@ INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`
 (34, 'Venta al \"CONTADO\"', '12548787', 'ENTRADA', '2712', '2018-12-30', '21:30:17', NULL, NULL, NULL, NULL, NULL),
 (35, 'Venta al \"CONTADO\"', '12548788', 'ENTRADA', '2712', '2018-12-30', '21:33:56', NULL, NULL, NULL, NULL, NULL),
 (36, 'Venta al \"CONTADO\"', '12548789', 'ENTRADA', '2712', '2018-12-30', '21:38:10', NULL, NULL, NULL, NULL, NULL),
-(37, 'Venta al \"CONTADO\"', '12548790', 'ENTRADA', '2712', '2018-12-30', '21:39:11', NULL, NULL, NULL, NULL, NULL);
+(37, 'Venta al \"CONTADO\"', '12548790', 'ENTRADA', '2712', '2018-12-30', '21:39:11', NULL, NULL, NULL, NULL, NULL),
+(38, 'Venta al \"CONTADO\"', '12548791', 'ENTRADA', '1130', '2019-01-01', '22:01:52', NULL, NULL, NULL, NULL, NULL),
+(45, 'Compra al \"CONTADO\"', '12548792', 'SALIDA', '900', '2019-01-02', '06:02:07', NULL, NULL, NULL, NULL, NULL),
+(46, '2', '12548793', 'CXP', '900', '2019-01-02', '06:29:25', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,7 +231,34 @@ INSERT INTO `detalle` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`
 (84, '12548757', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
 (111, '12548788', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-30'),
 (112, '12548789', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30'),
-(113, '12548790', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30');
+(113, '12548790', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30'),
+(114, '12548791', 5, '5', '1', '1000', '1130', 'VENTA', '2019-01-01');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_compra`
+--
+
+CREATE TABLE `detalle_compra` (
+  `id_detalle` int(11) NOT NULL,
+  `factura` varchar(50) DEFAULT NULL,
+  `articulo` int(11) DEFAULT NULL,
+  `codigo` varchar(20) DEFAULT NULL,
+  `cantidad` varchar(10) DEFAULT NULL,
+  `valor` varchar(20) DEFAULT NULL,
+  `importe` varchar(20) DEFAULT NULL,
+  `tipo` varchar(20) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detalle_compra`
+--
+
+INSERT INTO `detalle_compra` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`, `valor`, `importe`, `tipo`, `fecha`) VALUES
+(120, '12548792', 2, '7415300005014', '1', '900', '900', 'COMPRA', '2019-01-02'),
+(121, '12548793', 1, 'LR12345664', '1', '900', '900', 'COMPRA', '2019-01-02');
 
 -- --------------------------------------------------------
 
@@ -278,7 +327,31 @@ INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
 (70, '12548787', '2712', '2018-12-30'),
 (71, '12548788', '2712', '2018-12-30'),
 (72, '12548789', '2712', '2018-12-30'),
-(73, '12548790', '2712', '2018-12-30');
+(73, '12548790', '2712', '2018-12-30'),
+(74, '12548791', '1130', '2019-01-01'),
+(78, '12548792', '900', '2019-01-02'),
+(79, '12548793', '900', '2019-01-02');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `factura_compra`
+--
+
+CREATE TABLE `factura_compra` (
+  `id_fac` int(10) NOT NULL,
+  `factura` varchar(50) DEFAULT NULL,
+  `valor` varchar(40) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `factura_compra`
+--
+
+INSERT INTO `factura_compra` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
+(4, '10011011', '900', '2019-01-02'),
+(5, '10011012', '900', '2019-01-02');
 
 -- --------------------------------------------------------
 
@@ -322,10 +395,10 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 8, 5, 1000, 1),
-(2, 1, -6, 5, 1200, 1),
+(1, 2, 18, 5, 1000, 1),
+(2, 1, -5, 5, 1200, 1),
 (3, 3, 13, 10, 950, 1),
-(5, 5, -15, 10, 1000, 1);
+(5, 5, -16, 10, 1000, 1);
 
 -- --------------------------------------------------------
 
@@ -420,7 +493,10 @@ INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`,
 (118, '12548787', 'VENTA', 1, 2, 900, 1800, 0, '2018-12-30'),
 (119, '12548788', 'VENTA', 1, 2, 900, 1800, -2, '2018-12-30'),
 (120, '12548789', 'VENTA', 1, 2, 900, 1800, -4, '2018-12-30'),
-(121, '12548790', 'VENTA', 1, 2, 900, 1800, -6, '2018-12-30');
+(121, '12548790', 'VENTA', 1, 2, 900, 1800, -6, '2018-12-30'),
+(122, '12548791', 'VENTA', 5, 1, 300, 300, -16, '2019-01-01'),
+(132, '12548792', 'COMPRA', 2, 1, 900, 900, 18, '2019-01-02'),
+(133, '12548793', 'COMPRA', 1, 1, 900, 900, -5, '2019-01-02');
 
 -- --------------------------------------------------------
 
@@ -444,7 +520,27 @@ CREATE TABLE `proveedor` (
 --
 
 INSERT INTO `proveedor` (`idproveedor`, `proveedor`, `contacto`, `direccion`, `dui`, `nit`, `telefono`, `estado`) VALUES
-(1, 'SONY', 'Isabel Mejia Hernandez', 'colonia san benito, san salvador', '12345678-9', '1221-234212-123-1', '2342-2321', 's');
+(1, 'SONY', 'Isabel Mejia Hernandez', 'colonia san benito, san salvador', '12345678-9', '1221-234212-123-1', '2342-2321', 's'),
+(2, 'MABE', 'Maria cruz', 'San salvador', '11246655-1', '1122-454566-123-1', '23485689', 's');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prov_tmp`
+--
+
+CREATE TABLE `prov_tmp` (
+  `id` int(10) NOT NULL,
+  `proveedor` int(10) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `prov_tmp`
+--
+
+INSERT INTO `prov_tmp` (`id`, `proveedor`, `fecha`) VALUES
+(5, 1, '2019-01-02');
 
 -- --------------------------------------------------------
 
@@ -512,7 +608,35 @@ INSERT INTO `resumen` (`id_resumen`, `id_clientes`, `concepto`, `factura`, `clas
 (57, 2, 'Venta al \"CONTADO\"', '12548787', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:30:17', 'CONTADO'),
 (58, 2, 'Venta al \"CONTADO\"', '12548788', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:33:56', 'CONTADO'),
 (59, 2, 'Venta al \"CONTADO\"', '12548789', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:38:10', 'CONTADO'),
-(60, 2, 'Venta al \"CONTADO\"', '12548790', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:39:11', 'CONTADO');
+(60, 2, 'Venta al \"CONTADO\"', '12548790', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:39:11', 'CONTADO'),
+(61, 1, 'Venta al \"CONTADO\"', '12548791', 'VENTA', '1130', 'VENTA', '2019-01-01', '22:01:52', 'CONTADO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `resumen_compra`
+--
+
+CREATE TABLE `resumen_compra` (
+  `id_resumen` int(11) NOT NULL,
+  `id_proveedor` int(11) DEFAULT NULL,
+  `concepto` varchar(50) DEFAULT NULL,
+  `factura` varchar(50) DEFAULT NULL,
+  `clase` varchar(50) DEFAULT NULL,
+  `valor` varchar(50) DEFAULT NULL,
+  `tipo` varchar(50) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `resumen_compra`
+--
+
+INSERT INTO `resumen_compra` (`id_resumen`, `id_proveedor`, `concepto`, `factura`, `clase`, `valor`, `tipo`, `fecha`, `hora`, `status`) VALUES
+(5, 1, 'Compra al \"CONTADO\"', '12548792', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:02:07', 'CONTADO'),
+(6, 2, 'Compra al \"CREDITO\"', '12548793', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:29:25', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -547,6 +671,13 @@ CREATE TABLE `ventac_temp` (
   `id_articulo` int(10) DEFAULT NULL,
   `cantidad` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `ventac_temp`
+--
+
+INSERT INTO `ventac_temp` (`id_venta`, `id_articulo`, `cantidad`) VALUES
+(2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -600,6 +731,13 @@ ALTER TABLE `cliente_temp`
   ADD KEY `fk_cliente` (`id_cliente`);
 
 --
+-- Indices de la tabla `compra_tmp`
+--
+ALTER TABLE `compra_tmp`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_venTem` (`id_articulo`) USING BTREE;
+
+--
 -- Indices de la tabla `contable`
 --
 ALTER TABLE `contable`
@@ -616,9 +754,24 @@ ALTER TABLE `detalle`
   ADD KEY `fk_facturassss` (`factura`);
 
 --
+-- Indices de la tabla `detalle_compra`
+--
+ALTER TABLE `detalle_compra`
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `fk_articulos` (`articulo`),
+  ADD KEY `fk_facturassss` (`factura`);
+
+--
 -- Indices de la tabla `factura`
 --
 ALTER TABLE `factura`
+  ADD PRIMARY KEY (`id_fac`),
+  ADD KEY `factura` (`factura`);
+
+--
+-- Indices de la tabla `factura_compra`
+--
+ALTER TABLE `factura_compra`
   ADD PRIMARY KEY (`id_fac`),
   ADD KEY `factura` (`factura`);
 
@@ -649,11 +802,26 @@ ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`idproveedor`);
 
 --
+-- Indices de la tabla `prov_tmp`
+--
+ALTER TABLE `prov_tmp`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_cliente` (`proveedor`) USING BTREE;
+
+--
 -- Indices de la tabla `resumen`
 --
 ALTER TABLE `resumen`
   ADD PRIMARY KEY (`id_resumen`),
   ADD KEY `fk_clie` (`id_clientes`),
+  ADD KEY `fk_factu` (`factura`);
+
+--
+-- Indices de la tabla `resumen_compra`
+--
+ALTER TABLE `resumen_compra`
+  ADD PRIMARY KEY (`id_resumen`),
+  ADD KEY `fk_clie` (`id_proveedor`),
   ADD KEY `fk_factu` (`factura`);
 
 --
@@ -690,7 +858,7 @@ ALTER TABLE `abono`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -702,31 +870,49 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `clientcred_tmp`
 --
 ALTER TABLE `clientcred_tmp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente_temp`
 --
 ALTER TABLE `cliente_temp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `compra_tmp`
+--
+ALTER TABLE `compra_tmp`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_compra`
+--
+ALTER TABLE `detalle_compra`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
+--
+-- AUTO_INCREMENT de la tabla `factura_compra`
+--
+ALTER TABLE `factura_compra`
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `institucion`
@@ -744,19 +930,31 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idproveedor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idproveedor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `prov_tmp`
+--
+ALTER TABLE `prov_tmp`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+
+--
+-- AUTO_INCREMENT de la tabla `resumen_compra`
+--
+ALTER TABLE `resumen_compra`
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cliente`
@@ -768,13 +966,13 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT de la tabla `ventac_temp`
 --
 ALTER TABLE `ventac_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_temp`
 --
 ALTER TABLE `venta_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -806,6 +1004,12 @@ ALTER TABLE `cliente_temp`
   ADD CONSTRAINT `fk_clienteTem` FOREIGN KEY (`id_cliente`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `compra_tmp`
+--
+ALTER TABLE `compra_tmp`
+  ADD CONSTRAINT `compra_tmp_ibfk_1` FOREIGN KEY (`id_articulo`) REFERENCES `articulos` (`idarticulos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `contable`
 --
 ALTER TABLE `contable`
@@ -817,6 +1021,13 @@ ALTER TABLE `contable`
 ALTER TABLE `detalle`
   ADD CONSTRAINT `fk_articulos` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`),
   ADD CONSTRAINT `fk_facturassss` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
+
+--
+-- Filtros para la tabla `detalle_compra`
+--
+ALTER TABLE `detalle_compra`
+  ADD CONSTRAINT `detalle_compra_ibfk_1` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`),
+  ADD CONSTRAINT `detalle_compra_ibfk_2` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
 
 --
 -- Filtros para la tabla `inventario`
@@ -831,11 +1042,24 @@ ALTER TABLE `kardex`
   ADD CONSTRAINT `fk_kardex_articulos1` FOREIGN KEY (`id_articulos`) REFERENCES `articulos` (`idarticulos`);
 
 --
+-- Filtros para la tabla `prov_tmp`
+--
+ALTER TABLE `prov_tmp`
+  ADD CONSTRAINT `prov_tmp_ibfk_1` FOREIGN KEY (`proveedor`) REFERENCES `proveedor` (`idproveedor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `resumen`
 --
 ALTER TABLE `resumen`
   ADD CONSTRAINT `fk_clie` FOREIGN KEY (`id_clientes`) REFERENCES `tb_cliente` (`id_cliente`),
   ADD CONSTRAINT `fk_factu` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
+
+--
+-- Filtros para la tabla `resumen_compra`
+--
+ALTER TABLE `resumen_compra`
+  ADD CONSTRAINT `facd` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`),
+  ADD CONSTRAINT `resumen_compra_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedor` (`idproveedor`);
 
 --
 -- Filtros para la tabla `ventac_temp`

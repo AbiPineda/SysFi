@@ -213,8 +213,8 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
             } 
                
                                         
-//        mysqli_query($conexion,"DELETE FROM compra_tmp ");
-//        mysqli_query($conexion,"DELETE FROM prov_tmp");
+        mysqli_query($conexion,"DELETE FROM compra_tmp ");
+        mysqli_query($conexion,"DELETE FROM prov_tmp");
     ?>
     
                
