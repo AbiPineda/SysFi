@@ -152,7 +152,7 @@ $ejeYsalidas = mysqli_query($conexion, "SELECT tipo,fecha FROM contable WHERE ti
                 <div class="panel panel-green">
                     <div class="panel-heading">
                         <!--                             VENTAS, COMPRAS, CXC Y CXP-->
-                        VENTAS,Cuenta por Cobrar
+                        VENTAS,CUENTAS POR COBRAR,CUENTAS POR PAGAR
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered">

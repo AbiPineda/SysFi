@@ -92,8 +92,6 @@
         <?php }else{?>
         <td>PAGO MORA</td>
         <?php }?>
-                                           
-        
 
        <?php  }?>
       </tr>

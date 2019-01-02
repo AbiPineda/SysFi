@@ -64,35 +64,13 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        
+                        
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                            <a href="../compra/compra.php"><i class="fa fa-shopping-cart "></i>Compras</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Cuentas por Cobrar<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="../cxc/cobros.php">Cobros a clientes</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Notifications</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="../cxc/cobros.php"><i class="fa fa-wrench fa-fw"></i>Cobros y pagos</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-user"></i> Proveedores<span class="fa arrow"></span></a>

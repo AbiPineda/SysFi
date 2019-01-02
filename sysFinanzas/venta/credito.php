@@ -297,7 +297,7 @@ $fecha=date('Y-m-d');
 
                                      ############### manejo de STOCK#########################
                                     if ($row['stock'] == 0) {
-                                        $aviso=' <a href="#m'.$row['id_articulo'].'" role="button" class="btn btn-danger btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
+                                        $aviso=' <a href="#m'.$row['idarticulo'].'" role="button" class="btn btn-danger btn-mini" data-toggle="modal" title="Cambiar Cantidad" accesskey="c">
                                             <strong>Sin stock</strong>
                                         </a>';
                                     }
@@ -327,7 +327,10 @@ $fecha=date('Y-m-d');
                                 <td><?php echo $row['nombre'];  ?></td>
                                 <td>
                                     <center>
-                                      <?php echo $aviso; ?>
+                                      <!--<?php echo $aviso; ?>-->
+                                       <a href="#m<?php echo $row['idarticulos']; ?>" role="button" class="btn btn-success btn-mini" data-toggle="modal" title="Cambiar Cantidad">
+                                            <strong><?php echo $row['cantidad']; ?></strong>
+                                        </a>
                                     </center>
                                 </td>
                                 <td>
@@ -348,7 +351,7 @@ $fecha=date('Y-m-d');
                             </tr>
                            
                       <!--  Modals-->
-                                  <div class="modal fade" id="m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal fade" id="m<?php echo $row['idarticulos']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <form name="form1" method="post" action="">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
