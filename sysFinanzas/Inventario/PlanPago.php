@@ -15,6 +15,14 @@
    .redondeado {
      border-radius: 5px;
    }
+
+  table th {
+  text-align: center;
+}
+
+table td {
+  text-align: center;
+}
 </style>
 </head>
         <div id="page-wrapper"  align="center">
@@ -28,9 +36,13 @@
                         <div class="panel-heading" align="center">
                              PLAN DE PAGO
                         </div>
+                          
+
                         <div class="panel-body" align="center">
+                          <input type="text" class="redondeado" id="buscador" onkeyup="myFunction()" placeholder="Buscar..">
                             <div class="table-responsive">
                               <table width="100%" border="0">
+                               
                                   <tr>
                                     <td width="50%">
                                         <div align="right">
@@ -47,12 +59,12 @@
      <tbody class="buscar"> 
      <br>
     <?php
-        $sacar1 = mysqli_query($conexion, "SELECT * FROM articulos");
+        $sacar1 = mysqli_query($conexion, "SELECT articulos.idarticulos, articulos.codigo, articulos.nombre, articulos.marca, inventario.pv FROM articulos INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos");
             while ($fila = mysqli_fetch_array($sacar1)) {
                 $cod=$fila['codigo'];
                 $nom=$fila['nombre'];  
                 $marca=$fila['marca'];
-                $valor=$fila['valor'];
+                $valor=$fila['pv'];
                       
         ?> 
         <tr>
@@ -79,14 +91,21 @@
         <div class="col-lg-4">
          <label style="color: black">Articulo Seleccionado<small class="text-muted" ></small></label>
           <div class="input-group">                         
-          <input type="text" class="form-control" id="insumo" name="insumo"><br>
+          <input type="text" class="form-control" id="insumo" name="insumo" disabled><br>
           <br>
-          <input type="text" class="form-control" id="valor" name="valor">
+          <input type="text" class="form-control" id="valor" name="valor" disabled>
+          <br>
+          
+         <input type="text" class="form-control" id="prima" name="prima" placeholder="Ingrese Prima ($)">
+         <br>
+         <input type="text" class="form-control" id="interes" name="interes" placeholder="Interes (%)">
+         <br>
          <div class="input-group-append">
       <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
         </div> 
        </div>
            </div></form>
+
 
              <div class="row mb-12" style="float: right; margin-right: 10px; margin-top: 15px;">
                     <button type="button" class="btn btn-primary" name="btnGuardar" id="btnGuardar" onClick="agregarTabla()">  <i class="fa fa-shopping-cart"></i> Consultar Articulo</button>
@@ -94,15 +113,13 @@
                 </div>
                               
                                  
-                                           
+                                     <br>      
                                 <table id="tablaPP" class="table table-striped table-bordered table-hover">
                                     <thead>
+                                      <tr align="center"><th colspan="8">PLAN DE CREDITO MENSUAL ($)</th></tr>
                                         <tr>
-                                          
                                             <th>ARTICULO</th>
                                             <th>PRECIO DE VENTA</th>
-                                             <th>IVA</th>
-                                             <th>TOTAL</th>
                                              <th>6 MESES</th>
                                               <th>12 MESES</th>
                                                <th>18 MESES</th>
@@ -110,8 +127,9 @@
                                                  <th>30 MESES</th> 
                                                   <th>36 MESES</th>                                           
                                      
-                                            <th></th>                                          
+                                                                                    
                                         </tr>
+                                       
                                     </thead>
                                      <tbody class="tabla_ajax"> 
   
@@ -144,10 +162,27 @@ include_once '../Plantilla/inferior.php';
              <script>
                function agregarTabla(){
                    //alert('si');
-                    var articulo = $('#insumo').val();
-                    var valor1 = $('#valor').val();
-                    var iva = parseFloat(valor1) * 0.13;
-                   var calculo = parseFloat(valor1) + parseFloat(iva);
+
+                   //se muestran en input
+                   var articulo = $('#insumo').val();
+                   var valor1 = $('#valor').val();
+                   /////////////////////////////////////
+
+                    var prima = $('#prima').val();
+                   
+                  
+                    var costo = parseFloat($('#valor').val()) - parseFloat($('#prima').val());
+                   
+                   //si el iva es 13%, le sumo el iva al costo 
+                    var iva = 0.13;
+                    var iva1 = parseFloat(costo) * parseFloat(iva);
+                    var costoConIva = parseFloat(costo) + parseFloat(iva1);
+
+                    //sumarle el interes al costo con iva que tenia
+                    var interes = parseFloat($('#interes').val())/100;
+                    var interes1 = parseFloat(costoConIva) * parseFloat(interes);
+                    var calculo = parseFloat(costo) + parseFloat(interes1);
+
                     var seis = parseFloat(calculo)/6;
                     var doce = parseFloat(calculo)/12;
                     var diesiocho = parseFloat(calculo)/18;
@@ -156,16 +191,15 @@ include_once '../Plantilla/inferior.php';
                     var treintaseis = parseFloat(calculo)/36;
 
                    
-                   
+                 
                   
                    
                     var tabla = $('#tablaPP');
                     
+              
                     var datos = "<tr>"+
                             "<td>"+articulo+"</td>"+
-                            "<td>"+valor1+"</td>"+
-                            "<td>"+iva+"</td>"+
-                            "<td>"+calculo+"</td>"+
+                            "<td>"+costo+"</td>"+
                             "<td>"+parseFloat(seis).toFixed(2)+"</td>"+
                             "<td>"+parseFloat(doce).toFixed(2)+"</td>"+
                             "<td>"+parseFloat(diesiocho).toFixed(2)+"</td>"+
@@ -178,5 +212,26 @@ include_once '../Plantilla/inferior.php';
                     }
                     
                 </script>
+
+                <script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("buscador");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tabla");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("th")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>       
 
               

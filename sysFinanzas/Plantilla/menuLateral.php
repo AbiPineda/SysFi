@@ -19,7 +19,7 @@
                                     <a href="../Registros/registroCliente.php">Registro de Cliente</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Buttons</a>
+                                    <a href="../Cliente/lista_clientes.php"">Lista de Clientes</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Notifications</a>
@@ -65,7 +65,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                            <a href="../Inventario/InventarioArticulos.php"><i class="fa fa-table fa-fw"></i> Plan de Credito</a>
                         </li>
                         <li>
                             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
