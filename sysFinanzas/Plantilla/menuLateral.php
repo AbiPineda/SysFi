@@ -19,7 +19,7 @@
                                     <a href="../Registros/registroCliente.php">Registro de Cliente</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Buttons</a>
+                                    <a href="../Cliente/lista_clientes.php"">Lista de Clientes</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Notifications</a>
@@ -67,7 +67,9 @@
                         
                         
                         <li>
-                            <a href="../compra/compra.php"><i class="fa fa-shopping-cart "></i>Compras</a>
+
+                            <a href="../Inventario/PlanPago.php"><i class="fa fa-table fa-fw"></i> Plan de Credito</a>
+
                         </li>
                         <li>
                             <a href="../cxc/cobros.php"><i class="fa fa-wrench fa-fw"></i>Cobros y pagos</a>
@@ -87,10 +89,10 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li class="active">
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> dss<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a class="active" href="blank.html">Blank Page</a>
+                                    <a href="">nose</a>
                                 </li>
                                 <li>
                                     <a href="login.html">Login Page</a>
