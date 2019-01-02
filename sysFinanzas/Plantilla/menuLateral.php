@@ -65,7 +65,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="../Inventario/InventarioArticulos.php"><i class="fa fa-table fa-fw"></i> Plan de Credito</a>
+                            <a href="../Inventario/PlanPago.php"><i class="fa fa-table fa-fw"></i> Plan de Credito</a>
                         </li>
                         <li>
                             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
@@ -109,10 +109,10 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li class="active">
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> dss<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a class="active" href="blank.html">Blank Page</a>
+                                    <a href="">nose</a>
                                 </li>
                                 <li>
                                     <a href="login.html">Login Page</a>
