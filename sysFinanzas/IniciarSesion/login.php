@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Random Login Form</title>
+  <title>FINANCIERO</title>
   
   
   
@@ -106,7 +106,7 @@ body{
 	margin-top: 10px;
 }
 
-.login input[type=button]{
+.login input[type=submit]{
 	width: 260px;
 	height: 35px;
 	background: #fff;
@@ -121,11 +121,11 @@ body{
 	margin-top: 10px;
 }
 
-.login input[type=button]:hover{
+.login input[type=submit]:hover{
 	opacity: 0.8;
 }
 
-.login input[type=button]:active{
+.login input[type=submit]:active{
 	opacity: 0.6;
 }
 
@@ -139,7 +139,7 @@ body{
 	border: 1px solid rgba(255,255,255,0.9);
 }
 
-.login input[type=button]:focus{
+.login input[type=submit]:focus{
 	outline: none;
 }
 
@@ -165,8 +165,8 @@ body{
 		</div>
 		<br>
 		<div class="login">
-				<input type="text" class="form-control" placeholder="Usuario" name="usuario"><br>
-				<input type="password" class="form-control" placeholder="Contraseña" name="clave"><br>
+				<input type="text" class="form-control" placeholder="Usuario" name="usuario" autocomplete="off"><br>
+				<input type="password" class="form-control" placeholder="Contraseña" name="clave" autocomplete="off"><br>
 				<input type="submit" value="Iniciar Sesion">
 
 		</div>

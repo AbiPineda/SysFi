@@ -45,7 +45,7 @@
                                         $cantidad = $fila['cantidad'];
                                         $valor = $fila['valor'];
                                         $marca = $fila['marca'];
-                                        $unidad = $fila['unidad'];
+                                      
 
 
                                          $sacar1 = mysqli_query($conexion, "SELECT*FROM inventario, articulos WHERE idinventario='$modi' and id_articulos=idarticulos");
@@ -88,11 +88,7 @@
                                                 <input type="number" min="0" class="form-control" name="valor" value="<?php echo $valor; ?>">
                                             </div>
 
-                                             <label class="col-md-1 control-label">Unidad:</label>
-                                            <div class="col-md-2">
-                                                
-                                                <input type="number" min="0" class="form-control" name="unidad" value="<?php echo $unidad; ?>">
-                                            </div>
+                                             
 
                                             <label class="col-md-1 control-label">Stock:</label>
                                             <div class="col-md-2">
@@ -156,12 +152,12 @@ if (isset($_REQUEST['btnEnviar'])) {
      $cantidad = $_REQUEST['cantidad'];
      $valor = $_REQUEST['valor'];
      $marca = $_REQUEST['marca'];
-     $unidad = $_REQUEST['unidad'];
+     
       $stock = $_REQUEST['stock'];
 
 
 
-    mysqli_query($conexion, "UPDATE articulos SET codigo='$codigo',nombre='$nombre',cantidad='$cantidad',valor='$valor',marca='$marca',unidad='$unidad' WHERE idarticulos='$modi'");
+    mysqli_query($conexion, "UPDATE articulos SET codigo='$codigo',nombre='$nombre',cantidad='$cantidad',valor='$valor',marca='$marca' WHERE idarticulos='$modi'");
 
    mysqli_query($conexion, "UPDATE inventario SET stock='$stock' WHERE idinventario='$modi'");
    

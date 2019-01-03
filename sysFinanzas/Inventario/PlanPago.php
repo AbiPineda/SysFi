@@ -49,6 +49,8 @@ table td {
                                         <form method="get" action="" enctype="multipart/form-data" name="form1" id="form1">
                                         
                                         <div class="table-responsive">
+                                          <div class="scroll-window-wrapper">
+  <div class="scroll-window">
          <table class="table table-striped" id="tabla">
     <thead>
       <th><div>Código</div></th>
@@ -83,6 +85,8 @@ table td {
     </thead>
     
   </table>
+   </div> <!-- Div scroll-window -->
+</div> <!-- Div scroll-window-wrapper-->
   
 
   
@@ -190,10 +194,6 @@ include_once '../Plantilla/inferior.php';
                     var treinta = parseFloat(calculo)/30;
                     var treintaseis = parseFloat(calculo)/36;
 
-                   
-                 
-                  
-                   
                     var tabla = $('#tablaPP');
                     
               

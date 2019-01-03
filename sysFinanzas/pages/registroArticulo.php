@@ -68,10 +68,15 @@
                                                 <input type="number" min="0" class="form-control" name="valor">
                                             </div>
 
-                                             <label class="col-md-2 control-label">Unidad:</label>
+                                             <label class="col-md-2 control-label">Stock Minimo:</label>
                                             <div class="col-md-2">
                                                 
-                                                <input type="number" min="0" class="form-control" name="unidad">
+                                                <input type="number" min="0" class="form-control" name="minimo">
+                                            </div>
+                                             <label class="col-md-1 control-label">Precio de Venta:</label>
+                                            <div class="col-md-2">
+                                                
+                                                <input type="number" min="0" class="form-control" name="pv">
                                             </div>
                              
                           <br>
@@ -124,7 +129,7 @@
    $estado = "s";
   
    
-    mysqli_query($conexion, "INSERT INTO articulos(codigo,nombre,cantidad,valor,marca,estado,unidad) VALUES('$codigo','$nombre','$cantidad','$valor','$marca','$estado','$unidad')");
+    mysqli_query($conexion, "INSERT INTO articulos(codigo,nombre,cantidad,valor,marca,estado,unidad) VALUES('$codigo','$nombre','$cantidad','$valor','$marca','$estado','$minimo')");
     
 } 
 ?>

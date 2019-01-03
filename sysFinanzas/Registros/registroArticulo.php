@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-md-12" >
                
-                              <div class="col-md-12">
+                              <div class="col-md-14">
                                     <form class="form-horizontal" role="form">
 
                                         
@@ -39,14 +39,17 @@
                                             </div>
 
                                             <label class="col-md-1 control-label">Nombre:</label>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <input type="text" class="form-control" name="nombre">
                                             </div>
 
-                                       
+                                        <br>
+                                            <br>
+                                            
+                                            <br>
                                             <label class="col-md-1 control-label">Categoria:</label>
                                             <div class="col-md-2">
-                                               
+                                              
                                       <select class="custom-select" name="categoria" id="categoria" style="width: 100%; height:36px;">
                                         <?php
                                         include_once '../conexion/php_conexion.php';
@@ -63,6 +66,29 @@
                                     </select>
                                     </div>
                                         
+                                         <label class="col-md-1 control-label">Marca:</label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" name="marca">
+                                            </div>
+
+                                            <label class="col-md-1 control-label">Proveedor:</label>
+                                            <div class="col-md-2">
+                                              
+                                      <select class="custom-select" name="proveedor" id="proveedor" style="width: 100%; height:36px;">
+                                        <?php
+                                        include_once '../conexion/php_conexion.php';
+                                        $pro = mysqli_query($conexion, "SELECT*from proveedor");
+                                        ?>
+                                        <option>Seleccione:</option>
+                                        <?php
+                                        while ($row = mysqli_fetch_array($pro)) {
+                                               $prove = $row['idproveedor'];
+                                            echo '<option value=' . "$row[0]" . '>' . $row[1] . '</option>';
+                                        }
+                                       
+                                        ?>
+                                    </select>
+                                    </div>
 
                                        
                                         <div class="col-md-12">
@@ -70,28 +96,33 @@
                          <div class="panel panel-green">
                          <br>
 
-                                          <label class="col-md-1 control-label">Marca:</label>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" name="marca">
-                                            </div>
+                                         
                                         
 
-                                           <label class="col-md-1 control-label">Cantidad:</label>
+                                           <label class="col-md-2 control-label">Cantidad:</label>
                                             <div class="col-md-2">
-                                                
-                                                <input type="number" min="0" class="form-control" name="cantidad">
+                                        <input type="number" min="0" class="form-control" name="cantidad">
                                             </div>
 
-                                             <label class="col-md-1 control-label">Valor:</label>
+                                             <label class="col-md-2 control-label">Valor:</label>
                                             <div class="col-md-2">
                                                 
                                                 <input type="number" min="0" class="form-control" name="valor">
                                             </div>
 
-                                             <label class="col-md-1 control-label">Unidad:</label>
+                                            <br>
+                                            <br>
+                                            <br>
+
+                                              <label class="col-md-2 control-label">Stock Minimo:</label>
                                             <div class="col-md-2">
                                                 
-                                                <input type="number" min="0" class="form-control" name="unidad">
+                                                <input type="number" min="0" class="form-control" name="minimo">
+                                            </div>
+                                             <label class="col-md-2 control-label">Precio de Venta:</label>
+                                            <div class="col-md-2">
+                                                
+                                                <input type="number" min="0" class="form-control" name="pv">
                                             </div>
                              
                           <br>
@@ -139,15 +170,27 @@
     $marca = $_REQUEST['marca'];
     $cantidad = $_REQUEST['cantidad'];
     $valor = $_REQUEST['valor'];
-    $unidad = $_REQUEST['unidad'];
-     $categoria = $_REQUEST['categoria'];
+   $proveedor= $_REQUEST['proveedor'];
+    $categoria = $_REQUEST['categoria'];
+     $minimo = $_REQUEST['minimo'];
+      
+       $pv= $_REQUEST['pv'];
+
+      
       
    $estado = "s";
   
    
-    mysqli_query($conexion, "INSERT INTO articulos(codigo,nombre,cantidad,valor,marca,estado,unidad,idcategoria) VALUES('$codigo','$nombre','$cantidad','$valor','$marca','$estado','$unidad','$categoria')");
-    
-} 
+    mysqli_query($conexion, "INSERT INTO articulos(codigo,nombre,cantidad,valor,marca,estado,idproveedor,idcategoria) VALUES('$codigo','$nombre','$cantidad','$valor','$marca','$estado','$proveedor','$categoria')");
+
+    $sacar = mysqli_query($conexion, "SELECT * from articulos");
+            while ($fila = mysqli_fetch_array($sacar)) {  
+                 $id=$fila['idarticulos'];  
+                } 
+     
+      mysqli_query($conexion, "INSERT INTO inventario(id_articulos,stock,stockMinimo,pv) VALUES('$id','$cantidad','$minimo','$pv')");
+
+ }
 ?>
 
 <?php
