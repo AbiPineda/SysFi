@@ -203,7 +203,7 @@ include_once '../Plantilla/inferior.php';
                     //sumarle el interes al costo con iva que tenia
                     var interes = parseFloat($('#interes').val())/100;
                     var interes1 = parseFloat(costoConIva) * parseFloat(interes);
-                    var calculo = parseFloat(costo) + parseFloat(interes1);
+                    var calculo = parseFloat(costoConIva) + parseFloat(interes1);
 
                     var seis = parseFloat(calculo)/6;
                     var doce = parseFloat(calculo)/12;
