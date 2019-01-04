@@ -280,11 +280,11 @@ $fecha=date('Y-m-d');
 //////                                }
                                                                                                     
                 ?>-->
-                <div class="table-responsive">                                
+                <div class="table-responsive" style="background-color: #C8C5C6;">                                
                         <table class="table table-striped table thead-light">
                            
                             <tr class="well-dos">
-                                <td><strong>CODIGO</strong></td>
+                                <td><strong>CÓDIGO</strong></td>
                                 <!--<td><strong>Referencia</strong></td>-->
                                 <td><strong>PRODUCTO</strong></td>
                                 <td><strong><center>CANT.</center></strong></td>
@@ -328,7 +328,7 @@ $fecha=date('Y-m-d');
                         while($row=mysqli_fetch_array($consultaAr)){
                             ?>
                             <tr>
-                             <td align="center"><span class="label label-info"> <?php echo $row['codigo']; ?></span></td>                                                             
+                             <td align="center"><span class="label label" style="color: black; font-size: 15px;"> <?php echo $row['codigo']; ?></span></td>                                                             
                                 <td><?php echo $row['nombre'];  ?></td>
                                 <td>
                                     <center>
@@ -346,7 +346,7 @@ $fecha=date('Y-m-d');
                                 <td>
                                     <center>                           
                                         <a href="Vis_ventas.php.php?del=<?php echo $row['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
-                                            <i class="fa fa-times" ></i>
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </center>
                                 </td>
