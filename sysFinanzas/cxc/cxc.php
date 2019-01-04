@@ -243,7 +243,7 @@ $sql = mysqli_query($conexion, "SELECT SUM(valor) as valores FROM abono WHERE cu
 while ($res = mysqli_fetch_array($sql)) {
     ?>
 
-                        ['<?php echo 'Total Abonos: ' . $res['valores']; ?>', <?php echo $res['valores'] ?>],
+                        ['<?php echo 'Total Abonos: ' . round($res['valores'],3); ?>', <?php echo round($res['valores'],3); ?>],
     <?php
 }
 ?>]
@@ -299,7 +299,7 @@ $sql = mysqli_query($conexion, "SELECT SUM(total_interes) as to_interes FROM abo
 while ($res = mysqli_fetch_array($sql)) {
     ?>
 
-                        ['<?php echo 'Abono Interes: ' . $res['to_interes']; ?>', <?php echo $res['to_interes'] ?>],
+                        ['<?php echo 'Abono Interes: ' . round($res['to_interes'],3); ?>', <?php echo round($res['to_interes'],3); ?>],
     <?php
 }
 ?>]
@@ -446,11 +446,11 @@ if ($deuda-$abonos <> 0) {
                             <div class="row">                                       
                                 <div class="col-md-6">                                          
                                     <label>Valor del Abono:</label>                                             
-                                    <input type="text" name="valor" value="1" min="1" max="<?php //echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
+                                    <input type="text" name="valor" value="<?php echo $cuota;?>" min="1" max="<?php //echo $deuda -$abonos; ?>" autocomplete="off" required class="form-control"><br><br>
                                 </div>
                                 <div class="col-md-6">                                          
                                     <label>Proximo pago:</label>                                             
-                                    <input type="date" name="proximo" value="1" min="1" max="<?php //echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
+                                    <input type="date" name="proximo"  autocomplete="off" required class="form-control"><br><br>
                                 </div>
                                 <div class="col-md-6">                                                                                          
                                     <label>Observaciones</label>
