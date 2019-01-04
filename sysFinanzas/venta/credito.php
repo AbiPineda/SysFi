@@ -459,7 +459,7 @@ $fecha=date('Y-m-d');
                                                 <div class="panel-footer back-footer-red">
                                                     TOTAL FACTURA
                                                 </div>
-                                                <div class="panel-body">
+                                                <div class="panel-heading">
                                                     <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($neto+$iva); ?></div>
                                                 </div>                           
                                             </div>
@@ -473,15 +473,15 @@ $fecha=date('Y-m-d');
                                                 <span class="input-group-addon"><?php echo '$'; ?></span>
                                                 <input type="number" class="form-control input-lg" name="valor_recibido" required min="0" step="any" min="<?php echo $neto_full; ?>"  autocomplete="off" required><br>                                         
                                                 <span class="input-group-addon">.00</span>
-                                             </div><br>
+                                             </div><!--<br>
                                               <div class="input-group">
                                                 <span class="input-group-addon">Forma de Pago</span>
                                                <select class="form-control" name="pago">
                                                     <option value="CONTADO">CONTADO</option>
                                     
                                                 </select>                                               
-                                             </div><br>                                                
-                                            <!--<input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
+                                             </div><br>                                               
+                                            <input type="hidden" value="<?php echo $neto; ?>" name="valor_recibido">-->
                                             <input type="hidden" value="<?php echo $neto+$iva; ?>" name="neto">  
                                             <input type="hidden" value="<?php echo $iva; ?>" name="iva">  
                                             <!--<input type="hidden" value="<?php echo $impuesto; ?>" name="impuesto">-->  
