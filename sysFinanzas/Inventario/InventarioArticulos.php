@@ -60,16 +60,7 @@
                                     </thead>
                                     <tbody class="buscar">
                                     	<?php
-        $sacar = mysqli_query($conexion, "SELECT
-articulos.idarticulos,
-articulos.codigo,
-articulos.nombre,
-inventario.pv,
-inventario.stock
-FROM
-articulos
-INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos
-");
+        $sacar = mysqli_query($conexion, "SELECT articulos.idarticulos, articulos.codigo, articulos.nombre, inventario.pv, inventario.stock FROM articulos INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos");
             while ($fila = mysqli_fetch_array($sacar)) {
                $modificar=$fila['idarticulos']; 
                  $codigo=$fila['codigo'];  

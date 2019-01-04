@@ -5,6 +5,10 @@ include_once '../Plantilla/encabezado.php';
   include_once '../Plantilla/menuLateral.php';
 $fecha=date('Y-m-d');
 ?>
+<head>
+ 
+
+</head>
 
         <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
         <div id="page-wrapper">
@@ -143,7 +147,7 @@ $fecha=date('Y-m-d');
                         <?php } }?>
           <div class="col-md-12">              
 <!--######################################## ARTICULOS ############################################################################################## -->
-                    <div class="alert alert-success" align="center">                
+                    <div  align="center">                
                             <form name="form2" action="" method="post">
                                      <div class="input-group">
                                     <span class="input-group-addon">ARTICULO:</span>
@@ -276,10 +280,11 @@ $fecha=date('Y-m-d');
 //////                                }
                                                                                                     
                 ?>-->
-                <div class="table-responsive">                                
-                        <table class="table table-striped">
+                <div class="table-responsive" style="background-color: #C8C5C6;">                                
+                        <table class="table table-striped table thead-light">
+                           
                             <tr class="well-dos">
-                                <td><strong>CODIGO</strong></td>
+                                <td><strong>CÓDIGO</strong></td>
                                 <!--<td><strong>Referencia</strong></td>-->
                                 <td><strong>PRODUCTO</strong></td>
                                 <td><strong><center>CANT.</center></strong></td>
@@ -287,6 +292,7 @@ $fecha=date('Y-m-d');
                                 <td><strong><div align="right">TOTAL</div></strong></td>
                                 <td></td>
                             </tr>
+                           
                             <?php 
                                 $neto=0;$item=0;$total=0;
                                 $pa=mysqli_query($conexion,"SELECT * FROM venta_temp, inventario WHERE  venta_temp.id_articulo=inventario.id_articulos");              
@@ -322,7 +328,7 @@ $fecha=date('Y-m-d');
                         while($row=mysqli_fetch_array($consultaAr)){
                             ?>
                             <tr>
-                             <td align="center"><span class="label label-info"> <?php echo $row['codigo']; ?></span></td>                                                             
+                             <td align="center"><span class="label label" style="color: black; font-size: 15px;"> <?php echo $row['codigo']; ?></span></td>                                                             
                                 <td><?php echo $row['nombre'];  ?></td>
                                 <td>
                                     <center>
@@ -340,7 +346,7 @@ $fecha=date('Y-m-d');
                                 <td>
                                     <center>                           
                                         <a href="Vis_ventas.php.php?del=<?php echo $row['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
-                                            <i class="fa fa-times" ></i>
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </center>
                                 </td>
@@ -425,8 +431,8 @@ $fecha=date('Y-m-d');
                         </table>
                     </div>
                     </div>
-                    <div class="span4">
-                        <table class="table table-bordered">
+                    <div class="span4" align="center">
+                        <table class="">
                             <tr>
                                 <td>
                                     <center><strong>TOTAL</strong>
@@ -436,19 +442,23 @@ $fecha=date('Y-m-d');
                             </tr>
                         </table>
                         <?php if($neto<>0){ ?>
-                        <table class="table table-bordered">
+                        <table class="">
                             <tr>
                                 <td>
                                     <div align="center">
                                     <div class="row" align="center">
                                     <div class="col-md-12" align="center">
-                                     <strong>FORMA DE PAGO FACTURA</strong><br>
-                                        <a href="#factura1" role="button" class="btn btn-outline btn-success btn-lg btn-block" data-toggle="modal">
-                                             <strong>CONTADO</strong>
+
+                                        <div align="center">
+                                        <a href="#factura2" role="button" class="btn btn-primary btn-lg" data-toggle="modal">
+                                            <i class="fa fa-credit-card"></i> <strong>FACTURAR</strong>
                                         </a>
-                                        <a href="#factura2" role="button" class="btn btn-outline btn-success btn-lg btn-block" data-toggle="modal">
-                                             <strong>CREDITO</strong>
-                                        </a>
+                                    </div>
+                                    
+<!--                                        <a href="#factura1" role="button" class="btn btn-success btn-circle btn-lg" data-toggle="modal"><i class="fa fa-dollar"></i>
+                                             <strong></strong>
+                                        </a>-->
+                                        
                                     </div>
                                     
                                         
@@ -531,7 +541,7 @@ $fecha=date('Y-m-d');
                                                 <div class="panel-footer back-footer-red">
                                                     TOTAL FACTURA
                                                 </div>
-                                                <div class="panel-body">
+                                                <div class="panel-heading">
                                                     <div style=" bg-color: red;font-size:50px"><?php echo '$'.formato($neto+$impuesto); ?></div>
                                                 </div>                           
                                             </div>
@@ -547,13 +557,13 @@ $fecha=date('Y-m-d');
                                                 <span class="input-group-addon">.00</span>
                                              </div><br>
 
-                                              <div class="input-group">
+                                              <!-- <div class="input-group">
                                                 <span class="input-group-addon">Forma de Pago</span>
                                                <select class="form-control" name="pago">
                                                     <option value="CREDITO">CREDITO</option>
                                                 </select>                                               
                                              </div>
-                                             <br>
+                                             <br>-->
                                               <div class="input-group">
                                                 <span class="input-group-addon">MESES</span>
                                                <select class="form-control" name="mes">
