@@ -1,163 +1,145 @@
 <?php
+ include_once '../conexion/php_conexion.php';
+    include_once '../Plantilla/encabezado.php';
+    include_once '../Plantilla/menuLateral.php';
 
-include_once '../Plantilla/encabezado.php';
-include_once '../Plantilla/menuLateral.php';
-include_once '../conexion/php_conexion.php';
 ?>
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
 <head>
-    <style>
-        input {
-            width: 250px;
-            padding: 5px;
-        }
-        .redondeado {
-            border-radius: 5px;
-        }
+	<style>
+   input {
+     width: 250px;
+     padding: 5px;
+   }
+   .redondeado {
+     border-radius: 5px;
+   }
 
-        table th {
-            text-align: center;
-        }
+  table th {
+  text-align: center;
+}
 
-        table td {
-            text-align: center;
-        }
-    </style>
+table td {
+  text-align: center;
+}
+</style>
 </head>
-<div id="page-wrapper"  align="center">
-    <div class="container-fluid"  align="center">
-        <div class="row" align="center">
+        <div id="page-wrapper"  align="center">
+            <div class="container-fluid"  align="center">
+                <div class="row" align="center">
+          
+           <div class="col-md-12">
+           	<br>
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-green">
+                        <div class="panel-heading" align="center">
+                             PLAN DE PAGO
+                        </div>
+                          
 
-            <div class="col-md-12">
-                <br>
-                <!-- Advanced Tables -->
-                <div class="panel panel-green">
-                    <div class="panel-heading" align="center">
-                        PLAN DE PAGO
-                    </div>
-
-
-                    <div class="panel-body" align="center">
-                        <input type="text" class="redondeado" id="buscador" onkeyup="myFunction()" placeholder="Buscar..">
-                        <div class="table-responsive">
-                            <table width="100%" border="0">
-
-                                <tr>
+                        <div class="panel-body" align="center">
+                          <input type="text" class="redondeado" id="buscador" onkeyup="myFunction()" placeholder="Buscar..">
+                            <div class="table-responsive">
+                              <table width="100%" border="0">
+                               
+                                  <tr>
                                     <td width="50%">
                                         <div align="right">
-                                            <form method="get" action="" enctype="multipart/form-data" name="form1" id="form1">
-
-                                                <div class="table-responsive">
-                                                    <div class="scroll-window-wrapper">
-                                                        <div class="scroll-window">
-                                                            <table class="table table-striped" id="tabla">
-                                                                <thead>
-                                                                <th><div>Código</div></th>
-                                                                <th><div>Nombre</div></th>
-                                                                <th><div>Marca</div></th>
-                                                                <th><div>Valor</div></th>
-
-
-                                                                <tbody class="buscar"> 
-                                                                <br>
-                                                                <?php
-                                                                $sacar1 = mysqli_query($conexion, "SELECT articulos.idarticulos, articulos.codigo, articulos.nombre, articulos.marca, inventario.pv FROM articulos INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos");
-                                                                while ($fila = mysqli_fetch_array($sacar1)) {
-                                                                    $cod = $fila['codigo'];
-                                                                    $nom = $fila['nombre'];
-                                                                    $marca = $fila['marca'];
-                                                                    $valor = $fila['pv'];
-                                                                    ?> 
-                                                                    <tr>
-                                                                        <td data-title="Relea"><?php echo $cod; ?></td>
-                                                                        <th scope="row"><?php echo $nom; ?></th>
-                                                                        <th scope="row"><?php echo $marca; ?></th>
-                                                                        <th scope="row"><?php echo $valor; ?></th>
-
-                                                                        </td>
-
-                                                                    <?php } ?>
-
-                                                                </tr>
-
-                                                                </tbody>  
-
-
-                                                            </table>
-                                                        </div> <!-- Div scroll-window -->
-                                                    </div> <!-- Div scroll-window-wrapper-->
-
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                                        <form method="get" action="" enctype="multipart/form-data" name="form1" id="form1">
+                                        
+                                        <div class="table-responsive">
+                                          <div class="scroll-window-wrapper">
+  <div class="scroll-window">
+         <table class="table table-striped" id="tabla">
+    <thead>
+      <th><div>Código</div></th>
+      <th><div>Nombre</div></th>
+      <th><div>Marca</div></th>
+      <th><div>Valor</div></th>
+      
+     <tbody class="buscar"> 
+     <br>
+    <?php
+        $sacar1 = mysqli_query($conexion, "SELECT articulos.idarticulos, articulos.codigo, articulos.nombre, articulos.marca, inventario.pv FROM articulos INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos");
+            while ($fila = mysqli_fetch_array($sacar1)) {
+                $cod=$fila['codigo'];
+                $nom=$fila['nombre'];  
+                $marca=$fila['marca'];
+                $valor=$fila['pv'];
+                      
+        ?> 
+        <tr>
+                <td data-title="Relea"><?php echo $cod; ?></td>
+                <th scope="row"><?php echo $nom; ?></th>
+                 <th scope="row"><?php echo $marca; ?></th>
+                  <th scope="row"><?php echo $valor; ?></th>
                 
-                    <form>
-                        <div class="col-lg-14">
-                            <label style="color: black">Articulo Seleccionado<small class="text-muted" ></small></label>
-                            <div class="input-group">                         
-                                <input type="text" class="form-control" id="insumo" name="insumo" disabled><br>
-                                <br>
-                                <input type="text" class="form-control" id="valor" name="valor" disabled>
-                                <br>
+                </td>
 
-                                <input type="text" class="form-control" id="prima" name="prima" placeholder="Ingrese Prima ($)">
-                                <br>
-                                <input type="text" class="form-control" id="interes" name="interes" placeholder="Interes (%)">
-                                <br>
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
-                                </div> 
-                            </div>
-                        </div>
-                    </form>
+       <?php  }?>
+      
+      </tr>
 
+    </tbody>  
+    </thead>
+    
+  </table>
+   </div> <!-- Div scroll-window -->
+</div> <!-- Div scroll-window-wrapper-->
+  
 
-                    <div class="row mb-10" style="float: right; margin-right: 425px; margin-top: 2px;">
-                        <button type="button" class="btn btn-primary" name="btnGuardar" id="btnGuardar" onClick="agregarTabla()">  <i class="fa fa-shopping-cart"></i> Consultar Articulo</button>
-
-                    </div>
-
-
-                    <br>      
-                    <table id="tablaPP" class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr align="center"><th colspan="8">PLAN DE CREDITO MENSUAL ($)</th></tr>
-                            <tr>
-                                <th>ARTICULO</th>
-                                <th>PRECIO DE VENTA</th>
-                                <th>6 MESES</th>
-                                <th>12 MESES</th>
-                                <th>18 MESES</th>
-                                <th>24 MESES</th> 
-                                <th>30 MESES</th> 
-                                <th>36 MESES</th>                                           
+  
+                                </form>
+       <form>
+        <div class="col-lg-4">
+         <label style="color: black">Articulo Seleccionado<small class="text-muted" ></small></label>
+          <div class="input-group">                         
+          <input type="text" class="form-control" id="insumo" name="insumo" disabled><br>
+          <br>
+          <input type="text" class="form-control" id="valor" name="valor" disabled>
+          <br>
+          
+         <input type="text" class="form-control" id="prima" name="prima" placeholder="Ingrese Prima ($)">
+         <br>
+         <input type="text" class="form-control" id="interes" name="interes" placeholder="Interes (%)">
+         <br>
+         <div class="input-group-append">
+      <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
+        </div> 
+       </div>
+           </div></form>
 
 
-                            </tr>
-
-                        </thead>
-                        <tbody class="tabla_ajax"> 
-
-
-                        </tbody>
-                    </table>
+             <div class="row mb-12" style="float: right; margin-right: 10px; margin-top: 15px;">
+                    <button type="button" class="btn btn-primary" name="btnGuardar" id="btnGuardar" onClick="agregarTabla()">  <i class="fa fa-shopping-cart"></i> Consultar Articulo</button>
+             
                 </div>
-               
-            </div>
-        </div>
-    </div>
-</div>
+                              
+                                 
+                                     <br>      
+                                <table id="tablaPP" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                      <tr align="center"><th colspan="8">PLAN DE CREDITO MENSUAL ($)</th></tr>
+                                        <tr>
+                                            <th>ARTICULO</th>
+                                            <th>PRECIO DE VENTA</th>
+                                             <th>6 MESES</th>
+                                              <th>12 MESES</th>
+                                               <th>18 MESES</th>
+                                                <th>24 MESES</th> 
+                                                 <th>30 MESES</th> 
+                                                  <th>36 MESES</th>                                           
+                                     
+                                                                                    
+                                        </tr>
+                                       
+                                    </thead>
+                                     <tbody class="tabla_ajax"> 
+  
 
-
-
-
+    </tbody>
+                                    
       
 
 
@@ -203,7 +185,7 @@ include_once '../Plantilla/inferior.php';
                     //sumarle el interes al costo con iva que tenia
                     var interes = parseFloat($('#interes').val())/100;
                     var interes1 = parseFloat(costoConIva) * parseFloat(interes);
-                    var calculo = parseFloat(costoConIva) + parseFloat(interes1);
+                    var calculo = parseFloat(costo) + parseFloat(interes1);
 
                     var seis = parseFloat(calculo)/6;
                     var doce = parseFloat(calculo)/12;
