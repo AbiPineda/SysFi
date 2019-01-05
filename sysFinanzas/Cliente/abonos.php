@@ -4,6 +4,7 @@
     include_once '../Plantilla/menuLateral.php';
 
      $modi = $_GET['ir'];
+     $cuenta=$_GET['x'];
 
 
  ?>
@@ -71,7 +72,7 @@
                                     </thead>
                                     <tbody class="buscar">
                                       <?php
-        $sacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta=22");
+        $sacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$cuenta'");
             while ($fila = mysqli_fetch_array($sacar)) {          
                  $fecha=$fila['fecha'];
                  $valor=$fila['valor'];  

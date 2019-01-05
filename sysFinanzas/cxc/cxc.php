@@ -30,6 +30,7 @@ if (!empty($_GET['id'])) {
         $inte = $row['interes'];
         $cuota = $row['cuota'];
         $interesT = $row['to_interes'];
+        $plazo=$row['meses'];
         $conCliente = (int) $row['concepto1'];
         $cliente = mysqli_query($conexion, "SELECT*FROM tb_cliente WHERE id_cliente='$conCliente'");
 
@@ -89,12 +90,13 @@ if (!empty($_GET['id'])) {
 
 <?php
 //para la graficas
-$sql = mysqli_query($conexion, "SELECT SUM(valor) as valores FROM abono WHERE cuenta='$id'");
+$sql = mysqli_query($conexion, "SELECT SUM(valor) as valores,estado FROM abono WHERE cuenta='$id'");
 while ($res2 = mysqli_fetch_array($sql)) {
     $abonos = $res2['valores'];
+    $estadoA=$res2['estado'];
 }
 
-$sql = mysqli_query($conexion,"SELECT SUM(total_interes) as to_interes FROM abono WHERE cuenta='$id'");
+$sql = mysqli_query($conexion,"SELECT SUM(total_interes) as to_interes,estado FROM abono WHERE cuenta='$id'");
 if ($row = mysqli_fetch_array($sql)) {
     $total_inter=$row['to_interes'];
 } else {
@@ -190,6 +192,11 @@ if ($row = mysqli_fetch_array($sql)) {
 ?>
 
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
+<?php
+//graficas
+$sql = mysqli_query($conexion, "SELECT valor FROM contable WHERE id_contable='$id'");
+
+?>
 
 <script type="text/javascript" src="../Highcharts-4.1.5/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../Highcharts-4.1.5/js/highcharts.js"></script>
@@ -207,7 +214,7 @@ if ($row = mysqli_fetch_array($sql)) {
             title: {
             text: 'Estadistica de Abonos'
             }, subtitle: {
-    text: 'Saldo Faltante :<?php echo $deuda - $abonos; ?>'
+    text: 'Saldo Faltante :<?php if ($estadoA=='Finalizado'){ echo '0';}else{echo $deuda - $abonos;} ?>'
     },
             tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -230,7 +237,6 @@ if ($row = mysqli_fetch_array($sql)) {
 
             name: 'Abono',
                     data:[<?php
-$sql = mysqli_query($conexion, "SELECT valor FROM contable WHERE id_contable='$id'");
 while ($res = mysqli_fetch_array($sql)) {
     ?>
 
@@ -243,7 +249,8 @@ $sql = mysqli_query($conexion, "SELECT SUM(valor) as valores FROM abono WHERE cu
 while ($res = mysqli_fetch_array($sql)) {
     ?>
 
-                        ['<?php echo 'Total Abonos: ' . $res['valores']; ?>', <?php echo $res['valores'] ?>],
+                        ['<?php if ($estadoA=='Finalizado'){echo 'Total Abonos: ' .$deuda ?>', <?php echo $deuda;}
+                        else{echo 'Total Abonos: ' . round($res['valores'],2); ?>', <?php echo round($res['valores'],2);} ?>],
     <?php
 }
 ?>]
@@ -263,7 +270,7 @@ while ($res = mysqli_fetch_array($sql)) {
             title: {
             text: 'Estadistica de Interes'
             }, subtitle: {
-    text: 'Interes Faltante :<?php echo $interesT-$total_inter; ?>'
+    text: 'Interes Faltante :<?php if ($estadoA=='Finalizado'){ echo '0';}else{echo $interesT-$total_inter;} ?>'
     },
             tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -299,7 +306,8 @@ $sql = mysqli_query($conexion, "SELECT SUM(total_interes) as to_interes FROM abo
 while ($res = mysqli_fetch_array($sql)) {
     ?>
 
-                        ['<?php echo 'Abono Interes: ' . $res['to_interes']; ?>', <?php echo $res['to_interes'] ?>],
+                        ['<?php if ($estadoA=='Finalizado'){echo 'Abono Interes: ' .$interesT; ?>', <?php echo $interesT;}
+                        else{echo 'Abono Interes: ' . round($res['to_interes'],2); ?>', <?php echo round($res['to_interes'],2);} ?>],
     <?php
 }
 ?>]
@@ -313,7 +321,7 @@ while ($res = mysqli_fetch_array($sql)) {
 <div id="page-wrapper">
     <div class="container-fluid">
 <?php
-if (!empty($_POST['valor'])) {
+   if (!empty($_POST['valor'])) {
     $valor = $_POST['valor'];
     $proxi = $_POST['proximo'];
     $mora = $_POST['mora'];
@@ -342,22 +350,35 @@ if (!empty($_POST['valor'])) {
     }
     $fecha = date('Y-m-d');
     $hora = date('H:i:s');
-
-
-
-
-
-    mysqli_query($conexion,"INSERT INTO abono (cuenta,valor,fecha,hora,nota,total_interes,proximo_pago,mora) VALUES ('$id','$calculoValor','$fecha','$hora','$nota','$aboInteres','$proxi','$mora')");
+    ///*******************Validar la cantidad de cuotas que ha pagados igual que los meses
+     $cuentaMeses = mysqli_query($conexion,"SELECT COUNT(id_abono) as mesPagado, estado FROM abono WHERE cuenta='$id'");
+     while ($c= mysqli_fetch_array($cuentaMeses)){
+        $Cmes=$c['mesPagado']; 
+     }
+     $ultimoMes=$plazo-$Cmes;
+     if ($ultimoMes==1) {
+          mysqli_query($conexion,"INSERT INTO abono (cuenta,valor,fecha,hora,nota,total_interes,proximo_pago,mora,estado)"
+            . " VALUES ('$id','$calculoValor','$fecha','$hora','$nota','$aboInteres','$proxi','$mora','EnProceso')");
 
     mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,clase,observacion) 
                         VALUES ('Abono CXC No. $id','$conce2','ENTRADA','$calculoValor','$fecha','$hora','CXC','Sin Observaciones')");
     echo mensajes("El Abono a la Cuenta por Cobrar No. " . $id . " por valor de " ." $" . formato($valor) . " ha sido registrado con exito", "verde");
-        
+    
+         
+       mysqli_query($conexion,"UPDATE abono SET estado='Finalizado' WHERE cuenta='$id'");
+       
+     } else {
+    mysqli_query($conexion,"INSERT INTO abono (cuenta,valor,fecha,hora,nota,total_interes,proximo_pago,mora,estado)"
+            . " VALUES ('$id','$calculoValor','$fecha','$hora','$nota','$aboInteres','$proxi','$mora','EnProceso')");
+
+    mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,clase,observacion) 
+                        VALUES ('Abono CXC No. $id','$conce2','ENTRADA','$calculoValor','$fecha','$hora','CXC','Sin Observaciones')");
+    echo mensajes("El Abono a la Cuenta por Cobrar No. " . $id . " por valor de " ." $" . formato($valor) . " ha sido registrado con exito", "verde");
+     }    
     echo "<script>
           location.href ='cxc.php?id=$id';
         </script>";
-    
-    }
+   }   
 ?>
 <head>
     <style> 
@@ -400,10 +421,10 @@ input[type=text] {
         
         <div class="row">
             <div class="col-md-6 text-info" align="center" style="font-size:16px">
-                <div id="container" style="min-width:200px; height: 350px; max-width: 800px; margin: 0 auto"></div>
+                <div id="container" style="min-width:200px; height: 250px; max-width: 800px; margin: 0 auto"></div>
             </div>
             <div class="col-md-6 text-info" align="center" style="font-size:16px">
-                <div id="container1" style="min-width:200px; height: 350px; max-width: 800px; margin: 0 auto"></div>
+                <div id="container1" style="min-width:200px; height: 250px; max-width: 800px; margin: 0 auto"></div>
             </div>
 
 
@@ -412,7 +433,11 @@ input[type=text] {
         <!--fin de interese-->
         <div class="col-md-3">                                                                                          
             <label>Mora</label>
+            <?php if ($estadoA=='Finalizado') {?>
+             <input type="text" name="moraVer" value="Finalizado" autocomplete="off" class="form-control">
+            <?php }else{?>
             <input type="text" name="moraVer" value="<?php echo $PagoMora; ?>" autocomplete="off" class="form-control">
+            <?php }?>
         </div>  
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -422,7 +447,7 @@ input[type=text] {
                     </button></a>
                
 <?php
-if ($deuda-$abonos <> 0) {
+if ($deuda-$abonos <> 0&& $estadoA=='EnProceso') {
     echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
 }
@@ -487,11 +512,11 @@ if ($deuda-$abonos <> 0) {
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">                                   
                                 <thead>
                                     <tr>
-                                        <th>FECHA</th>
-                                        <th>OBSERVACION</th>
+                                        <th>Fecha</th>
+                                        <th>Observacion</th>
                                                                                                                                                                       
-                                        <th><div align="right"><strong>VALOR</strong></div></th>                                                                                        
-                                        <th></th>                                                                                       
+                                        <th><div align="right"><strong>Valor</strong></div></th>                                                                                        
+                                                                                                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -504,7 +529,7 @@ while ($row = mysqli_fetch_array($sql)) {
                                     <td><?php echo $row['nota']; ?></td>
                                    
                                     <td><div align="right"><?php echo '$' . formato($row['valor']) ?></div></td>
-                                    <td></td>
+                                
                                     </tr>
 <?php } ?>                                                              
                                 </tbody>                                    
