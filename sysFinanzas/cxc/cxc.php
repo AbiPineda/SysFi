@@ -400,10 +400,10 @@ input[type=text] {
         
         <div class="row">
             <div class="col-md-6 text-info" align="center" style="font-size:16px">
-                <div id="container" style="min-width:200px; height: 350px; max-width: 500px; margin: 0 auto"></div>
+                <div id="container" style="min-width:200px; height: 350px; max-width: 800px; margin: 0 auto"></div>
             </div>
             <div class="col-md-6 text-info" align="center" style="font-size:16px">
-                <div id="container1" style="min-width:200px; height: 350px; max-width: 500px; margin: 0 auto"></div>
+                <div id="container1" style="min-width:200px; height: 350px; max-width: 800px; margin: 0 auto"></div>
             </div>
 
 
@@ -446,7 +446,7 @@ if ($deuda-$abonos <> 0) {
                             <div class="row">                                       
                                 <div class="col-md-6">                                          
                                     <label>Valor del Abono:</label>                                             
-                                    <input type="text" name="valor" value="1" min="1" max="<?php //echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
+                                    <input type="text" name="valor" value="<?php echo $cuota;?>" min="1" max="<?php //echo $deuda - abonos_saldo($id); ?>" autocomplete="off" required class="form-control"><br><br>
                                 </div>
                                 <div class="col-md-6">                                          
                                     <label>Proximo pago:</label>                                             
