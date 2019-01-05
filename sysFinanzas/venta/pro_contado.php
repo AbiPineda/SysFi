@@ -13,7 +13,7 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
             # code...
         }else{
         $intereR=$_GET['interes'];
-        $mesR=$_GET['mes'];
+        $mesR1=$_GET['mes'];
          }
 
         $fecha=date('Y-m-d');
@@ -382,10 +382,12 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                                   VALUES ('$id_cliente','$mensaje','$factura','VENTA','$netoO','VENTA','$fecha','$hora','$pago')");
         if ($pago == 'CREDITO'){  
              $guardax=$netoO-$valor_recibido;
-             $interesG=($intereR/100)/12;
-        $mx=round(($guardax*$interesG*(pow((1+$interesG),($mesR))))/((pow((1+$interesG),($mesR)))-1),2);
+            
+             $mesR=$mesR1/12;
+        $interesG=($intereR/100)/12;   
+        $mx=round(($guardax*$interesG*(pow((1+$interesG),($mesR*12))))/((pow((1+$interesG),($mesR*12)))-1),2);
              $totalint=0;
-        for($i=1;$i<=$mesR;$i++)
+        for($i=1;$i<=$mesR*12;$i++)
         {
                 $totalint=round($totalint+($guardax*$interesG),2);
                 number_format($guardax*$interesG,2,",",".");
@@ -398,7 +400,7 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
         $guarda=$netoO-$valor_recibido;
         $interesG=($intereR/100)/12;
         $interesAg=round($guarda*$interesG,2);
-        $m=round(($guarda*$interesG*(pow((1+$interesG),($mesR))))/((pow((1+$interesG),($mesR)))-1),2);
+        $m=round(($guarda*$interesG*(pow((1+$interesG),($mesR*12))))/((pow((1+$interesG),($mesR*12)))-1),2);
 
            
             mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,interes,cuota,to_interes) 
