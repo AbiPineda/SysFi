@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2019 a las 20:28:34
+-- Tiempo de generación: 05-01-2019 a las 18:09:03
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -37,16 +37,36 @@ CREATE TABLE `abono` (
   `nota` varchar(75) DEFAULT NULL,
   `total_interes` varchar(20) DEFAULT NULL,
   `proximo_pago` date DEFAULT NULL,
-  `mora` float DEFAULT NULL
+  `mora` float DEFAULT NULL,
+  `estado` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `abono`
 --
 
-INSERT INTO `abono` (`id_abono`, `cuenta`, `valor`, `fecha`, `hora`, `nota`, `total_interes`, `proximo_pago`, `mora`) VALUES
-(8, 22, '88.543', '2018-12-30', '07:33:42', 'Sin Observaciones', '9.167', '2019-01-28', 0),
-(9, 22, '88.281', '2018-12-30', '07:56:10', 'Sin Observaciones', '8.429', '2018-12-14', 0);
+INSERT INTO `abono` (`id_abono`, `cuenta`, `valor`, `fecha`, `hora`, `nota`, `total_interes`, `proximo_pago`, `mora`, `estado`) VALUES
+(8, 22, '88.543', '2018-12-30', '07:33:42', 'Sin Observaciones', '9.167', '2019-01-28', 0, NULL),
+(9, 22, '88.281', '2018-12-30', '07:56:10', 'Sin Observaciones', '8.429', '2018-12-14', 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `activo`
+--
+
+CREATE TABLE `activo` (
+  `idactivo` int(10) NOT NULL,
+  `correlativo` varchar(45) DEFAULT NULL,
+  `fecha_adquisicion` date DEFAULT NULL,
+  `descripcion` varchar(200) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL,
+  `observaciones` varchar(200) DEFAULT NULL,
+  `idtipo` int(10) DEFAULT NULL,
+  `idinstitucion` int(10) DEFAULT NULL,
+  `idestado` int(10) DEFAULT NULL,
+  `idusuario` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -76,7 +96,12 @@ INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`,
 (2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 2, 1),
 (3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1, 1, 6),
 (4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1, 1, 7),
-(5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1, 1, 3);
+(5, '744110280091', 'Play Station 4', 5, 300, 'Sony', 's', 1, 1, 3),
+(6, 'DVPSR370', 'Reproductor de DVD', 5, 42, 'SONY', 's', 5, NULL, 4),
+(7, 'MDR100AAP', 'Audifonos', 5, 169, 'SONY', 's', 5, NULL, 5),
+(8, 'NWZB183F', 'Reproductor MP3', 5, 70, 'SONY', 's', 5, NULL, 5),
+(9, 'NWZW273S', 'Walkman MP3', 5, 119, 'SONY', 's', 0, 1, 5),
+(10, 'CM618', 'Cafetera', 10, 23, 'Black & Decker', 's', NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -101,6 +126,19 @@ INSERT INTO `categoria` (`idcategoria`, `nombre`) VALUES
 (5, 'Accesorios'),
 (6, 'Video'),
 (7, 'Electronica');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clasificacion`
+--
+
+CREATE TABLE `clasificacion` (
+  `id_clasificacion` int(10) NOT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `correlativo` varchar(45) DEFAULT NULL,
+  `tiempo_depreciacion` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -138,13 +176,6 @@ CREATE TABLE `compra_tmp` (
   `cant` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Volcado de datos para la tabla `compra_tmp`
---
-
-INSERT INTO `compra_tmp` (`id`, `id_articulo`, `cant`) VALUES
-(8, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -163,31 +194,55 @@ CREATE TABLE `contable` (
   `interes` float DEFAULT NULL,
   `cuota` float DEFAULT NULL,
   `to_interes` float DEFAULT NULL,
-  `observacion` varchar(75) DEFAULT NULL
+  `observacion` varchar(75) DEFAULT NULL,
+  `meses` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `contable`
 --
 
-INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`, `fecha`, `hora`, `clase`, `interes`, `cuota`, `to_interes`, `observacion`) VALUES
-(22, '1', '12548741', 'CXC', '1100', '2018-12-28', '03:05:12', NULL, 10, 96.71, 60.5, NULL),
-(24, 'Abono CXC No. 22', '12548741', 'ENTRADA', '88.543', '2018-12-31', '07:33:42', 'CXC', NULL, NULL, NULL, 'Sin Observaciones'),
-(25, 'Abono CXC No. 22', '12548741', 'ENTRADA', '88.281', '2018-12-12', '07:56:10', 'CXC', NULL, NULL, NULL, 'Sin Observaciones'),
-(27, '2', '12548780', 'CXC', '2160', '2018-12-30', '20:40:21', NULL, 20, 139.89, 358.01, NULL),
-(28, 'Venta al \"CONTADO\"', '12548781', 'ENTRADA', '1200', '2018-12-30', '20:41:52', NULL, NULL, NULL, NULL, NULL),
-(29, 'Venta al \"CONTADO\"', '12548782', 'ENTRADA', '120', '2018-12-30', '21:02:01', NULL, NULL, NULL, NULL, NULL),
-(30, 'Venta al \"CONTADO\"', '12548783', 'ENTRADA', '9492', '2018-12-30', '21:06:34', NULL, NULL, NULL, NULL, NULL),
-(31, 'Venta al \"CONTADO\"', '12548784', 'ENTRADA', '9492', '2018-12-30', '21:09:15', NULL, NULL, NULL, NULL, NULL),
-(32, 'Venta al \"CONTADO\"', '12548785', 'ENTRADA', '9492', '2018-12-30', '21:21:30', NULL, NULL, NULL, NULL, NULL),
-(33, 'Venta al \"CONTADO\"', '12548786', 'ENTRADA', '9492', '2018-12-30', '21:23:30', NULL, NULL, NULL, NULL, NULL),
-(34, 'Venta al \"CONTADO\"', '12548787', 'ENTRADA', '2712', '2018-12-30', '21:30:17', NULL, NULL, NULL, NULL, NULL),
-(35, 'Venta al \"CONTADO\"', '12548788', 'ENTRADA', '2712', '2018-12-30', '21:33:56', NULL, NULL, NULL, NULL, NULL),
-(36, 'Venta al \"CONTADO\"', '12548789', 'ENTRADA', '2712', '2018-12-30', '21:38:10', NULL, NULL, NULL, NULL, NULL),
-(37, 'Venta al \"CONTADO\"', '12548790', 'ENTRADA', '2712', '2018-12-30', '21:39:11', NULL, NULL, NULL, NULL, NULL),
-(38, 'Venta al \"CONTADO\"', '12548791', 'ENTRADA', '1130', '2019-01-01', '22:01:52', NULL, NULL, NULL, NULL, NULL),
-(45, 'Compra al \"CONTADO\"', '12548792', 'SALIDA', '900', '2019-01-02', '06:02:07', NULL, NULL, NULL, NULL, NULL),
-(46, '2', '12548793', 'CXP', '900', '2019-01-02', '06:29:25', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`, `fecha`, `hora`, `clase`, `interes`, `cuota`, `to_interes`, `observacion`, `meses`) VALUES
+(22, '1', '12548741', 'CXC', '1100', '2018-12-28', '03:05:12', NULL, 10, 96.71, 60.5, NULL, NULL),
+(24, 'Abono CXC No. 22', '12548741', 'ENTRADA', '88.543', '2018-12-31', '07:33:42', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL),
+(25, 'Abono CXC No. 22', '12548741', 'ENTRADA', '88.281', '2018-12-12', '07:56:10', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL),
+(27, '2', '12548780', 'CXC', '2160', '2018-12-30', '20:40:21', NULL, 20, 139.89, 358.01, NULL, NULL),
+(28, 'Venta al \"CONTADO\"', '12548781', 'ENTRADA', '1200', '2018-12-30', '20:41:52', NULL, NULL, NULL, NULL, NULL, NULL),
+(29, 'Venta al \"CONTADO\"', '12548782', 'ENTRADA', '120', '2018-12-30', '21:02:01', NULL, NULL, NULL, NULL, NULL, NULL),
+(30, 'Venta al \"CONTADO\"', '12548783', 'ENTRADA', '9492', '2018-12-30', '21:06:34', NULL, NULL, NULL, NULL, NULL, NULL),
+(31, 'Venta al \"CONTADO\"', '12548784', 'ENTRADA', '9492', '2018-12-30', '21:09:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(32, 'Venta al \"CONTADO\"', '12548785', 'ENTRADA', '9492', '2018-12-30', '21:21:30', NULL, NULL, NULL, NULL, NULL, NULL),
+(33, 'Venta al \"CONTADO\"', '12548786', 'ENTRADA', '9492', '2018-12-30', '21:23:30', NULL, NULL, NULL, NULL, NULL, NULL),
+(34, 'Venta al \"CONTADO\"', '12548787', 'ENTRADA', '2712', '2018-12-30', '21:30:17', NULL, NULL, NULL, NULL, NULL, NULL),
+(35, 'Venta al \"CONTADO\"', '12548788', 'ENTRADA', '2712', '2018-12-30', '21:33:56', NULL, NULL, NULL, NULL, NULL, NULL),
+(36, 'Venta al \"CONTADO\"', '12548789', 'ENTRADA', '2712', '2018-12-30', '21:38:10', NULL, NULL, NULL, NULL, NULL, NULL),
+(37, 'Venta al \"CONTADO\"', '12548790', 'ENTRADA', '2712', '2018-12-30', '21:39:11', NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'Venta al \"CONTADO\"', '12548791', 'ENTRADA', '1130', '2019-01-01', '22:01:52', NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 'Compra al \"CONTADO\"', '12548792', 'SALIDA', '900', '2019-01-02', '06:02:07', NULL, NULL, NULL, NULL, NULL, NULL),
+(46, '2', '12548793', 'CXP', '900', '2019-01-02', '06:29:25', NULL, NULL, NULL, NULL, NULL, NULL),
+(47, '3', '12548794', 'CXP', '900', '2019-01-03', '04:58:17', NULL, NULL, NULL, NULL, NULL, NULL),
+(48, 'Venta al \"CONTADO\"', '12548795', 'ENTRADA', '1130', '2019-01-04', '21:05:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(49, 'Venta al \"\"', '12548796', 'ENTRADA', '1200', '2019-01-04', '21:05:37', NULL, NULL, NULL, NULL, NULL, NULL),
+(50, 'Venta al \"\"', '12548797', 'ENTRADA', '1356', '2019-01-04', '21:07:18', NULL, NULL, NULL, NULL, NULL, NULL),
+(51, 'Venta al \"CONTADO\"', '12548798', 'ENTRADA', '1000', '2019-01-04', '21:14:05', NULL, NULL, NULL, NULL, NULL, NULL),
+(52, '1', '12548799', 'CXC', '25', '2019-01-04', '21:14:27', NULL, 4, 4.22, 0.29, NULL, NULL),
+(53, 'Venta al \"CONTADO\"', '12548800', 'ENTRADA', '146.9', '2019-01-04', '21:14:49', NULL, NULL, NULL, NULL, NULL, NULL),
+(54, '2', '12548801', 'CXC', '120', '2019-01-04', '21:16:37', NULL, 4, 20.23, 1.4, NULL, NULL),
+(55, '3', '12548802', 'CXP', '23', '2019-01-04', '21:25:04', NULL, NULL, NULL, NULL, NULL, NULL),
+(56, '1', '12548803', 'CXC', '30', '2019-01-04', '21:52:02', NULL, 4, 5.06, 0.35, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `departamento`
+--
+
+CREATE TABLE `departamento` (
+  `id_departamento` int(10) NOT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `correlativo` varchar(45) DEFAULT NULL,
+  `idencargado` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -232,7 +287,16 @@ INSERT INTO `detalle` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`
 (111, '12548788', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-30'),
 (112, '12548789', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30'),
 (113, '12548790', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30'),
-(114, '12548791', 5, '5', '1', '1000', '1130', 'VENTA', '2019-01-01');
+(114, '12548791', 5, '5', '1', '1000', '1130', 'VENTA', '2019-01-01'),
+(115, '12548795', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-04'),
+(116, '12548795', 9, '9', '1', '130', '130', 'VENTA', '2019-01-04'),
+(117, '12548796', 1, '1', '1', '1200', '1200', 'VENTA', '2019-01-04'),
+(118, '12548797', 1, '1', '1', '1200', '1356', 'VENTA', '2019-01-04'),
+(119, '12548798', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-04'),
+(120, '12548799', 10, '10', '1', '30', '30', 'VENTA', '2019-01-04'),
+(121, '12548800', 9, '9', '1', '130', '146.9', 'VENTA', '2019-01-04'),
+(122, '12548801', 9, '9', '1', '130', '130', 'VENTA', '2019-01-04'),
+(123, '12548803', 9, '9', '1', '130', '130', 'VENTA', '2019-01-04');
 
 -- --------------------------------------------------------
 
@@ -258,7 +322,35 @@ CREATE TABLE `detalle_compra` (
 
 INSERT INTO `detalle_compra` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`, `valor`, `importe`, `tipo`, `fecha`) VALUES
 (120, '12548792', 2, '7415300005014', '1', '900', '900', 'COMPRA', '2019-01-02'),
-(121, '12548793', 1, 'LR12345664', '1', '900', '900', 'COMPRA', '2019-01-02');
+(121, '12548793', 1, 'LR12345664', '1', '900', '900', 'COMPRA', '2019-01-02'),
+(122, '12548794', 1, 'LR12345664', '1', '900', '900', 'COMPRA', '2019-01-03'),
+(123, '12548802', 10, 'CM618', '1', '23', '23', 'COMPRA', '2019-01-04');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encargado`
+--
+
+CREATE TABLE `encargado` (
+  `id_encargado` int(10) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `apellidos` varchar(45) DEFAULT NULL,
+  `dui` varchar(15) DEFAULT NULL,
+  `nit` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado`
+--
+
+CREATE TABLE `estado` (
+  `id_estado` int(10) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `tiempo_de_uso` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -330,7 +422,17 @@ INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
 (73, '12548790', '2712', '2018-12-30'),
 (74, '12548791', '1130', '2019-01-01'),
 (78, '12548792', '900', '2019-01-02'),
-(79, '12548793', '900', '2019-01-02');
+(79, '12548793', '900', '2019-01-02'),
+(80, '12548794', '900', '2019-01-03'),
+(81, '12548795', '1130', '2019-01-04'),
+(82, '12548796', '1200', '2019-01-04'),
+(83, '12548797', '1356', '2019-01-04'),
+(84, '12548798', '1000', '2019-01-04'),
+(85, '12548799', '30', '2019-01-04'),
+(86, '12548800', '146.9', '2019-01-04'),
+(87, '12548801', '130', '2019-01-04'),
+(88, '12548802', '23', '2019-01-04'),
+(89, '12548803', '130', '2019-01-04');
 
 -- --------------------------------------------------------
 
@@ -365,15 +467,17 @@ CREATE TABLE `institucion` (
   `abreviatura` varchar(60) NOT NULL,
   `ideTributaria` varchar(25) NOT NULL,
   `direccion` varchar(50) NOT NULL,
-  `telefono` varchar(10) NOT NULL
+  `telefono` varchar(10) NOT NULL,
+  `correlativo` varchar(45) DEFAULT NULL,
+  `iddepartamento` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `institucion`
 --
 
-INSERT INTO `institucion` (`idInstitucion`, `nombre`, `abreviatura`, `ideTributaria`, `direccion`, `telefono`) VALUES
-(1, 'GMG COMERCIAL EL SALVADOR, SOCIEDAD ANONIMA DE CAPITAL VARIABLE', 'GMG COMERCIAL EL SALVADOR, S.A DE C.V', '0614-100805-106-7', 'San Salvador, departamento de San Salvador', '2353-2343');
+INSERT INTO `institucion` (`idInstitucion`, `nombre`, `abreviatura`, `ideTributaria`, `direccion`, `telefono`, `correlativo`, `iddepartamento`) VALUES
+(1, 'GMG COMERCIAL EL SALVADOR, SOCIEDAD ANONIMA DE CAPITAL VARIABLE', 'GMG COMERCIAL EL SALVADOR, S.A DE C.V', '0614-100805-106-7', 'San Salvador, departamento de San Salvador', '2353-2343', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -395,10 +499,12 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 18, 5, 1000, 1),
-(2, 1, -5, 5, 1200, 1),
+(1, 2, 16, 5, 1000, 1),
+(2, 1, -6, 5, 1200, 1),
 (3, 3, 13, 10, 950, 1),
-(5, 5, -16, 10, 1000, 1);
+(5, 5, -16, 10, 1000, 1),
+(6, 9, 1, 5, 130, NULL),
+(7, 10, 10, 5, 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -496,7 +602,18 @@ INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`,
 (121, '12548790', 'VENTA', 1, 2, 900, 1800, -6, '2018-12-30'),
 (122, '12548791', 'VENTA', 5, 1, 300, 300, -16, '2019-01-01'),
 (132, '12548792', 'COMPRA', 2, 1, 900, 900, 18, '2019-01-02'),
-(133, '12548793', 'COMPRA', 1, 1, 900, 900, -5, '2019-01-02');
+(133, '12548793', 'COMPRA', 1, 1, 900, 900, -5, '2019-01-02'),
+(134, '12548794', 'COMPRA', 1, 1, 900, 900, -4, '2019-01-03'),
+(135, '12548795', 'VENTA', 2, 1, 900, 900, 17, '2019-01-04'),
+(136, '12548795', 'VENTA', 9, 1, 119, 119, 4, '2019-01-04'),
+(137, '12548796', 'VENTA', 1, 1, 900, 900, -5, '2019-01-04'),
+(138, '12548797', 'VENTA', 1, 1, 900, 900, -6, '2019-01-04'),
+(139, '12548798', 'VENTA', 2, 1, 900, 900, 16, '2019-01-04'),
+(140, '12548799', 'VENTA', 10, 1, 23, 23, 9, '2019-01-04'),
+(141, '12548800', 'VENTA', 9, 1, 119, 119, 3, '2019-01-04'),
+(142, '12548801', 'VENTA', 9, 1, 119, 119, 2, '2019-01-04'),
+(143, '12548802', 'COMPRA', 10, 1, 23, 23, 10, '2019-01-04'),
+(144, '12548803', 'VENTA', 9, 1, 119, 119, 1, '2019-01-04');
 
 -- --------------------------------------------------------
 
@@ -521,7 +638,8 @@ CREATE TABLE `proveedor` (
 
 INSERT INTO `proveedor` (`idproveedor`, `proveedor`, `contacto`, `direccion`, `dui`, `nit`, `telefono`, `estado`) VALUES
 (1, 'SONY', 'Isabel Mejia Hernandez', 'colonia san benito, san salvador', '12345678-9', '1221-234212-123-1', '2342-2321', 's'),
-(2, 'MABE', 'Maria cruz', 'San salvador', '11246655-1', '1122-454566-123-1', '23485689', 's');
+(2, 'MABE', 'Maria cruz', 'San salvador', '11246655-1', '1122-454566-123-1', '23485689', 's'),
+(3, 'Black & Decker', 'Blanca Melara', 'colonia rosa, san salvador', '34324234-2', '3244-242342-334-2', '2323-2323', 's');
 
 -- --------------------------------------------------------
 
@@ -534,13 +652,6 @@ CREATE TABLE `prov_tmp` (
   `proveedor` int(10) DEFAULT NULL,
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-
---
--- Volcado de datos para la tabla `prov_tmp`
---
-
-INSERT INTO `prov_tmp` (`id`, `proveedor`, `fecha`) VALUES
-(5, 1, '2019-01-02');
 
 -- --------------------------------------------------------
 
@@ -609,7 +720,15 @@ INSERT INTO `resumen` (`id_resumen`, `id_clientes`, `concepto`, `factura`, `clas
 (58, 2, 'Venta al \"CONTADO\"', '12548788', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:33:56', 'CONTADO'),
 (59, 2, 'Venta al \"CONTADO\"', '12548789', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:38:10', 'CONTADO'),
 (60, 2, 'Venta al \"CONTADO\"', '12548790', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:39:11', 'CONTADO'),
-(61, 1, 'Venta al \"CONTADO\"', '12548791', 'VENTA', '1130', 'VENTA', '2019-01-01', '22:01:52', 'CONTADO');
+(61, 1, 'Venta al \"CONTADO\"', '12548791', 'VENTA', '1130', 'VENTA', '2019-01-01', '22:01:52', 'CONTADO'),
+(62, 1, 'Venta al \"CONTADO\"', '12548795', 'VENTA', '1130', 'VENTA', '2019-01-04', '21:05:12', 'CONTADO'),
+(63, 1, 'Venta al \"\"', '12548796', 'VENTA', '1200', 'VENTA', '2019-01-04', '21:05:37', ''),
+(64, 2, 'Venta al \"\"', '12548797', 'VENTA', '1356', 'VENTA', '2019-01-04', '21:07:18', ''),
+(65, 1, 'Venta al \"CONTADO\"', '12548798', 'VENTA', '1000', 'VENTA', '2019-01-04', '21:14:05', 'CONTADO'),
+(66, 1, 'Venta al \"CREDITO\"', '12548799', 'VENTA', '30', 'VENTA', '2019-01-04', '21:14:27', 'CREDITO'),
+(67, 1, 'Venta al \"CONTADO\"', '12548800', 'VENTA', '146.9', 'VENTA', '2019-01-04', '21:14:49', 'CONTADO'),
+(68, 2, 'Venta al \"CREDITO\"', '12548801', 'VENTA', '130', 'VENTA', '2019-01-04', '21:16:37', 'CREDITO'),
+(69, 1, 'Venta al \"CREDITO\"', '12548803', 'VENTA', '130', 'VENTA', '2019-01-04', '21:52:02', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -636,7 +755,9 @@ CREATE TABLE `resumen_compra` (
 
 INSERT INTO `resumen_compra` (`id_resumen`, `id_proveedor`, `concepto`, `factura`, `clase`, `valor`, `tipo`, `fecha`, `hora`, `status`) VALUES
 (5, 1, 'Compra al \"CONTADO\"', '12548792', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:02:07', 'CONTADO'),
-(6, 2, 'Compra al \"CREDITO\"', '12548793', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:29:25', 'CREDITO');
+(6, 2, 'Compra al \"CREDITO\"', '12548793', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:29:25', 'CREDITO'),
+(7, 3, 'Compra al \"CREDITO\"', '12548794', 'COMPRA', '900', 'COMPRA', '2019-01-03', '04:58:17', 'CREDITO'),
+(8, 3, 'Compra al \"CREDITO\"', '12548802', 'COMPRA', '23', 'COMPRA', '2019-01-04', '21:25:04', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -659,6 +780,19 @@ CREATE TABLE `tb_cliente` (
 INSERT INTO `tb_cliente` (`id_cliente`, `nombre_cliente`, `dir_cliente`, `dui`, `tel`) VALUES
 (1, 'Juan Moz', 'Cedros', '78404023', '56464'),
 (2, 'Abi', 'Verapaz en la casa del chimilo', '2001221', '44547');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_activo`
+--
+
+CREATE TABLE `tipo_activo` (
+  `id_tipo` int(10) NOT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `correlativo` varchar(45) DEFAULT NULL,
+  `idclasificacion` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -693,13 +827,6 @@ CREATE TABLE `ventac_temp` (
   `cantidad` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
---
--- Volcado de datos para la tabla `ventac_temp`
---
-
-INSERT INTO `ventac_temp` (`id_venta`, `id_articulo`, `cantidad`) VALUES
-(2, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -724,6 +851,16 @@ ALTER TABLE `abono`
   ADD KEY `fk_abono` (`cuenta`);
 
 --
+-- Indices de la tabla `activo`
+--
+ALTER TABLE `activo`
+  ADD PRIMARY KEY (`idactivo`),
+  ADD KEY `idtipo` (`idtipo`),
+  ADD KEY `idinstitucion` (`idinstitucion`),
+  ADD KEY `idestado` (`idestado`),
+  ADD KEY `idusuario` (`idusuario`);
+
+--
 -- Indices de la tabla `articulos`
 --
 ALTER TABLE `articulos`
@@ -736,6 +873,12 @@ ALTER TABLE `articulos`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`idcategoria`);
+
+--
+-- Indices de la tabla `clasificacion`
+--
+ALTER TABLE `clasificacion`
+  ADD PRIMARY KEY (`id_clasificacion`);
 
 --
 -- Indices de la tabla `clientcred_tmp`
@@ -767,6 +910,13 @@ ALTER TABLE `contable`
   ADD KEY `concepto1` (`concepto1`);
 
 --
+-- Indices de la tabla `departamento`
+--
+ALTER TABLE `departamento`
+  ADD PRIMARY KEY (`id_departamento`),
+  ADD KEY `idencargado` (`idencargado`);
+
+--
 -- Indices de la tabla `detalle`
 --
 ALTER TABLE `detalle`
@@ -781,6 +931,18 @@ ALTER TABLE `detalle_compra`
   ADD PRIMARY KEY (`id_detalle`),
   ADD KEY `fk_articulos` (`articulo`),
   ADD KEY `fk_facturassss` (`factura`);
+
+--
+-- Indices de la tabla `encargado`
+--
+ALTER TABLE `encargado`
+  ADD PRIMARY KEY (`id_encargado`);
+
+--
+-- Indices de la tabla `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`id_estado`);
 
 --
 -- Indices de la tabla `factura`
@@ -800,7 +962,8 @@ ALTER TABLE `factura_compra`
 -- Indices de la tabla `institucion`
 --
 ALTER TABLE `institucion`
-  ADD PRIMARY KEY (`idInstitucion`);
+  ADD PRIMARY KEY (`idInstitucion`),
+  ADD KEY `iddepartamento` (`iddepartamento`);
 
 --
 -- Indices de la tabla `inventario`
@@ -852,6 +1015,13 @@ ALTER TABLE `tb_cliente`
   ADD PRIMARY KEY (`id_cliente`);
 
 --
+-- Indices de la tabla `tipo_activo`
+--
+ALTER TABLE `tipo_activo`
+  ADD PRIMARY KEY (`id_tipo`),
+  ADD KEY `idclasificacion` (`idclasificacion`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -882,16 +1052,28 @@ ALTER TABLE `abono`
   MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT de la tabla `activo`
+--
+ALTER TABLE `activo`
+  MODIFY `idactivo` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idarticulos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
   MODIFY `idcategoria` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `clasificacion`
+--
+ALTER TABLE `clasificacion`
+  MODIFY `id_clasificacion` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `clientcred_tmp`
@@ -909,31 +1091,49 @@ ALTER TABLE `cliente_temp`
 -- AUTO_INCREMENT de la tabla `compra_tmp`
 --
 ALTER TABLE `compra_tmp`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT de la tabla `departamento`
+--
+ALTER TABLE `departamento`
+  MODIFY `id_departamento` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+
+--
+-- AUTO_INCREMENT de la tabla `encargado`
+--
+ALTER TABLE `encargado`
+  MODIFY `id_encargado` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `estado`
+--
+ALTER TABLE `estado`
+  MODIFY `id_estado` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT de la tabla `factura_compra`
@@ -951,43 +1151,49 @@ ALTER TABLE `institucion`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `idinventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idinventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `idproveedor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idproveedor` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `prov_tmp`
 --
 ALTER TABLE `prov_tmp`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen_compra`
 --
 ALTER TABLE `resumen_compra`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_activo`
+--
+ALTER TABLE `tipo_activo`
+  MODIFY `id_tipo` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -999,7 +1205,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `ventac_temp`
 --
 ALTER TABLE `ventac_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_temp`
@@ -1016,6 +1222,15 @@ ALTER TABLE `venta_temp`
 --
 ALTER TABLE `abono`
   ADD CONSTRAINT `fk_abono` FOREIGN KEY (`cuenta`) REFERENCES `contable` (`id_contable`);
+
+--
+-- Filtros para la tabla `activo`
+--
+ALTER TABLE `activo`
+  ADD CONSTRAINT `idestado` FOREIGN KEY (`idestado`) REFERENCES `estado` (`id_estado`),
+  ADD CONSTRAINT `idinstitucion` FOREIGN KEY (`idinstitucion`) REFERENCES `institucion` (`idInstitucion`),
+  ADD CONSTRAINT `idtipo` FOREIGN KEY (`idtipo`) REFERENCES `tipo_activo` (`id_tipo`),
+  ADD CONSTRAINT `idusuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`);
 
 --
 -- Filtros para la tabla `articulos`
@@ -1049,6 +1264,12 @@ ALTER TABLE `contable`
   ADD CONSTRAINT `fk_factuu` FOREIGN KEY (`concepto2`) REFERENCES `factura` (`factura`);
 
 --
+-- Filtros para la tabla `departamento`
+--
+ALTER TABLE `departamento`
+  ADD CONSTRAINT `idencargado` FOREIGN KEY (`idencargado`) REFERENCES `encargado` (`id_encargado`);
+
+--
 -- Filtros para la tabla `detalle`
 --
 ALTER TABLE `detalle`
@@ -1061,6 +1282,12 @@ ALTER TABLE `detalle`
 ALTER TABLE `detalle_compra`
   ADD CONSTRAINT `detalle_compra_ibfk_1` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`),
   ADD CONSTRAINT `detalle_compra_ibfk_2` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
+
+--
+-- Filtros para la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  ADD CONSTRAINT `iddepartamento` FOREIGN KEY (`iddepartamento`) REFERENCES `departamento` (`id_departamento`);
 
 --
 -- Filtros para la tabla `inventario`
@@ -1093,6 +1320,12 @@ ALTER TABLE `resumen`
 ALTER TABLE `resumen_compra`
   ADD CONSTRAINT `facd` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`),
   ADD CONSTRAINT `resumen_compra_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedor` (`idproveedor`);
+
+--
+-- Filtros para la tabla `tipo_activo`
+--
+ALTER TABLE `tipo_activo`
+  ADD CONSTRAINT `idclasificacion` FOREIGN KEY (`idclasificacion`) REFERENCES `clasificacion` (`id_clasificacion`);
 
 --
 -- Filtros para la tabla `ventac_temp`
