@@ -7,8 +7,16 @@
      $cuenta=$_GET['x'];
      
            $estadoSacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$cuenta'");
+           if (mysqli_num_rows($estadoSacar)>0) {
             while ($fila = mysqli_fetch_array($estadoSacar)) { 
                 $estado=$fila['estado'];
+            }
+           } else {
+                $inco = mysqli_query($conexion,"SELECT * FROM contable WHERE id_contable='$cuenta'");
+                    while ($filita = mysqli_fetch_array($inco)) {
+                        $estado=$filita['estadoC'];
+                    }
+               
             }
 
 
@@ -22,7 +30,7 @@
                         <br/>
                          <div class="panel panel-green">
                         <div class="panel-heading">
-                             HISTORIAL DE CREDITOS DE CLIENTE
+                             CARTERA DE CREDITOS DE CLIENTE
                         </div>
                         <div class="panel-body">
              <div class="col-md-8">

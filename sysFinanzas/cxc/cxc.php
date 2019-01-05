@@ -383,6 +383,32 @@ while ($res = mysqli_fetch_array($sql)) {
    //para incobrabilidad si ya hizo algun abono
    if (!empty($_POST['si'])) {
     mysqli_query($conexion,"UPDATE abono SET estado='incobrable' WHERE cuenta='$id'");
+    mysqli_query($conexion,"UPDATE contable SET estadoC='incobrable' WHERE id_contable='$id'");
+     echo "<script>
+          location.href ='cxc.php?id=$id';
+        </script>";
+   }
+   //para incobrabilidad si no ha hecho algun abono
+   if (!empty($_POST['si2'])) {
+    mysqli_query($conexion,"UPDATE contable SET estadoC='incobrable' WHERE id_contable='$id'");
+     echo "<script>
+          location.href ='cxc.php?id=$id';
+        </script>";
+   }
+   //recuperar cuenta si no hay abonos
+   if (!empty($_POST['recu2'])) {
+    mysqli_query($conexion,"UPDATE contable SET estadoC='EnProceso' WHERE id_contable='$id'");
+     echo "<script>
+          location.href ='cxc.php?id=$id';
+        </script>";
+   }
+   //si ya hizo abonos
+   if (!empty($_POST['recu'])) {
+   mysqli_query($conexion,"UPDATE abono SET estado='EnProceso' WHERE cuenta='$id'");
+   mysqli_query($conexion,"UPDATE contable SET estadoC='EnProceso' WHERE id_contable='$id'");
+     echo "<script>
+          location.href ='cxc.php?id=$id';
+        </script>";
    }
 ?>
 <head>
@@ -452,15 +478,39 @@ input[type=text] {
                     </button></a>
                
 <?php
+if ($estadoA!=null) {
+    
 if ($deuda-$abonos <> 0 && $estadoA=='EnProceso') {
-    echo ' <button type="button" class="btn btn-success " data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+    echo '<button type="button" class="btn btn-success " data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
     //*****incobrable*******
     echo ' <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#inco"><i class="fa fa-arrow-down fa-2x" title="Agregar Nuevo Abono"></i>
                                       Incobrable</button>';
-}elseif($estadoA==null){
-     echo '<button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#inco2"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+} elseif($estadoA=='incobrable') {
+     echo ' <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#recu"><i class="fa fa-arrow-up fa-2x" title="Agregar Nuevo Abono"></i>
+                                      Recuperar</button>';  
+    }
+
+}else{
+      //aqui es cuando no ha hecho ningun abono
+    $inco = mysqli_query($conexion,"SELECT * FROM contable WHERE id_contable='$id'");
+    while ($filita = mysqli_fetch_array($inco)) {
+        $inEstado=$filita['estadoC'];
+    }
+    
+    if ($inEstado=='EnProceso') {
+      echo '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
+     //*****incobrable*******
+    echo ' <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#inco2"><i class="fa fa-arrow-down fa-2x" title="Agregar Nuevo Abono"></i>
+                                      Incobrable</button>';  
+    }else{
+        //*****recuperar*******
+    echo ' <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#recu2"><i class="fa fa-arrow-up fa-2x" title="Agregar Nuevo Abono"></i>
+                                      Recuperar</button>';  
+    }
+     
+    
 }
 ?>        
              
@@ -571,9 +621,71 @@ if ($deuda-$abonos <> 0 && $estadoA=='EnProceso') {
                 </div>
             </form>
         </div>
+       
       
         <!--incobrabilidad-->
         
+        <!--RECUPERAR CUENTA INCOBRABLE-->
+        <div class="modal fade" id="recu2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!--<div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <form name="forms" method="post" action="">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                            <h3 align="center" class="modal-title" id="myModalLabel">¿Desea recuperar la<br><?php echo 'Cuenta por Cobrar No. ' . $id; ?>?</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">                                       
+                                <div class="col-md-6">  
+                                    <center>
+                                                <img src="../Imagenes/finanzas.png" width="75px" height="75px"><br>
+                                          <input type="hidden" value="si" name="recu2">  
+                                            </center>  
+                                    </div>
+                                
+                            </div> 
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-warning">Si</button>
+                        </div>                                       
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+         <div class="modal fade" id="recu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!--<div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <form name="forms" method="post" action="">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                            <h3 align="center" class="modal-title" id="myModalLabel">¿Desea recuperar la<br><?php echo 'Cuenta por Cobrar No. ' . $id; ?>?</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">                                       
+                                <div class="col-md-6">  
+                                    <center>
+                                                <img src="../Imagenes/finanzas.png" width="75px" height="75px"><br>
+                                          <input type="hidden" value="si" name="recu">  
+                                            </center>  
+                                    </div>
+                                
+                            </div> 
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-warning">Si</button>
+                        </div>                                       
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--RECUPERAR CUENTA INCOBRABLE--> 
         
      
 

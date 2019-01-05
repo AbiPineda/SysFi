@@ -21,7 +21,7 @@
                         <br/>
                          <div class="panel panel-green">
                         <div class="panel-heading">
-                             HISTORIAL DE CREDITOS A CLIENTES
+                             CARTERA DE CREDITOS A CLIENTE
                         </div>
                         <div class="panel-body">
              <div class="col-md-8">
@@ -107,6 +107,9 @@
         <td class="center">
             <?php
              $estadoSacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$id'");
+             if (mysqli_num_rows($estadoSacar)>0) {
+                 
+             
             while ($fila = mysqli_fetch_array($estadoSacar)) { 
                 $estado=$fila['estado'];
             }
@@ -115,11 +118,13 @@
              <a href="" class="btn btn btn-success btn-xs"><strong>Finalizado</strong></a>
             <?php }else{?>
             <a href="../cxc/cxc.php?id=<?php echo $id; ?>" class="btn btn btn-danger btn-xs"><strong>Pagar</strong></a>
-            <?php }?>                             
+             <?php }}else{?>
+            <a href="../cxc/cxc.php?id=<?php echo $id; ?>" class="btn btn btn-danger btn-xs"><strong>Pagar</strong></a>
+             <?php }?>
         </td>
         
 
-       <?php  }?>
+            <?php   }?>
       
       </tr>
     </tbody>

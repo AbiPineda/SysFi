@@ -39,18 +39,6 @@
                                 <li>
                                     <a href="../carteraCliente/lista_clientes.php">Cartera de clientes</a>
                                 </li>
-                                <li>
-                                    <a href="notifications.html">Notifications</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -96,7 +84,7 @@
 
                         </li>
                         <li>
-                            <a href="../cxc/cobros.php"><i class="fa fa-wrench fa-fw"></i>Cobros y pagos</a>
+                            <a href="../cxc/cobros.php"><i class="fa fa-wrench fa-fw"></i>Estadisticas</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-user"></i> Proveedores<span class="fa arrow"></span></a>
