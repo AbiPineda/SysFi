@@ -403,8 +403,8 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
         $m=round(($guarda*$interesG*(pow((1+$interesG),($mesR*12))))/((pow((1+$interesG),($mesR*12)))-1),2);
 
            
-            mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,interes,cuota,to_interes,meses) 
-                                       VALUES ('$id_cliente','$factura','CXC','$guarda','$fecha','$hora','$intereR','$m','$totalint','$mesR1')");          
+            mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,interes,cuota,to_interes,meses,estadoC) 
+                                       VALUES ('$id_cliente','$factura','CXC','$guarda','$fecha','$hora','$intereR','$m','$totalint','$mesR1','EnProceso')");          
         } else{
                 mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora) 
                                            VALUES ('$mensaje','$factura','ENTRADA','$netoO','$fecha','$hora')");
