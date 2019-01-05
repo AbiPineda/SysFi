@@ -378,7 +378,12 @@ while ($res = mysqli_fetch_array($sql)) {
     echo "<script>
           location.href ='cxc.php?id=$id';
         </script>";
-   }   
+   } 
+   
+   //para incobrabilidad si ya hizo algun abono
+   if (!empty($_POST['si'])) {
+    mysqli_query($conexion,"UPDATE abono SET estado='incobrable' WHERE cuenta='$id'");
+   }
 ?>
 <head>
     <style> 
@@ -442,13 +447,19 @@ input[type=text] {
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <div class="panel-body" align="center">                                                                                 
-                <a href="../cxc/cobros.php">
-                    <button type="button" class="btn btn-primary btn-circle"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
+                <a href="../carteraCliente/lista_clientes.php">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
                     </button></a>
                
 <?php
-if ($deuda-$abonos <> 0&& $estadoA=='EnProceso') {
-    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+if ($deuda-$abonos <> 0 && $estadoA=='EnProceso') {
+    echo ' <button type="button" class="btn btn-success " data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+                                      </button>';
+    //*****incobrable*******
+    echo ' <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#inco"><i class="fa fa-arrow-down fa-2x" title="Agregar Nuevo Abono"></i>
+                                      Incobrable</button>';
+}elseif($estadoA==null){
+     echo '<button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#inco2"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
 }
 ?>        
@@ -498,6 +509,72 @@ if ($deuda-$abonos <> 0&& $estadoA=='EnProceso') {
                 </div>
             </form>
         </div>
+        <!--incobrabilidad-->
+        
+           <div class="modal fade" id="inco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!--<div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <form name="forms" method="post" action="">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                            <h3 align="center" class="modal-title" id="myModalLabel">¿Desea pasar la<br><?php echo 'Cuenta por Cobrar No. ' . $id; ?> a incobrablidad?</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">                                       
+                                <div class="col-md-6">  
+                                    <center>
+                                                <img src="../Imagenes/finanzas.png" width="75px" height="75px"><br>
+                                          <input type="hidden" value="si" name="si">  
+                                            </center>  
+                                    </div>
+                                
+                            </div> 
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-warning">Si</button>
+                        </div>                                       
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!--sino ha realizado ningun abono-->
+        <div class="modal fade" id="inco2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!--<div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <form name="forms" method="post" action="">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                            <h3 align="center" class="modal-title" id="myModalLabel">¿Desea pasar la<br><?php echo 'Cuenta por Cobrar No. ' . $id; ?> a incobrablidad?</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">                                       
+                                <div class="col-md-6">  
+                                    <center>
+                                                <img src="../Imagenes/finanzas.png" width="75px" height="75px"><br>
+                                          <input type="hidden" value="si" name="si2">  
+                                            </center>  
+                                    </div>
+                                
+                            </div> 
+                        </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-warning">Si</button>
+                        </div>                                       
+                    </div>
+                </div>
+            </form>
+        </div>
+      
+        <!--incobrabilidad-->
+        
+        
      
 
         <div class="row">

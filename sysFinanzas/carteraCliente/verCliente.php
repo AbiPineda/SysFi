@@ -5,6 +5,10 @@
 
      $modi = $_GET['ir'];
      
+     
+          
+
+     
 
 
  ?>
@@ -62,13 +66,14 @@
                           <table id="tabla" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>TIPO DE VENTA</th>
-                                            <th>FECHA DE CREDITO</th>
-                                            <th>VALOR</th>
-                                            <th>INTERES</th>
-                                            <th>TOTAL INTERESES</th>
-                                            
-                                            <th>HISTORIAL</th>                                          
+                                            <th>Tipo de venta</th>
+                                            <th>Fecha de credito</th>
+                                            <th>Valor</th>
+                                            <th>Interes</th>
+                                            <th>Total de interes</th>
+                                            <th>Cuota</th>
+                                            <th>Historial</th> 
+                                            <th>Abonar</th> 
                                         </tr>
                                     </thead>
                                     <tbody class="buscar">
@@ -81,6 +86,7 @@
                  $valor=$fila['valor'];  
                   $interes=$fila['interes'];
                     $total_interes=$fila['to_interes']; 
+                    $cuota=$fila['cuota']; 
                      $id=$fila['id_contable']; 
                          
        ?>
@@ -90,12 +96,27 @@
         <th><?php echo $tipo;?></th>
         <td><?php echo $fecha;?></td>
         <td><?php echo $valor;?></td>
-        <td><?php echo $interes;?></td>
+        <td><?php echo $interes.'%';?></td>
        
         <td><?php echo $total_interes;?></td>
+        
+        <td><?php echo $cuota;?></td>
         <td class="center">
             <a href="abonos.php?x=<?php echo $id; ?>&ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
-        </td>                                    
+        </td>  
+        <td class="center">
+            <?php
+             $estadoSacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$id'");
+            while ($fila = mysqli_fetch_array($estadoSacar)) { 
+                $estado=$fila['estado'];
+            }
+            if ($estado=='Finalizado') {
+            ?>
+             <a href="" class="btn btn btn-success btn-xs"><strong>Finalizado</strong></a>
+            <?php }else{?>
+            <a href="../cxc/cxc.php?id=<?php echo $id; ?>" class="btn btn btn-danger btn-xs"><strong>Pagar</strong></a>
+            <?php }?>                             
+        </td>
         
 
        <?php  }?>

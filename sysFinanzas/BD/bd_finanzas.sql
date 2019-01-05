@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-01-2019 a las 18:09:03
+-- Tiempo de generación: 05-01-2019 a las 22:12:39
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -46,8 +46,10 @@ CREATE TABLE `abono` (
 --
 
 INSERT INTO `abono` (`id_abono`, `cuenta`, `valor`, `fecha`, `hora`, `nota`, `total_interes`, `proximo_pago`, `mora`, `estado`) VALUES
-(8, 22, '88.543', '2018-12-30', '07:33:42', 'Sin Observaciones', '9.167', '2019-01-28', 0, NULL),
-(9, 22, '88.281', '2018-12-30', '07:56:10', 'Sin Observaciones', '8.429', '2018-12-14', 0, NULL);
+(1, 1, '168.127', '2019-01-05', '20:20:09', 'Sin Observaciones', '8.583', '2019-01-28', 0, 'incobrable'),
+(2, 1, '169.528', '2019-01-05', '20:32:56', 'Sin Observaciones', '7.182', '2019-01-29', 0, 'incobrable'),
+(3, 1, '170.94', '2019-01-05', '20:33:05', 'Sin Observaciones', '5.77', '2019-01-30', 0, 'incobrable'),
+(4, 1, '172.365', '2019-01-05', '20:33:13', 'Sin Observaciones', '4.345', '2019-01-11', 0, 'incobrable');
 
 -- --------------------------------------------------------
 
@@ -195,41 +197,22 @@ CREATE TABLE `contable` (
   `cuota` float DEFAULT NULL,
   `to_interes` float DEFAULT NULL,
   `observacion` varchar(75) DEFAULT NULL,
-  `meses` varchar(20) DEFAULT NULL
+  `meses` varchar(20) DEFAULT NULL,
+  `estadoC` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `contable`
 --
 
-INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`, `fecha`, `hora`, `clase`, `interes`, `cuota`, `to_interes`, `observacion`, `meses`) VALUES
-(22, '1', '12548741', 'CXC', '1100', '2018-12-28', '03:05:12', NULL, 10, 96.71, 60.5, NULL, NULL),
-(24, 'Abono CXC No. 22', '12548741', 'ENTRADA', '88.543', '2018-12-31', '07:33:42', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL),
-(25, 'Abono CXC No. 22', '12548741', 'ENTRADA', '88.281', '2018-12-12', '07:56:10', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL),
-(27, '2', '12548780', 'CXC', '2160', '2018-12-30', '20:40:21', NULL, 20, 139.89, 358.01, NULL, NULL),
-(28, 'Venta al \"CONTADO\"', '12548781', 'ENTRADA', '1200', '2018-12-30', '20:41:52', NULL, NULL, NULL, NULL, NULL, NULL),
-(29, 'Venta al \"CONTADO\"', '12548782', 'ENTRADA', '120', '2018-12-30', '21:02:01', NULL, NULL, NULL, NULL, NULL, NULL),
-(30, 'Venta al \"CONTADO\"', '12548783', 'ENTRADA', '9492', '2018-12-30', '21:06:34', NULL, NULL, NULL, NULL, NULL, NULL),
-(31, 'Venta al \"CONTADO\"', '12548784', 'ENTRADA', '9492', '2018-12-30', '21:09:15', NULL, NULL, NULL, NULL, NULL, NULL),
-(32, 'Venta al \"CONTADO\"', '12548785', 'ENTRADA', '9492', '2018-12-30', '21:21:30', NULL, NULL, NULL, NULL, NULL, NULL),
-(33, 'Venta al \"CONTADO\"', '12548786', 'ENTRADA', '9492', '2018-12-30', '21:23:30', NULL, NULL, NULL, NULL, NULL, NULL),
-(34, 'Venta al \"CONTADO\"', '12548787', 'ENTRADA', '2712', '2018-12-30', '21:30:17', NULL, NULL, NULL, NULL, NULL, NULL),
-(35, 'Venta al \"CONTADO\"', '12548788', 'ENTRADA', '2712', '2018-12-30', '21:33:56', NULL, NULL, NULL, NULL, NULL, NULL),
-(36, 'Venta al \"CONTADO\"', '12548789', 'ENTRADA', '2712', '2018-12-30', '21:38:10', NULL, NULL, NULL, NULL, NULL, NULL),
-(37, 'Venta al \"CONTADO\"', '12548790', 'ENTRADA', '2712', '2018-12-30', '21:39:11', NULL, NULL, NULL, NULL, NULL, NULL),
-(38, 'Venta al \"CONTADO\"', '12548791', 'ENTRADA', '1130', '2019-01-01', '22:01:52', NULL, NULL, NULL, NULL, NULL, NULL),
-(45, 'Compra al \"CONTADO\"', '12548792', 'SALIDA', '900', '2019-01-02', '06:02:07', NULL, NULL, NULL, NULL, NULL, NULL),
-(46, '2', '12548793', 'CXP', '900', '2019-01-02', '06:29:25', NULL, NULL, NULL, NULL, NULL, NULL),
-(47, '3', '12548794', 'CXP', '900', '2019-01-03', '04:58:17', NULL, NULL, NULL, NULL, NULL, NULL),
-(48, 'Venta al \"CONTADO\"', '12548795', 'ENTRADA', '1130', '2019-01-04', '21:05:12', NULL, NULL, NULL, NULL, NULL, NULL),
-(49, 'Venta al \"\"', '12548796', 'ENTRADA', '1200', '2019-01-04', '21:05:37', NULL, NULL, NULL, NULL, NULL, NULL),
-(50, 'Venta al \"\"', '12548797', 'ENTRADA', '1356', '2019-01-04', '21:07:18', NULL, NULL, NULL, NULL, NULL, NULL),
-(51, 'Venta al \"CONTADO\"', '12548798', 'ENTRADA', '1000', '2019-01-04', '21:14:05', NULL, NULL, NULL, NULL, NULL, NULL),
-(52, '1', '12548799', 'CXC', '25', '2019-01-04', '21:14:27', NULL, 4, 4.22, 0.29, NULL, NULL),
-(53, 'Venta al \"CONTADO\"', '12548800', 'ENTRADA', '146.9', '2019-01-04', '21:14:49', NULL, NULL, NULL, NULL, NULL, NULL),
-(54, '2', '12548801', 'CXC', '120', '2019-01-04', '21:16:37', NULL, 4, 20.23, 1.4, NULL, NULL),
-(55, '3', '12548802', 'CXP', '23', '2019-01-04', '21:25:04', NULL, NULL, NULL, NULL, NULL, NULL),
-(56, '1', '12548803', 'CXC', '30', '2019-01-04', '21:52:02', NULL, 4, 5.06, 0.35, NULL, NULL);
+INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`, `fecha`, `hora`, `clase`, `interes`, `cuota`, `to_interes`, `observacion`, `meses`, `estadoC`) VALUES
+(1, '1', '12548804', 'CXC', '1030', '2019-01-05', '20:09:13', NULL, 10, 176.71, 30.25, NULL, '6', NULL),
+(2, 'Abono CXC No. 1', '12548804', 'ENTRADA', '168.127', '2019-01-05', '20:20:09', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
+(3, 'Abono CXC No. 1', '12548804', 'ENTRADA', '169.528', '2019-01-05', '20:32:56', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
+(4, 'Abono CXC No. 1', '12548804', 'ENTRADA', '170.94', '2019-01-05', '20:33:05', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
+(5, 'Abono CXC No. 1', '12548804', 'ENTRADA', '172.365', '2019-01-05', '20:33:13', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
+(6, 'Abono CXC No. 1', '12548804', 'ENTRADA', '173.801', '2019-01-05', '20:33:21', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
+(7, 'Abono CXC No. 1', '12548804', 'ENTRADA', '175.25', '2019-01-05', '20:33:31', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,36 +250,7 @@ CREATE TABLE `detalle` (
 --
 
 INSERT INTO `detalle` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`, `valor`, `importe`, `tipo`, `fecha`) VALUES
-(68, '12548741', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-28'),
-(69, '12548742', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-28'),
-(70, '12548744', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-28'),
-(71, '12548745', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-28'),
-(72, '12548745', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(73, '12548746', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-28'),
-(74, '12548747', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-28'),
-(75, '12548748', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-28'),
-(76, '12548749', 1, '1', '10', '1200', '12000', 'VENTA', '2018-12-28'),
-(77, '12548750', 2, '2', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(78, '12548750', 1, '1', '1', '1200', '1200', 'VENTA', '2018-12-28'),
-(79, '12548752', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(80, '12548753', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(81, '12548754', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(82, '12548755', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(83, '12548756', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(84, '12548757', 5, '5', '1', '1000', '1000', 'VENTA', '2018-12-28'),
-(111, '12548788', 1, '1', '2', '1200', '2400', 'VENTA', '2018-12-30'),
-(112, '12548789', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30'),
-(113, '12548790', 1, '1', '2', '1200', '2712', 'VENTA', '2018-12-30'),
-(114, '12548791', 5, '5', '1', '1000', '1130', 'VENTA', '2019-01-01'),
-(115, '12548795', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-04'),
-(116, '12548795', 9, '9', '1', '130', '130', 'VENTA', '2019-01-04'),
-(117, '12548796', 1, '1', '1', '1200', '1200', 'VENTA', '2019-01-04'),
-(118, '12548797', 1, '1', '1', '1200', '1356', 'VENTA', '2019-01-04'),
-(119, '12548798', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-04'),
-(120, '12548799', 10, '10', '1', '30', '30', 'VENTA', '2019-01-04'),
-(121, '12548800', 9, '9', '1', '130', '146.9', 'VENTA', '2019-01-04'),
-(122, '12548801', 9, '9', '1', '130', '130', 'VENTA', '2019-01-04'),
-(123, '12548803', 9, '9', '1', '130', '130', 'VENTA', '2019-01-04');
+(1, '12548804', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-05');
 
 -- --------------------------------------------------------
 
@@ -432,7 +386,8 @@ INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
 (86, '12548800', '146.9', '2019-01-04'),
 (87, '12548801', '130', '2019-01-04'),
 (88, '12548802', '23', '2019-01-04'),
-(89, '12548803', '130', '2019-01-04');
+(89, '12548803', '130', '2019-01-04'),
+(90, '12548804', '1130', '2019-01-05');
 
 -- --------------------------------------------------------
 
@@ -499,7 +454,7 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 16, 5, 1000, 1),
+(1, 2, 15, 5, 1000, 1),
 (2, 1, -6, 5, 1200, 1),
 (3, 3, 13, 10, 950, 1),
 (5, 5, -16, 10, 1000, 1),
@@ -529,91 +484,7 @@ CREATE TABLE `kardex` (
 --
 
 INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`, `costoK`, `importe`, `stockk`, `fecha`) VALUES
-(1, '100000001', 'VENTA', 5, 1, 900, 900, 4, '2018-12-24'),
-(2, '100000008', 'COMPRA', 2, 1, 200, 200, 5, '2018-12-25'),
-(53, '12548741', 'VENTA', 2, 3, 900, 2700, 952, '2018-12-27'),
-(54, '12548741', 'VENTA', 1, 2, 900, 1800, 968, '2018-12-27'),
-(55, '12548741', 'VENTA', 2, 3, 900, 2700, 949, '2018-12-27'),
-(56, '12548741', 'VENTA', 1, 2, 900, 1800, 966, '2018-12-27'),
-(57, '12548742', 'VENTA', 2, 3, 900, 2700, 946, '2018-12-27'),
-(58, '12548742', 'VENTA', 1, 2, 900, 1800, 964, '2018-12-27'),
-(59, '12548743', 'VENTA', 2, 3, 900, 2700, 943, '2018-12-27'),
-(60, '12548743', 'VENTA', 1, 2, 900, 1800, 962, '2018-12-27'),
-(61, '12548744', 'VENTA', 2, 3, 900, 2700, 940, '2018-12-27'),
-(62, '12548744', 'VENTA', 1, 2, 900, 1800, 960, '2018-12-27'),
-(63, '12548745', 'VENTA', 2, 3, 900, 2700, 937, '2018-12-27'),
-(64, '12548745', 'VENTA', 1, 2, 900, 1800, 958, '2018-12-27'),
-(65, '12548746', 'VENTA', 1, 2, 900, 1800, 956, '2018-12-27'),
-(66, '12548747', 'VENTA', 1, 1, 900, 900, 955, '2018-12-27'),
-(67, '12548747', 'VENTA', 3, 1, 700, 700, 14, '2018-12-27'),
-(68, '12548747', 'VENTA', 3, 1, 700, 700, 13, '2018-12-27'),
-(69, '', 'VENTA', 5, 1, 300, 300, 14, '0000-00-00'),
-(70, '12548750', 'VENTA', 1, 1, 900, 900, 954, '2018-12-27'),
-(71, '12548751', 'VENTA', 2, 1, 900, 900, 936, '2018-12-27'),
-(72, '12548752', 'VENTA', 5, 1, 300, 300, 13, '2018-12-27'),
-(73, '12548753', 'VENTA', 2, 1, 900, 900, 935, '2018-12-27'),
-(74, '12548755', 'VENTA', 2, 1, 900, 900, 934, '2018-12-27'),
-(75, '12548755', 'VENTA', 1, 1, 900, 900, 953, '2018-12-27'),
-(76, '12548741', 'VENTA', 1, 1, 900, 900, 952, '2018-12-28'),
-(77, '12548742', 'VENTA', 1, 2, 900, 1800, 950, '2018-12-28'),
-(78, '12548744', 'VENTA', 1, 1, 900, 900, 949, '2018-12-28'),
-(79, '12548745', 'VENTA', 1, 1, 900, 900, 948, '2018-12-28'),
-(80, '12548745', 'VENTA', 5, 1, 300, 300, 12, '2018-12-28'),
-(81, '12548746', 'VENTA', 1, 1, 900, 900, 947, '2018-12-28'),
-(82, '12548747', 'VENTA', 1, 1, 900, 900, 946, '2018-12-28'),
-(83, '12548748', 'VENTA', 1, 2, 900, 1800, 944, '2018-12-28'),
-(84, '12548749', 'VENTA', 1, 10, 900, 9000, 934, '2018-12-28'),
-(85, '12548750', 'VENTA', 2, 1, 900, 900, 4, '2018-12-28'),
-(86, '12548750', 'VENTA', 1, 1, 900, 900, 4, '2018-12-28'),
-(87, '12548752', 'VENTA', 5, 1, 300, 300, 11, '2018-12-28'),
-(88, '12548753', 'VENTA', 5, 1, 300, 300, 10, '2018-12-28'),
-(89, '12548754', 'VENTA', 5, 1, 300, 300, 9, '2018-12-28'),
-(90, '12548755', 'VENTA', 5, 1, 300, 300, 8, '2018-12-28'),
-(91, '12548756', 'VENTA', 5, 1, 300, 300, 7, '2018-12-28'),
-(92, '12548757', 'VENTA', 5, 1, 300, 300, 6, '2018-12-28'),
-(93, '12548758', 'VENTA', 5, 1, 300, 300, 5, '2018-12-28'),
-(94, '12548759', 'VENTA', 5, 1, 300, 300, 4, '2018-12-28'),
-(95, '12548760', 'VENTA', 5, 1, 300, 300, 3, '2018-12-28'),
-(96, '12548761', 'VENTA', 5, 1, 300, 300, 2, '2018-12-28'),
-(97, '12548762', 'VENTA', 5, 1, 300, 300, 1, '2018-12-28'),
-(98, '12548763', 'VENTA', 5, 1, 300, 300, 0, '2018-12-28'),
-(99, '12548764', 'VENTA', 5, 1, 300, 300, -1, '2018-12-28'),
-(100, '12548765', 'VENTA', 5, 1, 300, 300, -2, '2018-12-28'),
-(101, '12548766', 'VENTA', 5, 1, 300, 300, -3, '2018-12-28'),
-(102, '12548767', 'VENTA', 5, 1, 300, 300, -4, '2018-12-28'),
-(103, '12548768', 'VENTA', 5, 1, 300, 300, -5, '2018-12-28'),
-(104, '12548769', 'VENTA', 5, 1, 300, 300, -6, '2018-12-28'),
-(105, '12548770', 'VENTA', 5, 1, 300, 300, -7, '2018-12-28'),
-(106, '12548771', 'VENTA', 5, 1, 300, 300, -8, '2018-12-28'),
-(107, '12548772', 'VENTA', 5, 1, 300, 300, -9, '2018-12-28'),
-(108, '12548773', 'VENTA', 5, 1, 300, 300, -10, '2018-12-28'),
-(109, '12548774', 'VENTA', 5, 1, 300, 300, -11, '2018-12-28'),
-(110, '12548775', 'VENTA', 5, 1, 300, 300, -12, '2018-12-28'),
-(111, '12548776', 'VENTA', 5, 1, 300, 300, -13, '2018-12-28'),
-(112, '12548777', 'VENTA', 5, 1, 300, 300, -14, '2018-12-28'),
-(113, '12548778', 'VENTA', 5, 1, 300, 300, -15, '2018-12-28'),
-(114, '12548779', 'VENTA', 1, 1, 900, 900, 3, '2018-12-30'),
-(115, '12548780', 'VENTA', 2, 2, 900, 1800, 8, '2018-12-30'),
-(116, '12548781', 'VENTA', 1, 1, 900, 900, 9, '2018-12-30'),
-(117, '12548784', 'VENTA', 1, 7, 900, 6300, 2, '2018-12-30'),
-(118, '12548787', 'VENTA', 1, 2, 900, 1800, 0, '2018-12-30'),
-(119, '12548788', 'VENTA', 1, 2, 900, 1800, -2, '2018-12-30'),
-(120, '12548789', 'VENTA', 1, 2, 900, 1800, -4, '2018-12-30'),
-(121, '12548790', 'VENTA', 1, 2, 900, 1800, -6, '2018-12-30'),
-(122, '12548791', 'VENTA', 5, 1, 300, 300, -16, '2019-01-01'),
-(132, '12548792', 'COMPRA', 2, 1, 900, 900, 18, '2019-01-02'),
-(133, '12548793', 'COMPRA', 1, 1, 900, 900, -5, '2019-01-02'),
-(134, '12548794', 'COMPRA', 1, 1, 900, 900, -4, '2019-01-03'),
-(135, '12548795', 'VENTA', 2, 1, 900, 900, 17, '2019-01-04'),
-(136, '12548795', 'VENTA', 9, 1, 119, 119, 4, '2019-01-04'),
-(137, '12548796', 'VENTA', 1, 1, 900, 900, -5, '2019-01-04'),
-(138, '12548797', 'VENTA', 1, 1, 900, 900, -6, '2019-01-04'),
-(139, '12548798', 'VENTA', 2, 1, 900, 900, 16, '2019-01-04'),
-(140, '12548799', 'VENTA', 10, 1, 23, 23, 9, '2019-01-04'),
-(141, '12548800', 'VENTA', 9, 1, 119, 119, 3, '2019-01-04'),
-(142, '12548801', 'VENTA', 9, 1, 119, 119, 2, '2019-01-04'),
-(143, '12548802', 'COMPRA', 10, 1, 23, 23, 10, '2019-01-04'),
-(144, '12548803', 'VENTA', 9, 1, 119, 119, 1, '2019-01-04');
+(1, '12548804', 'VENTA', 2, 1, 900, 900, 15, '2019-01-05');
 
 -- --------------------------------------------------------
 
@@ -677,58 +548,7 @@ CREATE TABLE `resumen` (
 --
 
 INSERT INTO `resumen` (`id_resumen`, `id_clientes`, `concepto`, `factura`, `clase`, `valor`, `tipo`, `fecha`, `hora`, `status`) VALUES
-(12, 1, 'Venta al \"CREDITO\"', '12548741', 'VENTA', '1200', 'VENTA', '2018-12-28', '03:05:12', 'CREDITO'),
-(13, 1, 'Venta al \"CREDITO\"', '12548742', 'VENTA', '2400', 'VENTA', '2018-12-28', '05:46:51', 'CREDITO'),
-(14, 1, 'Venta al \"CREDITO\"', '12548744', 'VENTA', '1200', 'VENTA', '2018-12-28', '05:51:09', 'CREDITO'),
-(15, 1, 'Venta al \"CREDITO\"', '12548745', 'VENTA', '2200', 'VENTA', '2018-12-28', '06:06:01', 'CREDITO'),
-(16, 1, 'Venta al \"CONTADO\"', '12548746', 'VENTA', '1200', 'VENTA', '2018-12-28', '06:19:06', 'CONTADO'),
-(17, 1, 'Venta al \"CREDITO\"', '12548747', 'VENTA', '1200', 'VENTA', '2018-12-28', '06:20:17', 'CREDITO'),
-(18, 1, 'Venta al \"CONTADO\"', '12548748', 'VENTA', '2400', 'VENTA', '2018-12-28', '06:23:13', 'CONTADO'),
-(19, 1, 'Venta al \"CONTADO\"', '12548749', 'VENTA', '12000', 'VENTA', '2018-12-28', '06:25:20', 'CONTADO'),
-(20, 1, 'Venta al \"CONTADO\"', '12548750', 'VENTA', '2200', 'VENTA', '2018-12-28', '06:58:33', 'CONTADO'),
-(22, 1, 'Venta al \"CONTADO\"', '12548752', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:03:34', 'CONTADO'),
-(23, 1, 'Venta al \"CONTADO\"', '12548753', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:04:30', 'CONTADO'),
-(24, 1, 'Venta al \"CONTADO\"', '12548754', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:06:45', 'CONTADO'),
-(25, 1, 'Venta al \"CONTADO\"', '12548755', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:07:07', 'CONTADO'),
-(26, 1, 'Venta al \"CONTADO\"', '12548756', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:07:35', 'CONTADO'),
-(27, 1, 'Venta al \"CONTADO\"', '12548757', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:08:32', 'CONTADO'),
-(28, 1, 'Venta al \"CONTADO\"', '12548758', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:08:47', 'CONTADO'),
-(29, 1, 'Venta al \"CONTADO\"', '12548759', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:09:49', 'CONTADO'),
-(30, 1, 'Venta al \"CONTADO\"', '12548760', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:10:23', 'CONTADO'),
-(31, 1, 'Venta al \"CONTADO\"', '12548761', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:12:43', 'CONTADO'),
-(32, 1, 'Venta al \"CONTADO\"', '12548762', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:12:52', 'CONTADO'),
-(33, 1, 'Venta al \"CONTADO\"', '12548763', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:12:55', 'CONTADO'),
-(34, 1, 'Venta al \"CONTADO\"', '12548764', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:12:55', 'CONTADO'),
-(35, 1, 'Venta al \"CONTADO\"', '12548765', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:13:08', 'CONTADO'),
-(36, 1, 'Venta al \"CONTADO\"', '12548766', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:15:03', 'CONTADO'),
-(37, 1, 'Venta al \"CONTADO\"', '12548767', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:15:46', 'CONTADO'),
-(38, 1, 'Venta al \"CONTADO\"', '12548768', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:16:20', 'CONTADO'),
-(39, 1, 'Venta al \"CONTADO\"', '12548769', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:16:45', 'CONTADO'),
-(40, 1, 'Venta al \"CONTADO\"', '12548770', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:17:05', 'CONTADO'),
-(41, 1, 'Venta al \"CONTADO\"', '12548771', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:17:19', 'CONTADO'),
-(42, 1, 'Venta al \"CONTADO\"', '12548772', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:17:44', 'CONTADO'),
-(43, 1, 'Venta al \"CONTADO\"', '12548773', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:18:22', 'CONTADO'),
-(44, 1, 'Venta al \"CONTADO\"', '12548774', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:18:41', 'CONTADO'),
-(45, 1, 'Venta al \"CONTADO\"', '12548775', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:19:14', 'CONTADO'),
-(46, 1, 'Venta al \"CREDITO\"', '12548776', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:24:04', 'CREDITO'),
-(47, 1, 'Venta al \"CREDITO\"', '12548777', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:27:07', 'CREDITO'),
-(48, 1, 'Venta al \"CREDITO\"', '12548778', 'VENTA', '1000', 'VENTA', '2018-12-28', '07:29:56', 'CREDITO'),
-(50, 2, 'Venta al \"CREDITO\"', '12548780', 'VENTA', '2260', 'VENTA', '2018-12-30', '20:40:21', 'CREDITO'),
-(51, 2, 'Venta al \"CONTADO\"', '12548781', 'VENTA', '1200', 'VENTA', '2018-12-30', '20:41:52', 'CONTADO'),
-(56, 1, 'Venta al \"CONTADO\"', '12548786', 'VENTA', '9492', 'VENTA', '2018-12-30', '21:23:30', 'CONTADO'),
-(57, 2, 'Venta al \"CONTADO\"', '12548787', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:30:17', 'CONTADO'),
-(58, 2, 'Venta al \"CONTADO\"', '12548788', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:33:56', 'CONTADO'),
-(59, 2, 'Venta al \"CONTADO\"', '12548789', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:38:10', 'CONTADO'),
-(60, 2, 'Venta al \"CONTADO\"', '12548790', 'VENTA', '2712', 'VENTA', '2018-12-30', '21:39:11', 'CONTADO'),
-(61, 1, 'Venta al \"CONTADO\"', '12548791', 'VENTA', '1130', 'VENTA', '2019-01-01', '22:01:52', 'CONTADO'),
-(62, 1, 'Venta al \"CONTADO\"', '12548795', 'VENTA', '1130', 'VENTA', '2019-01-04', '21:05:12', 'CONTADO'),
-(63, 1, 'Venta al \"\"', '12548796', 'VENTA', '1200', 'VENTA', '2019-01-04', '21:05:37', ''),
-(64, 2, 'Venta al \"\"', '12548797', 'VENTA', '1356', 'VENTA', '2019-01-04', '21:07:18', ''),
-(65, 1, 'Venta al \"CONTADO\"', '12548798', 'VENTA', '1000', 'VENTA', '2019-01-04', '21:14:05', 'CONTADO'),
-(66, 1, 'Venta al \"CREDITO\"', '12548799', 'VENTA', '30', 'VENTA', '2019-01-04', '21:14:27', 'CREDITO'),
-(67, 1, 'Venta al \"CONTADO\"', '12548800', 'VENTA', '146.9', 'VENTA', '2019-01-04', '21:14:49', 'CONTADO'),
-(68, 2, 'Venta al \"CREDITO\"', '12548801', 'VENTA', '130', 'VENTA', '2019-01-04', '21:16:37', 'CREDITO'),
-(69, 1, 'Venta al \"CREDITO\"', '12548803', 'VENTA', '130', 'VENTA', '2019-01-04', '21:52:02', 'CREDITO');
+(1, 1, 'Venta al \"CREDITO\"', '12548804', 'VENTA', '1130', 'VENTA', '2019-01-05', '20:09:13', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -1049,7 +869,7 @@ ALTER TABLE `venta_temp`
 -- AUTO_INCREMENT de la tabla `abono`
 --
 ALTER TABLE `abono`
-  MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `activo`
@@ -1085,7 +905,7 @@ ALTER TABLE `clientcred_tmp`
 -- AUTO_INCREMENT de la tabla `cliente_temp`
 --
 ALTER TABLE `cliente_temp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `compra_tmp`
@@ -1097,7 +917,7 @@ ALTER TABLE `compra_tmp`
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `departamento`
@@ -1109,7 +929,7 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
@@ -1133,7 +953,7 @@ ALTER TABLE `estado`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de la tabla `factura_compra`
@@ -1157,7 +977,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -1175,7 +995,7 @@ ALTER TABLE `prov_tmp`
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen_compra`
@@ -1211,7 +1031,7 @@ ALTER TABLE `ventac_temp`
 -- AUTO_INCREMENT de la tabla `venta_temp`
 --
 ALTER TABLE `venta_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

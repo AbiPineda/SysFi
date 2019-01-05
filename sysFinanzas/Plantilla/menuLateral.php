@@ -19,7 +19,25 @@
                                     <a href="../Registros/registroCliente.php">Registro de Cliente</a>
                                 </li>
                                 <li>
-                                    <a href="../Cliente/lista_clientes.php"">Lista de Clientes</a>
+                                    <a href="notifications.html">Notifications</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html">Typography</a>
+                                </li>
+                                <li>
+                                    <a href="icons.html"> Icons</a>
+                                </li>
+                                <li>
+                                    <a href="grid.html">Grid</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                         <li>
+                            <a href="#"><i class="fa fa-users"></i>Cartera Clientes<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="../carteraCliente/lista_clientes.php">Cartera de clientes</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Notifications</a>

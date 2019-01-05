@@ -5,6 +5,11 @@
 
      $modi = $_GET['ir'];
      $cuenta=$_GET['x'];
+     
+           $estadoSacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$cuenta'");
+            while ($fila = mysqli_fetch_array($estadoSacar)) { 
+                $estado=$fila['estado'];
+            }
 
 
  ?>
@@ -45,28 +50,40 @@
                                                       $dui=$fila['dui'];
 
                                                        ?>
-                                            <label class="col-md-1 control-label">Cliente:</label>
+                                            <div class="row">
                                             <div class="col-md-5">
+                                                 <label >Cliente:</label>
                                                 <input type="text" class="form-control" name="cliente" value="<?php echo $nombre; ?>" disabled>
                                             </div>
-
-                                            <label class="col-md-1 control-label">DUI:</label>
                                             <div class="col-md-2">
+                                                 <label>DUI:</label>
                                                 <input type="text" class="form-control" name="dui" value="<?php echo $dui; ?>" disabled>
-                                            </div>  
-
+                                            </div> 
+                                            
+                                            <div class="col-md-4">
+                                    
+                                                <label >Estado del Credito:</label>
+                                                <?php if ($estado=='Finalizado'){?>
+                                                <input type="text" class="form-control" name="dui" value="Finalizado" disabled>
+                                                <?php }elseif($estado=='EnProceso'){?>
+                                                 <input type="text" class="form-control" name="dui" value="En proceso" disabled>
+                                                <?php }else{?>
+                                                 <input type="text" class="form-control" name="dui" value="Incobrable" disabled>
+                                                <?php }?>
+                                            </div> 
+                                            </div>
                           <br>
-                           <br>
                             
                          </div>
                           <table id="tabla" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
                                            <tr>
-                                            <th>ABONO</th>
-                                            <th>FECHA</th>
-                                            <th>NOTA</th>
-                                            <th>MORA</th>                                        
+                                            <th>Abono</th>
+                                            <th>Fecha</th>
+                                            <th>Nota</th>
+                                            <th>Mora</th> 
+                                           
                                         </tr>                                      
                                         </tr>
                                     </thead>
@@ -93,7 +110,6 @@
         <?php }else{?>
         <td>PAGO MORA</td>
         <?php }?>
-
        <?php  }?>
       </tr>
     </tbody>
