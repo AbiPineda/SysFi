@@ -94,6 +94,7 @@ $fecha=date('Y-m-d');
                                 $neto=0;$item=0;
                                 $pa=mysqli_query($conexion,"SELECT * FROM prov_tmp, proveedor WHERE prov_tmp.proveedor=proveedor.idproveedor");                
                                 while($row=mysqli_fetch_array($pa)){
+                                    $provee=$row['idproveedor'];
                                     ############# FECHA ######################
                                     if($row['fecha']==NULL){
                                         
@@ -153,7 +154,7 @@ $fecha=date('Y-m-d');
                                     <datalist id="browsers">
                                         <?php
                                             $pa=mysqli_query($conexion,"SELECT*FROM articulos INNER JOIN inventario ON articulos.idarticulos=inventario.id_articulos
-INNER JOIN proveedor ON proveedor.idproveedor=articulos.idproveedor");               
+INNER JOIN proveedor ON proveedor.idproveedor=articulos.idproveedor WHERE proveedor.idproveedor='$provee'");               
                                             while($row=mysqli_fetch_array($pa)){
                                                 echo '<option value="'.$row['nombre'].'">';
                                             }
