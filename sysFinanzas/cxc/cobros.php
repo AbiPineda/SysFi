@@ -152,7 +152,7 @@ $ejeYsalidas = mysqli_query($conexion, "SELECT tipo,fecha FROM contable WHERE ti
                 <div class="panel panel-green">
                     <div class="panel-heading">
                         <!--                             VENTAS, COMPRAS, CXC Y CXP-->
-                        VENTAS,CUENTAS POR COBRAR,CUENTAS POR PAGAR
+                        VENTAS
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered">
@@ -198,18 +198,18 @@ $ejeYsalidas = mysqli_query($conexion, "SELECT tipo,fecha FROM contable WHERE ti
                             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>DESCRIPCION</th>                                                                                      
-                                        <th>TIPO</th>                                                                                     
-                                        <th>FECHA REGISTRO</th>
-                                        <th>VALOR</th>
+                                       
+                                        <th>Descripcion</th>                                                                                      
+                                        <th>Tipo</th>                                                                                     
+                                        <th>Fecha</th>
+                                        <th>Valor</th>
 
                                         <th></th>                                         
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = mysqli_query($conexion, "SELECT * FROM contable");
+                                    $sql = mysqli_query($conexion, "SELECT*FROM contable WHERE concepto1='Venta al CONTADO' OR concepto1='Compra al CONTADO'");
                                     while ($row = mysqli_fetch_array($sql)) {
                                         if ($row['tipo'] == 'ENTRADA') {
                                             $tipo = '<span class="label label-success">Entrada</span>';
@@ -237,7 +237,7 @@ $ejeYsalidas = mysqli_query($conexion, "SELECT tipo,fecha FROM contable WHERE ti
                                         }
                                         ?>
                                         <tr class="odd gradeX">
-                                            <td><?php echo $row['id_contable'] ?></td>
+                                          
                                             <td><?php echo $c_nombre; ?></td>
                                             <td><center><?php echo $tipo; ?></center></td>
                                     <td><center><?php echo $row['fecha']; ?></center></td>

@@ -195,7 +195,7 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
         ######## GUARDAMOS LA INFORMACION DE LA FACTURA EN LA TABLA COMPRA
         $fecha=date('Y-m-d');                   
         $hora=date('H:i:s');
-        $mensaje='Compra al "'.$pago.'"';
+        $mensaje='Compra al '.$pago.'';
 
          
         mysqli_query($conexion,"INSERT INTO resumen_compra (id_proveedor,concepto,factura,clase,valor,tipo,fecha,hora,status) 

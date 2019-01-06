@@ -200,13 +200,13 @@ input[type=text] {
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <div class="panel-body" align="center">                                                                                 
-                <a href="../cxc/cobros.php">
-                    <button type="button" class="btn btn-primary btn-circle"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
+                <a href="../carteraPagos/lista_Proveedores.php">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
                     </button></a>
                
 <?php
 if ($deuda-$abonos <> 0) {
-    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+    echo ' <button type="button" class="btn btn-success" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
 }
 ?>        

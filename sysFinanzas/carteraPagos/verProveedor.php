@@ -21,7 +21,7 @@
                         <br/>
                          <div class="panel panel-green">
                         <div class="panel-heading">
-                             CARTERA DE CREDITOS A CLIENTE
+                             CARTERA DE PAGOS A PROVEEDORES
                         </div>
                         <div class="panel-body">
              <div class="col-md-8">
@@ -42,21 +42,21 @@
 
                                          <?php
                                     include_once '../conexion/php_conexion.php';
-                                    $sacar = mysqli_query($conexion, "SELECT*FROM tb_cliente WHERE id_cliente='$modi'");
+                                    $sacar = mysqli_query($conexion, "SELECT*FROM proveedor WHERE idproveedor='$modi'");
                                     while ($fila = mysqli_fetch_array($sacar)) {
-                                                      $modificar=$fila['id_cliente'];
-                                                      $nombre=$fila['nombre_cliente'];
-                                                      $dui=$fila['dui'];
+                                                      $modificar=$fila['idproveedor'];
+                                                      $nombre=$fila['proveedor'];
+                                                      $tel=$fila['telefono'];
 
                                                        ?>
-                                            <label class="col-md-1 control-label">Cliente:</label>
+                                            <label class="col-md-1 control-label">Proveedor:</label>
                                             <div class="col-md-5">
                                                 <input type="text" class="form-control" name="cliente" value="<?php echo $nombre; ?>" disabled>
                                             </div>
 
-                                            <label class="col-md-1 control-label">DUI:</label>
+                                            <label class="col-md-1 control-label">Telefono:</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control" name="dui" value="<?php echo $dui; ?>" disabled>
+                                                <input type="text" class="form-control" name="dui" value="<?php echo $tel; ?>" disabled>
                                             </div>  
 
                           <br>
@@ -69,24 +69,20 @@
                                             <th>Tipo de venta</th>
                                             <th>Fecha de credito</th>
                                             <th>Valor</th>
-                                            <th>Interes</th>
-                                            <th>Total de interes</th>
-                                            <th>Cuota</th>
+                                            
                                             <th>Historial</th> 
                                             <th>Abonar</th> 
                                         </tr>
                                     </thead>
                                     <tbody class="buscar">
                                       <?php
-        $sacar = mysqli_query($conexion, "SELECT*FROM tb_cliente INNER JOIN contable ON tb_cliente.id_cliente=contable.concepto1 WHERE contable.concepto1='$modi' AND tipo='CXC'");
+        $sacar = mysqli_query($conexion, "SELECT*FROM proveedor INNER JOIN contable ON proveedor.idproveedor=contable.concepto1 WHERE contable.concepto1='$modi' AND tipo='CXP'");
             while ($fila = mysqli_fetch_array($sacar)) {
              
                  $tipo=$fila['tipo'];  
                  $fecha=$fila['fecha'];
                  $valor=$fila['valor'];  
-                  $interes=$fila['interes'];
-                    $total_interes=$fila['to_interes']; 
-                    $cuota=$fila['cuota']; 
+                
                      $id=$fila['id_contable']; 
                          
        ?>
@@ -96,31 +92,14 @@
         <th><?php echo $tipo;?></th>
         <td><?php echo $fecha;?></td>
         <td><?php echo $valor;?></td>
-        <td><?php echo $interes.'%';?></td>
-       
-        <td><?php echo $total_interes;?></td>
         
-        <td><?php echo $cuota;?></td>
         <td class="center">
             <a href="abonos.php?x=<?php echo $id; ?>&ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
         </td>  
         <td class="center">
-            <?php
-             $estadoSacar = mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$id'");
-             if (mysqli_num_rows($estadoSacar)>0) {
-                 
-             
-            while ($fila = mysqli_fetch_array($estadoSacar)) { 
-                $estado=$fila['estado'];
-            }
-            if ($estado=='Finalizado') {
-            ?>
-             <a href="" class="btn btn btn-success btn-xs"><strong>Finalizado</strong></a>
-            <?php }else{?>
-            <a href="../cxc/cxc.php?id=<?php echo $id; ?>" class="btn btn btn-danger btn-xs"><strong>Pagar</strong></a>
-             <?php }}else{?>
-            <a href="../cxc/cxc.php?id=<?php echo $id; ?>" class="btn btn btn-danger btn-xs"><strong>Pagar</strong></a>
-             <?php }?>
+      
+            <a href="../cxc/cxp.php?id=<?php echo $id; ?>" class="btn btn btn-danger btn-xs"><strong>Pagar</strong></a>
+            
         </td>
         
 

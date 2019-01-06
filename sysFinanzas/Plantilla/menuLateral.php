@@ -42,6 +42,15 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                         <li>
+                            <a href="#"><i class="fa fa-users"></i>Cartera de pagos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="../carteraPagos/lista_Proveedores.php">Cartera pago a proveedores</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         <li>
                             <a href="#"><i class="fa fa-barcode"></i> Articulos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

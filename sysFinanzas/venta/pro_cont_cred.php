@@ -377,7 +377,7 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
         ######## GUARDAMOS LA INFORMACION DE LA FACTURA EN LAS TABLAS
         $fecha=date('Y-m-d');                   
         $hora=date('H:i:s');
-        $mensaje='Venta al "'.$pago.'"';
+        $mensaje='Venta al '.$pago.'';
       
        mysqli_query($conexion,"INSERT INTO resumen (id_clientes,concepto,factura,clase,valor,tipo,fecha,hora,status) 
                                   VALUES ('$id_cliente','$mensaje','$factura','VENTA','$netoO','VENTA','$fecha','$hora','$pago')");
