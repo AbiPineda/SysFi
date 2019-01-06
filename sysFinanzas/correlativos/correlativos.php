@@ -54,7 +54,7 @@ class correlativos {
                         $tipo->setId_tipo($fila['id_tipo']);
                         $tipo->setId_nombre($fila['nombre']);
                         $tipo->setId_correlativo($fila['correlativo']);
-                        $tipo->setId_clasificacion($fila['id_clasificacion']);
+                        $tipo->setId_clasificacion($fila['idclasificacion']);
                         $lista[] = $tipo;
                     }
                 }
@@ -78,7 +78,7 @@ class correlativos {
                 if (count($resultado)) {
                     foreach ($resultado as $fila) {
                         $departamento = new departamento();
-                        $departamento->setId_departamento($fila['id_departamento']);
+                        $departamento->setIddepartamento($fila['id_departamento']);
                         $departamento->setNombre($fila['nombre']);
                         $departamento->setCorrelativo($fila['correlativo']);
                         
@@ -165,7 +165,7 @@ class correlativos {
                         $encargado->setNombre($fila['nombre']);
                         $encargado->setApellido($fila['apellidos']);
                         $encargado->setDui($fila['dui']);
-                        $encargado->setDui($fila['nit']);
+                        $encargado->setNit($fila['nit']);
                         
                         
                         $lista[] = $encargado;
