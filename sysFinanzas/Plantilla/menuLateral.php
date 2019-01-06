@@ -109,14 +109,35 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li class="active">
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> dss<span class="fa arrow"></span></a>
+
+                        
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i>Activo Fijo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="">nose</a>
+                                    <a href="../activo/lista_activos.php">Activos Registrados</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Registros <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="../Registros/registroEncargado.php">Registro Encargado</a>
+                                        </li>
+                                        <li>
+                                            <a href="../Registros/registroDepartamento.php">Registro Departamento</a>
+                                        </li>
+                                        <li>
+                                            <a href="../Registros/registroTipoActivo.php">Registro Tipo de Activo</a>
+                                        </li>
+                                        <li>
+                                            <a href="../Registros/registroActivo.php">Registro Activo</a>
+                                        </li>
+                                        
+                                    </ul>
+                                    <!-- /.nav-third-level -->
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

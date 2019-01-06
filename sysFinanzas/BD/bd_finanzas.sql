@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-01-2019 a las 22:12:39
+-- Tiempo de generación: 06-01-2019 a las 21:28:07
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -59,16 +59,30 @@ INSERT INTO `abono` (`id_abono`, `cuenta`, `valor`, `fecha`, `hora`, `nota`, `to
 
 CREATE TABLE `activo` (
   `idactivo` int(10) NOT NULL,
+  `idtipo` int(10) DEFAULT NULL,
+  `iddepartamento` int(10) DEFAULT NULL,
+  `idusuario` int(10) DEFAULT NULL,
+  `idencargado` int(10) DEFAULT NULL,
   `correlativo` varchar(45) DEFAULT NULL,
   `fecha_adquisicion` date DEFAULT NULL,
   `descripcion` varchar(200) DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL,
   `observaciones` varchar(200) DEFAULT NULL,
-  `idtipo` int(10) DEFAULT NULL,
-  `idinstitucion` int(10) DEFAULT NULL,
-  `idestado` int(10) DEFAULT NULL,
-  `idusuario` int(10) DEFAULT NULL
+  `precio` double DEFAULT NULL,
+  `tiempo_uso` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `activo`
+--
+
+INSERT INTO `activo` (`idactivo`, `idtipo`, `iddepartamento`, `idusuario`, `idencargado`, `correlativo`, `fecha_adquisicion`, `descripcion`, `estado`, `observaciones`, `precio`, `tiempo_uso`) VALUES
+(1, 1, 8, 1, 2, '0001', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4),
+(2, 1, 8, 1, 2, '0002', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4),
+(3, 1, 8, 1, 1, '0003', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2),
+(4, 1, 8, 1, 1, '0004', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2),
+(5, 1, 8, 1, 2, '0005', '2018-12-01', 'ñañaña', 'ACTIVO', '', 5300, 1),
+(6, 1, 8, 1, 1, '0006', '2018-12-01', 'hello', 'ACTIVO', 'oha', 1200, 1);
 
 -- --------------------------------------------------------
 
@@ -141,6 +155,19 @@ CREATE TABLE `clasificacion` (
   `correlativo` varchar(45) DEFAULT NULL,
   `tiempo_depreciacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `clasificacion`
+--
+
+INSERT INTO `clasificacion` (`id_clasificacion`, `nombre`, `correlativo`, `tiempo_depreciacion`) VALUES
+(1, 'Moviliario y Equipo de Administracion', '0001', 120),
+(2, 'Vehiculos', '0002', 60),
+(3, 'Maquinaria', '0003', 60),
+(4, 'Edificio', '0004', 240),
+(5, 'Terrenos', '0005', 0),
+(6, 'Equipo de Computo y Tecnologias de Informacion', '0006', 36),
+(7, 'Equipos de Generacion Electrica', '0007', 120);
 
 -- --------------------------------------------------------
 
@@ -222,10 +249,17 @@ INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`
 
 CREATE TABLE `departamento` (
   `id_departamento` int(10) NOT NULL,
+  `idinstitucion` int(10) DEFAULT NULL,
   `nombre` varchar(100) DEFAULT NULL,
-  `correlativo` varchar(45) DEFAULT NULL,
-  `idencargado` int(10) DEFAULT NULL
+  `correlativo` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `departamento`
+--
+
+INSERT INTO `departamento` (`id_departamento`, `idinstitucion`, `nombre`, `correlativo`) VALUES
+(8, 2, 'compras', '0001');
 
 -- --------------------------------------------------------
 
@@ -294,17 +328,13 @@ CREATE TABLE `encargado` (
   `nit` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `estado`
+-- Volcado de datos para la tabla `encargado`
 --
 
-CREATE TABLE `estado` (
-  `id_estado` int(10) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `tiempo_de_uso` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `encargado` (`id_encargado`, `nombre`, `apellidos`, `dui`, `nit`) VALUES
+(1, 'Francisco ', 'Pineda Fernandez', '34234324-2', '1010-190167-123-2'),
+(2, 'Abigail', 'Pineda', '12324324-2', '3434-234324-234-4');
 
 -- --------------------------------------------------------
 
@@ -423,16 +453,15 @@ CREATE TABLE `institucion` (
   `ideTributaria` varchar(25) NOT NULL,
   `direccion` varchar(50) NOT NULL,
   `telefono` varchar(10) NOT NULL,
-  `correlativo` varchar(45) DEFAULT NULL,
-  `iddepartamento` int(10) DEFAULT NULL
+  `correlativo` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `institucion`
 --
 
-INSERT INTO `institucion` (`idInstitucion`, `nombre`, `abreviatura`, `ideTributaria`, `direccion`, `telefono`, `correlativo`, `iddepartamento`) VALUES
-(1, 'GMG COMERCIAL EL SALVADOR, SOCIEDAD ANONIMA DE CAPITAL VARIABLE', 'GMG COMERCIAL EL SALVADOR, S.A DE C.V', '0614-100805-106-7', 'San Salvador, departamento de San Salvador', '2353-2343', NULL, NULL);
+INSERT INTO `institucion` (`idInstitucion`, `nombre`, `abreviatura`, `ideTributaria`, `direccion`, `telefono`, `correlativo`) VALUES
+(2, 'Los coquitos de El Salvador', 'Los coquitos de S.A de C.V', '1221-234212-123-1', 'colonia san benito, san salvador', '1212-1212', '0002');
 
 -- --------------------------------------------------------
 
@@ -614,6 +643,13 @@ CREATE TABLE `tipo_activo` (
   `idclasificacion` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tipo_activo`
+--
+
+INSERT INTO `tipo_activo` (`id_tipo`, `nombre`, `correlativo`, `idclasificacion`) VALUES
+(1, 'camioneta', '0001', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -676,9 +712,9 @@ ALTER TABLE `abono`
 ALTER TABLE `activo`
   ADD PRIMARY KEY (`idactivo`),
   ADD KEY `idtipo` (`idtipo`),
-  ADD KEY `idinstitucion` (`idinstitucion`),
-  ADD KEY `idestado` (`idestado`),
-  ADD KEY `idusuario` (`idusuario`);
+  ADD KEY `idusuario` (`idusuario`),
+  ADD KEY `idencargado` (`idencargado`),
+  ADD KEY `iddepartamento` (`iddepartamento`);
 
 --
 -- Indices de la tabla `articulos`
@@ -734,7 +770,7 @@ ALTER TABLE `contable`
 --
 ALTER TABLE `departamento`
   ADD PRIMARY KEY (`id_departamento`),
-  ADD KEY `idencargado` (`idencargado`);
+  ADD KEY `idinstitucion` (`idinstitucion`);
 
 --
 -- Indices de la tabla `detalle`
@@ -759,12 +795,6 @@ ALTER TABLE `encargado`
   ADD PRIMARY KEY (`id_encargado`);
 
 --
--- Indices de la tabla `estado`
---
-ALTER TABLE `estado`
-  ADD PRIMARY KEY (`id_estado`);
-
---
 -- Indices de la tabla `factura`
 --
 ALTER TABLE `factura`
@@ -782,8 +812,7 @@ ALTER TABLE `factura_compra`
 -- Indices de la tabla `institucion`
 --
 ALTER TABLE `institucion`
-  ADD PRIMARY KEY (`idInstitucion`),
-  ADD KEY `iddepartamento` (`iddepartamento`);
+  ADD PRIMARY KEY (`idInstitucion`);
 
 --
 -- Indices de la tabla `inventario`
@@ -869,13 +898,13 @@ ALTER TABLE `venta_temp`
 -- AUTO_INCREMENT de la tabla `abono`
 --
 ALTER TABLE `abono`
-  MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_abono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `activo`
 --
 ALTER TABLE `activo`
-  MODIFY `idactivo` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idactivo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `articulos`
@@ -893,7 +922,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `clasificacion`
 --
 ALTER TABLE `clasificacion`
-  MODIFY `id_clasificacion` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_clasificacion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `clientcred_tmp`
@@ -905,7 +934,7 @@ ALTER TABLE `clientcred_tmp`
 -- AUTO_INCREMENT de la tabla `cliente_temp`
 --
 ALTER TABLE `cliente_temp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `compra_tmp`
@@ -923,7 +952,7 @@ ALTER TABLE `contable`
 -- AUTO_INCREMENT de la tabla `departamento`
 --
 ALTER TABLE `departamento`
-  MODIFY `id_departamento` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_departamento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
@@ -941,13 +970,7 @@ ALTER TABLE `detalle_compra`
 -- AUTO_INCREMENT de la tabla `encargado`
 --
 ALTER TABLE `encargado`
-  MODIFY `id_encargado` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `estado`
---
-ALTER TABLE `estado`
-  MODIFY `id_estado` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_encargado` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -965,7 +988,7 @@ ALTER TABLE `factura_compra`
 -- AUTO_INCREMENT de la tabla `institucion`
 --
 ALTER TABLE `institucion`
-  MODIFY `idInstitucion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idInstitucion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario`
@@ -1013,7 +1036,7 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT de la tabla `tipo_activo`
 --
 ALTER TABLE `tipo_activo`
-  MODIFY `id_tipo` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -1031,7 +1054,7 @@ ALTER TABLE `ventac_temp`
 -- AUTO_INCREMENT de la tabla `venta_temp`
 --
 ALTER TABLE `venta_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -1047,8 +1070,8 @@ ALTER TABLE `abono`
 -- Filtros para la tabla `activo`
 --
 ALTER TABLE `activo`
-  ADD CONSTRAINT `idestado` FOREIGN KEY (`idestado`) REFERENCES `estado` (`id_estado`),
-  ADD CONSTRAINT `idinstitucion` FOREIGN KEY (`idinstitucion`) REFERENCES `institucion` (`idInstitucion`),
+  ADD CONSTRAINT `iddepartamento` FOREIGN KEY (`iddepartamento`) REFERENCES `departamento` (`id_departamento`),
+  ADD CONSTRAINT `idencargado` FOREIGN KEY (`idencargado`) REFERENCES `encargado` (`id_encargado`),
   ADD CONSTRAINT `idtipo` FOREIGN KEY (`idtipo`) REFERENCES `tipo_activo` (`id_tipo`),
   ADD CONSTRAINT `idusuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`);
 
@@ -1087,7 +1110,7 @@ ALTER TABLE `contable`
 -- Filtros para la tabla `departamento`
 --
 ALTER TABLE `departamento`
-  ADD CONSTRAINT `idencargado` FOREIGN KEY (`idencargado`) REFERENCES `encargado` (`id_encargado`);
+  ADD CONSTRAINT `idinstitucion` FOREIGN KEY (`idinstitucion`) REFERENCES `institucion` (`idInstitucion`);
 
 --
 -- Filtros para la tabla `detalle`
@@ -1102,12 +1125,6 @@ ALTER TABLE `detalle`
 ALTER TABLE `detalle_compra`
   ADD CONSTRAINT `detalle_compra_ibfk_1` FOREIGN KEY (`articulo`) REFERENCES `articulos` (`idarticulos`),
   ADD CONSTRAINT `detalle_compra_ibfk_2` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
-
---
--- Filtros para la tabla `institucion`
---
-ALTER TABLE `institucion`
-  ADD CONSTRAINT `iddepartamento` FOREIGN KEY (`iddepartamento`) REFERENCES `departamento` (`id_departamento`);
 
 --
 -- Filtros para la tabla `inventario`

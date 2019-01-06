@@ -19,23 +19,23 @@ if (isset($_REQUEST['btnGuardar'])) {
     $tipo_activo = $_REQUEST['tipo'];
     $encargado = $_REQUEST['encargado'];
     $meses = $_REQUEST['tiempo'];
-    $observaciones = $_REQUEST['obsevaciones'];
+    $observaciones = $_REQUEST['observacion'];
     $fecha = $_REQUEST['fecha'];
     $descripcion  = $_REQUEST['descripcion'];
     $cantidad  = $_REQUEST['cantidad'];
-    $precio =$_REQUEST['precio'];
+    $precio =$_REQUEST['precio']; 
     
     
     $conexion = Conexion::obtener_conexion();
     
- for($i=0; $i<$cantidad;$i++){
+ 
  
     $correlativo = correlativos::obtener_correlativo($conexion, 'activo');
     $sql = "INSERT INTO activo (idtipo,iddepartamento,idusuario,idencargado,correlativo, fecha_adquisicion,descripcion,estado,observaciones,precio,tiempo_uso) "
                                    . "VALUES ( '$tipo_activo', '$departamento',  '1', '$encargado', '$correlativo', '$fecha', '$descripcion', 'ACTIVO', '$observaciones','$precio','$meses');";
     $sentencia = $conexion->prepare($sql);
     $resultado = $sentencia->execute();
- }
+ 
     
     echo '<script>location.href ="registroActivo.php";</script>';
 } else {
