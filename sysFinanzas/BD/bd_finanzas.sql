@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-01-2019 a las 21:28:07
+-- Tiempo de generación: 08-01-2019 a las 22:43:46
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -153,21 +153,22 @@ CREATE TABLE `clasificacion` (
   `id_clasificacion` int(10) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
   `correlativo` varchar(45) DEFAULT NULL,
-  `tiempo_depreciacion` int(11) DEFAULT NULL
+  `tiempo_depreciacion` int(11) DEFAULT NULL,
+  `vidautil` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `clasificacion`
 --
 
-INSERT INTO `clasificacion` (`id_clasificacion`, `nombre`, `correlativo`, `tiempo_depreciacion`) VALUES
-(1, 'Moviliario y Equipo de Administracion', '0001', 120),
-(2, 'Vehiculos', '0002', 60),
-(3, 'Maquinaria', '0003', 60),
-(4, 'Edificio', '0004', 240),
-(5, 'Terrenos', '0005', 0),
-(6, 'Equipo de Computo y Tecnologias de Informacion', '0006', 36),
-(7, 'Equipos de Generacion Electrica', '0007', 120);
+INSERT INTO `clasificacion` (`id_clasificacion`, `nombre`, `correlativo`, `tiempo_depreciacion`, `vidautil`) VALUES
+(1, 'Moviliario y Equipo de Administracion', '0001', 120, 10),
+(2, 'Vehiculos', '0002', 60, 5),
+(3, 'Maquinaria', '0003', 60, 5),
+(4, 'Edificio', '0004', 240, 20),
+(5, 'Terrenos', '0005', 0, 0),
+(6, 'Equipo de Computo y Tecnologias de Informacion', '0006', 36, 3),
+(7, 'Equipos de Generacion Electrica', '0007', 120, 10);
 
 -- --------------------------------------------------------
 

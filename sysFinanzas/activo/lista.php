@@ -53,7 +53,6 @@
                                         <tr>
                                             <th>CORRELATIVOS</th>
                                             <th>ACTIVO</th>
-                                                                                  
                                             <th>DEPARTAMENTO</th>
                                             <th>ENCARGADO</th>                                          
                                         </tr>
@@ -70,7 +69,13 @@
                             departamento.nombre as nombreDepartamento,
                             institucion.nombre as nombreInstituciion,
                             encargado.nombre ,
-                            encargado.apellidos
+                            encargado.apellidos,
+                            activo.fecha_adquisicion,
+                            activo.precio,
+                            activo.tiempo_uso,
+                            activo.estado,
+                            clasificacion.tiempo_depreciacion,
+                            clasificacion.vidautil
 
                             FROM
                             activo
@@ -81,18 +86,28 @@
                             INNER JOIN encargado ON activo.idencargado = encargado.id_encargado");
             while ($fila = mysqli_fetch_array($sacar)) { 
 
+               //correlativos
                $coInstitucion=$fila['coInstitucion'];
                $coDepartamento=$fila['coDepartamento'];
                $coClasificacion=$fila['coClasificacion'];
                $CoTipo=$fila['CoTipo'];
                $coActivo=$fila['coActivo'];
 
+               //Nombre de Institucion, departamento, activo
                  $nombreActivo=$fila['nombreActivo'];  
                  $nombreInstituciion=$fila['nombreInstituciion'];  
                  $nombreDepartamento=$fila['nombreDepartamento']; 
 
+                  //Nombre de Encargado
                   $nombre=$fila['nombre']; 
-                   $apellidos=$fila['apellidos']; 
+                  $apellidos=$fila['apellidos']; 
+
+                  //otros datos del activo
+                  $fecha_adquisicion = $fila['fecha_adquisicion'];
+                  $precio = $fila['precio'];  
+                  $estado = $fila['estado']; 
+                  $meses = $fila['tiempo_depreciacion']; 
+                  $anio = $fila['vidautil']; 
                   
        ?>
 
@@ -103,9 +118,11 @@
         
         <td><?php echo $nombreDepartamento;?></td>
         <td><?php echo $nombre . " " . $apellidos; ?></td>
-        <td class="center">
-           <a href="verActivo.php?ir=<?php echo $modificar; ?>"class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
-        </td>
+        <td style="visibility: hidden"><?php echo $fecha_adquisicion; ?></td>
+        <td style="visibility: hidden"><?php echo $precio; ?></td>
+        <td style="visibility: hidden"><?php echo $anio; ?></td>
+        <td style="visibility: hidden"><?php echo $meses; ?></td>
+        
                                        
         
 
@@ -117,10 +134,63 @@
 </div>
 
 </form>
+<!--DATOS SELECCIONADOS-->
+    <form>
+        <div class="col-lg-4">
+         <label style="color: black">Activo Seleccionado<small class="text-muted" ></small></label>
+          <div class="input-group">                         
+          <input type="text" class="form-control" id="correlativo" name="correlativo" disabled><br>
+          <br>
+          <input type="text" class="form-control" id="activo" name="activo" disabled>
+           <input type="hidden" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" >
+           <input type="hidden" class="form-control" id="precio" name="precio" >
+           <input type="hidden" class="form-control" id="anio" name="anio" >
+           <input type="hidden" class="form-control" id="meses" name="meses" >
+          
+          <br>
+          
+         <div class="input-group-append">
+      <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
+        </div> 
+       </div>
+           </div></form>
+
+           <div class="row mb-12" style="float: right; margin-right: 10px; margin-top: 15px;">
+                    <button type="button" class="btn btn-primary" name="btnGuardar" id="btnGuardar" onClick="agregarTabla()">  <i class="fa fa-shopping-cart"></i> Consultar Activo</button>
+             
+                </div>
+
+                 <br>       
+                 <br>
+                   <br> 
+                     <br> 
+                       <br>  
+                 <div class="table-responsive" align="center">   
+                                <table id="tablaPP" class="table table-striped table-bordered table-hover table-condensed table-striped">
+                                    <thead>
+                                      <tr><th colspan="8" align="center">DEPRECIACION DEL ACTIVO - METODO DE LINEA RECTA</th></tr>
+                                        <tr>
+                                            <th>ACTIVO</th>
+                                            <th>FECHA DE ADQUISICIÓN</th>
+                                             <th>PRECIO</th>
+                                              <th>ANUAL</th>
+                                               <th>MENSUAL</th>
+                                                <th>VALOR NETO</th> 
+                                                                                            
+                                     
+                                                                                    
+                                        </tr>
+                                       
+                                    </thead>
+                                     <tbody class="tabla_ajax"> 
+  
+
+    </tbody>
 </div>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 <button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='invetarioPDF.php'"><i class="fa fa-print fa-2"></i></button>
@@ -157,3 +227,60 @@ function myFunction() {
   }
 }
 </script>       
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+
+  <script>
+            var table = document.getElementById('tabla');
+            for(var i = 1; i<table.rows.length; i++)
+            {
+                table.rows[i].onclick = function()
+                {
+                    
+                    document.getElementById("correlativo").value = this.cells[0].innerHTML;
+                    document.getElementById("activo").value = this.cells[1].innerHTML;
+                     document.getElementById("fecha_adquisicion").value = this.cells[4].innerHTML;
+                     document.getElementById("precio").value = this.cells[5].innerHTML;
+                     document.getElementById("anio").value = this.cells[6].innerHTML;
+                     document.getElementById("meses").value = this.cells[7].innerHTML;
+               };
+            }
+            </script>
+
+
+             <script>
+               function agregarTabla(){
+                   //alert('si');
+
+                   //se muestran en input
+                   var activo = $('#activo').val();
+                   var fecha_adquisicion = $('#fecha_adquisicion').val();
+                    var precio = $('#precio').val();
+                    var anio = $('#anio').val();
+                    var meses = $('#meses').val();
+
+                    var depreAnual = parseFloat(precio)/parseFloat(anio);
+                    var depreMensual = parseFloat(precio)/parseFloat(meses);
+
+                    var neto = parseFloat(precio)-parseFloat(depreAnual);
+                   
+                  
+                    
+
+                    var tabla = $('#tablaPP');
+                    
+              
+                    var datos = "<tr>"+
+                            "<td>"+activo+"</td>"+
+                            "<td>"+fecha_adquisicion+"</td>"+
+                            "<td>"+precio+"</td>"+
+                            "<td>"+parseFloat(depreAnual).toFixed(2)+"</td>"+
+                            "<td>"+parseFloat(depreMensual).toFixed(2)+"</td>"+
+                            "<td>"+parseFloat(neto).toFixed(2)+"</td>"+
+                            
+                            "</tr>";
+                    
+                    tabla.append(datos);
+                    }
+                    
+                </script>
