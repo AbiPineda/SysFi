@@ -3,6 +3,9 @@
     include_once '../Plantilla/encabezado.php';
     include_once '../Plantilla/menuLateral.php';
 
+$hoy = date('Y-m-d');
+$partes=explode('-', $hoy); 
+$fechaHoy="{$partes[2]}-{$partes[1]}-{$partes[0]}"; 
 ?>
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
@@ -15,6 +18,15 @@
    .redondeado {
      border-radius: 5px;
    }
+   table th {
+  text-align: center;
+}
+table td {
+  text-align: center;
+}
+table tr {
+  text-align: center;
+}
 </style>
 </head>
         <div id="page-wrapper"  align="center">
@@ -47,8 +59,10 @@
                                         </div>
                                     </td>
                                   </tr>
-                                </table><br>                           
-                                <table id="tabla" class="table table-striped table-bordered table-hover">
+                                </table><br> 
+                                  <div class="scroll-window-wrapper">
+                                    <div class="scroll-window">                          
+                                <table id="tabla" class="table table-striped table-bordered table-hover table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th>CORRELATIVOS</th>
@@ -108,6 +122,10 @@
                   $estado = $fila['estado']; 
                   $meses = $fila['tiempo_depreciacion']; 
                   $anio = $fila['vidautil']; 
+
+
+                   $partes=explode('-', $fecha_adquisicion);
+                $fecha="{$partes[2]}-{$partes[1]}-{$partes[0]}"; 
                   
        ?>
 
@@ -118,7 +136,7 @@
         
         <td><?php echo $nombreDepartamento;?></td>
         <td><?php echo $nombre . " " . $apellidos; ?></td>
-        <td style="visibility: hidden"><?php echo $fecha_adquisicion; ?></td>
+        <td style="visibility: hidden"><?php echo $fecha; ?></td>
         <td style="visibility: hidden"><?php echo $precio; ?></td>
         <td style="visibility: hidden"><?php echo $anio; ?></td>
         <td style="visibility: hidden"><?php echo $meses; ?></td>
@@ -132,13 +150,15 @@
     </tbody>
   </table>
 </div>
+</div>
+
 
 </form>
 <!--DATOS SELECCIONADOS-->
     <form>
         <div class="col-lg-4">
          <label style="color: black">Activo Seleccionado<small class="text-muted" ></small></label>
-          <div class="input-group">                         
+          <div class="input-group col-md-12" align="center">                         
           <input type="text" class="form-control" id="correlativo" name="correlativo" disabled><br>
           <br>
           <input type="text" class="form-control" id="activo" name="activo" disabled>
@@ -148,14 +168,21 @@
            <input type="hidden" class="form-control" id="meses" name="meses" >
           
           <br>
+
           
          <div class="input-group-append">
+
       <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
         </div> 
        </div>
-           </div></form>
-
-           <div class="row mb-12" style="float: right; margin-right: 10px; margin-top: 15px;">
+           </div>
+         </form>
+<br>
+<br>
+<br>
+<br>
+<br>
+           <div class="col-lg-4">
                     <button type="button" class="btn btn-primary" name="btnGuardar" id="btnGuardar" onClick="agregarTabla()">  <i class="fa fa-shopping-cart"></i> Consultar Activo</button>
              
                 </div>
@@ -165,17 +192,22 @@
                    <br> 
                      <br> 
                        <br>  
+                <div id="content">
                  <div class="table-responsive" align="center">   
-                                <table id="tablaPP" class="table table-striped table-bordered table-hover table-condensed table-striped">
+                                <table id="tablaPP" name="tablaPP" class="table table-striped table-bordered table-hover table-condensed table-striped" style="font-size:10px">
                                     <thead>
-                                      <tr><th colspan="8" align="center">DEPRECIACION DEL ACTIVO - METODO DE LINEA RECTA</th></tr>
+                                      <tr><th colspan="10" bgcolor="#4BB543">DEPRECIACION DEL ACTIVO - METODO DE LINEA RECTA</th></tr>
                                         <tr>
                                             <th>ACTIVO</th>
                                             <th>FECHA DE ADQUISICIÓN</th>
                                              <th>PRECIO</th>
+                                             <th bgcolor="#A9F5A9">VIDA UTIL (AÑOS)</th>
                                               <th>ANUAL</th>
+                                              <th bgcolor="#A9F5A9">VIDA UTIL (MESES)</th>
                                                <th>MENSUAL</th>
-                                                <th>VALOR NETO</th> 
+                                                <th bgcolor="#A9F5A9">VALOR NETO</th> 
+                                                <th>MESES TRANSCURRIDOS</th>
+                                                <th bgcolor="#A9F5A9">DEPRECIACIÓN ACTUAL</th>  
                                                                                             
                                      
                                                                                     
@@ -186,20 +218,13 @@
   
 
     </tbody>
-</div>
-</td>
-</tr>
-</table>
+  </table>
 </div>
 </div>
-</div>
-<button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='invetarioPDF.php'"><i class="fa fa-print fa-2"></i></button>
 
-</div>
-</div>
-</div>
-</div>
-</div>
+
+<button class="btn btn-warning btn-circle btn-lg"><i class="fa fa-print fa-2"></i></button>
+
 
 
 
@@ -215,7 +240,7 @@ function myFunction() {
   table = document.getElementById("tabla");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("th")[0];
+    td = tr[i].getElementsByTagName("td")[0];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -259,28 +284,44 @@ function myFunction() {
                     var anio = $('#anio').val();
                     var meses = $('#meses').val();
 
+                    
                     var depreAnual = parseFloat(precio)/parseFloat(anio);
+                    
                     var depreMensual = parseFloat(precio)/parseFloat(meses);
 
                     var neto = parseFloat(precio)-parseFloat(depreAnual);
-                   
-                  
-                    
+
+  var f1 = fecha_adquisicion;
+  var f2 = "08-03-2019";
+  
+  var aF1 = f1.split("-");
+  var aF2 = f2.split("-");
+  
+  var numMeses = aF2[0]*12 + aF2[1] - (aF1[0]*12 + aF1[1]);
+  if (aF2[2]<aF1[2]){
+    numMeses = numMeses - 1;
+  }
+                  var x= parseFloat(depreMensual)*parseFloat(numMeses);
 
                     var tabla = $('#tablaPP');
                     
-              
+             
                     var datos = "<tr>"+
                             "<td>"+activo+"</td>"+
                             "<td>"+fecha_adquisicion+"</td>"+
                             "<td>"+precio+"</td>"+
+                            "<td>"+anio+"</td>"+
                             "<td>"+parseFloat(depreAnual).toFixed(2)+"</td>"+
+                            "<td>"+meses+"</td>"+
                             "<td>"+parseFloat(depreMensual).toFixed(2)+"</td>"+
                             "<td>"+parseFloat(neto).toFixed(2)+"</td>"+
-                            
+                             "<td>"+numMeses+"</td>"+
+                            "<td>"+parseFloat(x).toFixed(2)+"</td>"+
                             "</tr>";
                     
                     tabla.append(datos);
-                    }
+                    
+                  }
                     
                 </script>
+

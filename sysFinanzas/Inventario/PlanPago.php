@@ -23,6 +23,12 @@
 table td {
   text-align: center;
 }
+
+body {
+margin-bottom: 200%;
+}
+
+
 </style>
 </head>
         <div id="page-wrapper"  align="center">
@@ -47,10 +53,9 @@ table td {
                                     <td width="50%">
                                         <div align="right">
                                         <form method="get" action="" enctype="multipart/form-data" name="form1" id="form1">
-                                        
+                                        <div class="myBox">
                                         <div class="table-responsive">
-                                          <div class="scroll-window-wrapper">
-  <div class="scroll-window">
+  
          <table class="table table-striped" id="tabla">
     <thead>
       <th><div>Código</div></th>
@@ -85,8 +90,8 @@ table td {
     </thead>
     
   </table>
-   </div> <!-- Div scroll-window -->
-</div> <!-- Div scroll-window-wrapper-->
+   </div> 
+</div> <!-- myBox -->
   
 
   
