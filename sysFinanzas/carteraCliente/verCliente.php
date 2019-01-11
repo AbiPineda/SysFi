@@ -5,12 +5,6 @@
 
      $modi = $_GET['ir'];
      
-     
-          
-
-     
-
-
  ?>
 
   <div id="page-wrapper">
@@ -74,6 +68,7 @@
                                             <th>Cuota</th>
                                             <th>Historial</th> 
                                             <th>Abonar</th> 
+                                            <th>Contrato</th> 
                                         </tr>
                                     </thead>
                                     <tbody class="buscar">
@@ -125,6 +120,10 @@
         
 
             <?php   }?>
+
+            <td class="center">
+            <a href="../Reportes/contrato.php?x=<?php echo $id; ?>&ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm">Contrato</a>
+        </td> 
       
       </tr>
     </tbody>
