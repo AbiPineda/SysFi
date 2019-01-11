@@ -24,6 +24,8 @@ if (isset($_REQUEST['btnGuardar'])) {
     $descripcion  = $_REQUEST['descripcion'];
     $cantidad  = $_REQUEST['cantidad'];
     $precio =$_REQUEST['precio']; 
+    $adquisicion =$_REQUEST['adquisicion']; 
+    $donador =$_REQUEST['donador']; 
     
     
     $conexion = Conexion::obtener_conexion();
@@ -31,8 +33,8 @@ if (isset($_REQUEST['btnGuardar'])) {
  
  
     $correlativo = correlativos::obtener_correlativo($conexion, 'activo');
-    $sql = "INSERT INTO activo (idtipo,iddepartamento,idusuario,idencargado,correlativo, fecha_adquisicion,descripcion,estado,observaciones,precio,tiempo_uso) "
-                                   . "VALUES ( '$tipo_activo', '$departamento',  '1', '$encargado', '$correlativo', '$fecha', '$descripcion', 'ACTIVO', '$observaciones','$precio','$meses');";
+    $sql = "INSERT INTO activo (idtipo,iddepartamento,idusuario,idencargado,correlativo, fecha_adquisicion,descripcion,estado,observaciones,precio,tiempo_uso,adquisicion,donador) "
+                                   . "VALUES ( '$tipo_activo', '$departamento',  '1', '$encargado', '$correlativo', '$fecha', '$descripcion', 'ACTIVO', '$observaciones','$precio','$meses','$adquisicion','$donador');";
     $sentencia = $conexion->prepare($sql);
     $resultado = $sentencia->execute();
  
@@ -204,12 +206,42 @@ if (isset($_REQUEST['btnGuardar'])) {
                                                 <input type="text" class="form-control" name="observacion" placeholder="*Digite observación" required="">
                                             </div>
 
-                                    
+
                                             <br>
                                              <br>
                                         
                                          </div>
                                             </div>
+                                            <div class="col-md-12">
+                                        <br>
+                                        
+                                        <div class="panel panel-green">
+                                           
+
+                                            <br>
+                                             <label class="col-md-3 control-label">Tipo de Adquisición:</label>
+                                            <div class="col-md-3">
+                                              
+                                      <select name='adquisicion' id='adquisicion' class="custom-select" style="width: 50%; height:36px;">
+                                        <option value="Comprado" selected>Comprado</option>
+                                        <option value="Donado">Donado</option>
+                                        
+                                    </select>
+
+                                    </div>
+                                    <label class="col-md-2 control-label">Donado por:</label>
+                                            
+                                    <div class="col-md-3">
+                                    <input id="donador" name="donador" type="text" class="form-control" placeholder="*Nombre de Donador" disabled>
+                                    </div>
+                                    <br>
+                                    <br>
+                                     <br>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+
 
                                              <div class="col-md-12">
                                         <br>
@@ -294,6 +326,18 @@ if (isset($_REQUEST['btnGuardar'])) {
         }
     </script>
 
+    <!-- Verificar y habilitar input en caso que el Activo sea Donado-->
+<script type="text/javascript">
+    $( function() {
+    $("#adquisicion").change( function() {
+        if ($(this).val() === "Comprado") {
+            $("#donador").prop("disabled", true);
+        } else {
+            $("#donador").prop("disabled", false);
+        }
+    });
+});
+</script>
 
 <?php
 
