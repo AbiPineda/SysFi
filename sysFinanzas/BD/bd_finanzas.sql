@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2019 a las 22:43:46
+-- Tiempo de generación: 12-01-2019 a las 05:24:13
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -69,20 +69,25 @@ CREATE TABLE `activo` (
   `estado` varchar(45) DEFAULT NULL,
   `observaciones` varchar(200) DEFAULT NULL,
   `precio` double DEFAULT NULL,
-  `tiempo_uso` int(11) DEFAULT NULL
+  `tiempo_uso` int(11) DEFAULT NULL,
+  `adquisicion` varchar(45) DEFAULT NULL,
+  `donador` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `activo`
 --
 
-INSERT INTO `activo` (`idactivo`, `idtipo`, `iddepartamento`, `idusuario`, `idencargado`, `correlativo`, `fecha_adquisicion`, `descripcion`, `estado`, `observaciones`, `precio`, `tiempo_uso`) VALUES
-(1, 1, 8, 1, 2, '0001', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4),
-(2, 1, 8, 1, 2, '0002', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4),
-(3, 1, 8, 1, 1, '0003', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2),
-(4, 1, 8, 1, 1, '0004', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2),
-(5, 1, 8, 1, 2, '0005', '2018-12-01', 'ñañaña', 'ACTIVO', '', 5300, 1),
-(6, 1, 8, 1, 1, '0006', '2018-12-01', 'hello', 'ACTIVO', 'oha', 1200, 1);
+INSERT INTO `activo` (`idactivo`, `idtipo`, `iddepartamento`, `idusuario`, `idencargado`, `correlativo`, `fecha_adquisicion`, `descripcion`, `estado`, `observaciones`, `precio`, `tiempo_uso`, `adquisicion`, `donador`) VALUES
+(1, 1, 8, 1, 2, '0001', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4, NULL, NULL),
+(2, 1, 8, 1, 2, '0002', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4, NULL, NULL),
+(3, 1, 8, 1, 1, '0003', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2, NULL, NULL),
+(4, 1, 8, 1, 1, '0004', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2, NULL, NULL),
+(5, 1, 8, 1, 2, '0005', '2018-12-01', 'ñañaña', 'ACTIVO', '', 5300, 1, NULL, NULL),
+(6, 1, 8, 1, 1, '0006', '2018-12-01', 'hello', 'ACTIVO', 'oha', 1200, 1, NULL, NULL),
+(7, 2, 9, 1, 2, '0007', '2019-01-08', 'COMPUTADORA HP 20-C205LA AIO ALL IN ONE 19,5\"\"\", PROCESADOR CELERONDC J3060, MEMORIA 4GB, DISCO DURO 1TB HDD,DVD, COLOR SNOW WHITE', 'ACTIVO', 'Uso solo para Departamento de Ventas', 459, 1, NULL, NULL),
+(8, 2, 9, 1, 4, '0008', '2019-01-11', 'Disco duro de 500 GB y una memoria RAM de 4 GB. Diseñado para la tareas cotidianas básicas diarias. Intel® Celeron® N4000', 'ACTIVO', 'Uso solo para departamento de Ventas', 329, 2, '2', 'Negocios Valdez'),
+(9, 1, 8, 1, 3, '0009', '2019-01-11', 'Versión	LE\r\nTipo	DOHC, V8, CVTCS, VVEL DIG\r\nTransmisión	AT de 5 velocidades con modo manual\r\nDesplazamiento cc	5,552\r\nDiámetro x Carrera	98.0 x 92.0mm', 'ACTIVO', 'Uso solo para departamento de compras', 12500, 2, 'Donado', 'Nissan, El Salvador');
 
 -- --------------------------------------------------------
 
@@ -108,7 +113,7 @@ CREATE TABLE `articulos` (
 --
 
 INSERT INTO `articulos` (`idarticulos`, `codigo`, `nombre`, `cantidad`, `valor`, `marca`, `estado`, `unidad`, `idproveedor`, `idcategoria`) VALUES
-(1, 'LR12345664', 'Lavadora de Ropa', 1, 900, 'Mabe', 's', 1, 2, 1),
+(1, 'LR12345664', 'Lavadora de Ropa', 2, 900, 'Mabe', 's', 1, 2, 1),
 (2, '7415300005014', 'Refrigeradora', 1, 900, 'LG', 's', 1, 2, 1),
 (3, '750120665242', 'Televisor', 1, 700, 'LG', 's', 1, 1, 6),
 (4, '7441102801011', 'Computadora Sony', 3, 560, 'Sony', 's', 1, 1, 7),
@@ -182,6 +187,13 @@ CREATE TABLE `clientcred_tmp` (
   `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
+--
+-- Volcado de datos para la tabla `clientcred_tmp`
+--
+
+INSERT INTO `clientcred_tmp` (`id_cliente_temp`, `id_cliente`, `fecha`) VALUES
+(1, 2, '2019-01-10');
+
 -- --------------------------------------------------------
 
 --
@@ -240,7 +252,12 @@ INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`
 (4, 'Abono CXC No. 1', '12548804', 'ENTRADA', '170.94', '2019-01-05', '20:33:05', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
 (5, 'Abono CXC No. 1', '12548804', 'ENTRADA', '172.365', '2019-01-05', '20:33:13', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
 (6, 'Abono CXC No. 1', '12548804', 'ENTRADA', '173.801', '2019-01-05', '20:33:21', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
-(7, 'Abono CXC No. 1', '12548804', 'ENTRADA', '175.25', '2019-01-05', '20:33:31', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL);
+(7, 'Abono CXC No. 1', '12548804', 'ENTRADA', '175.25', '2019-01-05', '20:33:31', 'CXC', NULL, NULL, NULL, 'Sin Observaciones', NULL, NULL),
+(8, 'Venta al CONTADO', '12548805', 'ENTRADA', '1000', '2019-01-10', '21:05:17', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, '2', '12548806', 'CXC', '1100', '2019-01-10', '21:06:09', NULL, 4, 185.48, 12.87, NULL, '6', 'EnProceso'),
+(10, 'Compra al CONTADO', '12548807', 'SALIDA', '6300', '2019-01-11', '00:37:16', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 'Compra al CONTADO', '12548808', 'SALIDA', '18000', '2019-01-11', '00:41:07', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 'Compra al CONTADO', '12548809', 'SALIDA', '595', '2019-01-11', '01:08:53', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -260,7 +277,8 @@ CREATE TABLE `departamento` (
 --
 
 INSERT INTO `departamento` (`id_departamento`, `idinstitucion`, `nombre`, `correlativo`) VALUES
-(8, 2, 'compras', '0001');
+(8, 2, 'Compras', '0001'),
+(9, 2, 'Ventas', '0002');
 
 -- --------------------------------------------------------
 
@@ -285,7 +303,9 @@ CREATE TABLE `detalle` (
 --
 
 INSERT INTO `detalle` (`id_detalle`, `factura`, `articulo`, `codigo`, `cantidad`, `valor`, `importe`, `tipo`, `fecha`) VALUES
-(1, '12548804', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-05');
+(1, '12548804', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-05'),
+(2, '12548805', 2, '2', '1', '1000', '1000', 'VENTA', '2019-01-10'),
+(3, '12548806', 1, '1', '1', '1200', '1200', 'VENTA', '2019-01-10');
 
 -- --------------------------------------------------------
 
@@ -313,7 +333,31 @@ INSERT INTO `detalle_compra` (`id_detalle`, `factura`, `articulo`, `codigo`, `ca
 (120, '12548792', 2, '7415300005014', '1', '900', '900', 'COMPRA', '2019-01-02'),
 (121, '12548793', 1, 'LR12345664', '1', '900', '900', 'COMPRA', '2019-01-02'),
 (122, '12548794', 1, 'LR12345664', '1', '900', '900', 'COMPRA', '2019-01-03'),
-(123, '12548802', 10, 'CM618', '1', '23', '23', 'COMPRA', '2019-01-04');
+(123, '12548802', 10, 'CM618', '1', '23', '23', 'COMPRA', '2019-01-04'),
+(124, '12548807', 1, 'LR12345664', '7', '900', '6300', 'COMPRA', '2019-01-11'),
+(125, '12548808', 1, 'LR12345664', '20', '900', '18000', 'COMPRA', '2019-01-11'),
+(126, '12548809', 9, 'NWZW273S', '5', '119', '595', 'COMPRA', '2019-01-11');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documentos`
+--
+
+CREATE TABLE `documentos` (
+  `idDocumento` int(10) NOT NULL,
+  `constancia` mediumblob,
+  `remesa` mediumblob,
+  `recibo` mediumblob,
+  `idcliente` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `documentos`
+--
+
+INSERT INTO `documentos` (`idDocumento`, `constancia`, `remesa`, `recibo`, `idcliente`) VALUES
+(1, '', '', '', 3);
 
 -- --------------------------------------------------------
 
@@ -335,7 +379,9 @@ CREATE TABLE `encargado` (
 
 INSERT INTO `encargado` (`id_encargado`, `nombre`, `apellidos`, `dui`, `nit`) VALUES
 (1, 'Francisco ', 'Pineda Fernandez', '34234324-2', '1010-190167-123-2'),
-(2, 'Abigail', 'Pineda', '12324324-2', '3434-234324-234-4');
+(2, 'Abigail', 'Pineda', '12324324-2', '3434-234324-234-4'),
+(3, 'Jose Feliciano', 'Andrade Paz', '45345434-5', '1010-231267-232-3'),
+(4, 'Samuel Alberto', 'Recinos Campos', '34324324-2', '3434-120100-232-3');
 
 -- --------------------------------------------------------
 
@@ -418,7 +464,12 @@ INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
 (87, '12548801', '130', '2019-01-04'),
 (88, '12548802', '23', '2019-01-04'),
 (89, '12548803', '130', '2019-01-04'),
-(90, '12548804', '1130', '2019-01-05');
+(90, '12548804', '1130', '2019-01-05'),
+(91, '12548805', '1000', '2019-01-10'),
+(92, '12548806', '1200', '2019-01-10'),
+(93, '12548807', '6300', '2019-01-11'),
+(94, '12548808', '18000', '2019-01-11'),
+(95, '12548809', '595', '2019-01-11');
 
 -- --------------------------------------------------------
 
@@ -484,11 +535,11 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 15, 5, 1000, 1),
-(2, 1, -6, 5, 1200, 1),
+(1, 2, 30, 5, 1000, 1),
+(2, 1, 20, 5, 1200, 1),
 (3, 3, 13, 10, 950, 1),
-(5, 5, -16, 10, 1000, 1),
-(6, 9, 1, 5, 130, NULL),
+(5, 5, 30, 10, 1000, 1),
+(6, 9, 6, 5, 130, NULL),
 (7, 10, 10, 5, 30, NULL);
 
 -- --------------------------------------------------------
@@ -514,7 +565,12 @@ CREATE TABLE `kardex` (
 --
 
 INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`, `costoK`, `importe`, `stockk`, `fecha`) VALUES
-(1, '12548804', 'VENTA', 2, 1, 900, 900, 15, '2019-01-05');
+(1, '12548804', 'VENTA', 2, 1, 900, 900, 15, '2019-01-05'),
+(2, '12548805', 'VENTA', 2, 1, 900, 900, 14, '2019-01-10'),
+(3, '12548806', 'VENTA', 1, 1, 900, 900, -7, '2019-01-10'),
+(4, '12548807', 'COMPRA', 1, 7, 900, 6300, 0, '2019-01-11'),
+(5, '12548808', 'COMPRA', 1, 20, 900, 18000, 20, '2019-01-11'),
+(6, '12548809', 'COMPRA', 9, 5, 119, 595, 6, '2019-01-11');
 
 -- --------------------------------------------------------
 
@@ -557,6 +613,23 @@ CREATE TABLE `prov_tmp` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `referencias`
+--
+
+CREATE TABLE `referencias` (
+  `idReferencia` int(10) NOT NULL,
+  `nombre1` varchar(50) DEFAULT NULL,
+  `telefono1` varchar(10) DEFAULT NULL,
+  `direccion1` varchar(100) DEFAULT NULL,
+  `nombre2` varchar(50) DEFAULT NULL,
+  `telefono2` varchar(10) DEFAULT NULL,
+  `direccion2` varchar(100) DEFAULT NULL,
+  `idcliente` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `resumen`
 --
 
@@ -578,7 +651,9 @@ CREATE TABLE `resumen` (
 --
 
 INSERT INTO `resumen` (`id_resumen`, `id_clientes`, `concepto`, `factura`, `clase`, `valor`, `tipo`, `fecha`, `hora`, `status`) VALUES
-(1, 1, 'Venta al \"CREDITO\"', '12548804', 'VENTA', '1130', 'VENTA', '2019-01-05', '20:09:13', 'CREDITO');
+(1, 1, 'Venta al \"CREDITO\"', '12548804', 'VENTA', '1130', 'VENTA', '2019-01-05', '20:09:13', 'CREDITO'),
+(2, 2, 'Venta al CONTADO', '12548805', 'VENTA', '1000', 'VENTA', '2019-01-10', '21:05:17', 'CONTADO'),
+(3, 2, 'Venta al CREDITO', '12548806', 'VENTA', '1200', 'VENTA', '2019-01-10', '21:06:09', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -607,7 +682,10 @@ INSERT INTO `resumen_compra` (`id_resumen`, `id_proveedor`, `concepto`, `factura
 (5, 1, 'Compra al \"CONTADO\"', '12548792', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:02:07', 'CONTADO'),
 (6, 2, 'Compra al \"CREDITO\"', '12548793', 'COMPRA', '900', 'COMPRA', '2019-01-02', '06:29:25', 'CREDITO'),
 (7, 3, 'Compra al \"CREDITO\"', '12548794', 'COMPRA', '900', 'COMPRA', '2019-01-03', '04:58:17', 'CREDITO'),
-(8, 3, 'Compra al \"CREDITO\"', '12548802', 'COMPRA', '23', 'COMPRA', '2019-01-04', '21:25:04', 'CREDITO');
+(8, 3, 'Compra al \"CREDITO\"', '12548802', 'COMPRA', '23', 'COMPRA', '2019-01-04', '21:25:04', 'CREDITO'),
+(9, 2, 'Compra al CONTADO', '12548807', 'COMPRA', '6300', 'COMPRA', '2019-01-11', '00:37:16', 'CONTADO'),
+(10, 2, 'Compra al CONTADO', '12548808', 'COMPRA', '18000', 'COMPRA', '2019-01-11', '00:41:07', 'CONTADO'),
+(11, 1, 'Compra al CONTADO', '12548809', 'COMPRA', '595', 'COMPRA', '2019-01-11', '01:08:53', 'CONTADO');
 
 -- --------------------------------------------------------
 
@@ -629,7 +707,8 @@ CREATE TABLE `tb_cliente` (
 
 INSERT INTO `tb_cliente` (`id_cliente`, `nombre_cliente`, `dir_cliente`, `dui`, `tel`) VALUES
 (1, 'Juan Moz', 'Cedros', '78404023', '56464'),
-(2, 'Abi', 'Verapaz en la casa del chimilo', '2001221', '44547');
+(2, 'Abi', 'Verapaz en la casa del chimilo', '2001221', '44547'),
+(3, 'Josefina Arminda Lopez', 'col. garcia', '34324234-2', 'aa');
 
 -- --------------------------------------------------------
 
@@ -649,7 +728,8 @@ CREATE TABLE `tipo_activo` (
 --
 
 INSERT INTO `tipo_activo` (`id_tipo`, `nombre`, `correlativo`, `idclasificacion`) VALUES
-(1, 'camioneta', '0001', 2);
+(1, 'camioneta', '0001', 2),
+(2, 'Computadora de Escritorio', '0002', 6);
 
 -- --------------------------------------------------------
 
@@ -683,6 +763,13 @@ CREATE TABLE `ventac_temp` (
   `id_articulo` int(10) DEFAULT NULL,
   `cantidad` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+--
+-- Volcado de datos para la tabla `ventac_temp`
+--
+
+INSERT INTO `ventac_temp` (`id_venta`, `id_articulo`, `cantidad`) VALUES
+(1, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -790,6 +877,13 @@ ALTER TABLE `detalle_compra`
   ADD KEY `fk_facturassss` (`factura`);
 
 --
+-- Indices de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  ADD PRIMARY KEY (`idDocumento`),
+  ADD KEY `idclientes` (`idcliente`);
+
+--
 -- Indices de la tabla `encargado`
 --
 ALTER TABLE `encargado`
@@ -841,6 +935,13 @@ ALTER TABLE `proveedor`
 ALTER TABLE `prov_tmp`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_cliente` (`proveedor`) USING BTREE;
+
+--
+-- Indices de la tabla `referencias`
+--
+ALTER TABLE `referencias`
+  ADD PRIMARY KEY (`idReferencia`),
+  ADD KEY `idcliente` (`idcliente`);
 
 --
 -- Indices de la tabla `resumen`
@@ -905,7 +1006,7 @@ ALTER TABLE `abono`
 -- AUTO_INCREMENT de la tabla `activo`
 --
 ALTER TABLE `activo`
-  MODIFY `idactivo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idactivo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `articulos`
@@ -929,7 +1030,7 @@ ALTER TABLE `clasificacion`
 -- AUTO_INCREMENT de la tabla `clientcred_tmp`
 --
 ALTER TABLE `clientcred_tmp`
-  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente_temp` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente_temp`
@@ -947,37 +1048,43 @@ ALTER TABLE `compra_tmp`
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `departamento`
 --
 ALTER TABLE `departamento`
-  MODIFY `id_departamento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_departamento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle`
 --
 ALTER TABLE `detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+
+--
+-- AUTO_INCREMENT de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  MODIFY `idDocumento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `encargado`
 --
 ALTER TABLE `encargado`
-  MODIFY `id_encargado` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_encargado` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `factura_compra`
@@ -1001,7 +1108,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -1016,28 +1123,34 @@ ALTER TABLE `prov_tmp`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `referencias`
+--
+ALTER TABLE `referencias`
+  MODIFY `idReferencia` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `resumen`
 --
 ALTER TABLE `resumen`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen_compra`
 --
 ALTER TABLE `resumen_compra`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_activo`
 --
 ALTER TABLE `tipo_activo`
-  MODIFY `id_tipo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tipo` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -1049,7 +1162,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `ventac_temp`
 --
 ALTER TABLE `ventac_temp`
-  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_temp`
@@ -1128,6 +1241,12 @@ ALTER TABLE `detalle_compra`
   ADD CONSTRAINT `detalle_compra_ibfk_2` FOREIGN KEY (`factura`) REFERENCES `factura` (`factura`);
 
 --
+-- Filtros para la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  ADD CONSTRAINT `idclientes` FOREIGN KEY (`idcliente`) REFERENCES `tb_cliente` (`id_cliente`);
+
+--
 -- Filtros para la tabla `inventario`
 --
 ALTER TABLE `inventario`
@@ -1144,6 +1263,12 @@ ALTER TABLE `kardex`
 --
 ALTER TABLE `prov_tmp`
   ADD CONSTRAINT `prov_tmp_ibfk_1` FOREIGN KEY (`proveedor`) REFERENCES `proveedor` (`idproveedor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `referencias`
+--
+ALTER TABLE `referencias`
+  ADD CONSTRAINT `idcliente` FOREIGN KEY (`idcliente`) REFERENCES `tb_cliente` (`id_cliente`);
 
 --
 -- Filtros para la tabla `resumen`
