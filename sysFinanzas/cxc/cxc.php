@@ -704,7 +704,8 @@ if ($deuda-$abonos <> 0 && $estadoA=='EnProceso') {
                                         <th>Fecha</th>
                                         <th>Observacion</th>
                                                                                                                                                                       
-                                        <th><div align="right"><strong>Valor</strong></div></th>                                                                                        
+                                        <th><div align="right"><strong>Valor</strong></div></th>
+                                         <th>Factura</th>                                                                                       
                                                                                                                         
                                     </tr>
                                 </thead>
@@ -718,6 +719,10 @@ while ($row = mysqli_fetch_array($sql)) {
                                     <td><?php echo $row['nota']; ?></td>
                                    
                                     <td><div align="right"><?php echo '$' . formato($row['valor']) ?></div></td>
+
+                                    <td class="center">
+            <a href="../Reportes/facturaAbono.php?x=<?php echo $id;?>"class="btn btn-warning btn-sm">Factura</a>
+                                       </td>
                                 
                                     </tr>
 <?php } ?>                                                              
