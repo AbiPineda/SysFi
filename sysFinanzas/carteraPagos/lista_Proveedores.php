@@ -100,7 +100,8 @@
 </table>
 </div>
 </div>
-<button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='invetarioPDF.php'"><i class="fa fa-print fa-2"></i></button>
+<a href="../Reportes/carteraproveedor.php" target="_blank" class="btn btn-warning btn-circle btn-lg"><i class="fa fa-print fa-2"></i></a>
+
 
 </div>
 </div>

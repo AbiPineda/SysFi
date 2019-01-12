@@ -102,7 +102,7 @@
                                     <a href="../Registros/registroProveedor.php">Registrar Proveedor</a>
                                 </li>
                                 <li>
-                                    <a href="#">Second Level Item</a>
+                                    <a href="../Reportes/proveedor.php" target="blank">Listado Proveedor</a>
                                 </li>
                                 
                                 

@@ -120,7 +120,7 @@
                                         <div class="form-group" align="center" >
                                             <div class="col-md-12">
                                             <br>
-                                <a href="lista_clientes.php"class="btn btn-warning btn-sm x3" ><i class="fa fa-arrow-circle-o-left"></i></a>
+                                <a href="lista_Proveedores.php"class="btn btn-warning btn-sm x3" ><i class="fa fa-arrow-circle-o-left"></i></a>
                                             </div>
                                         </div>
                                          <?php
