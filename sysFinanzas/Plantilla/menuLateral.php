@@ -115,7 +115,13 @@
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i>Activo Fijo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="../activo/lista.php">Activos Registrados</a>
+                                    <a href="../activo/activosRegistrados.php">Activos Registrados</a>
+                                </li>
+                                <li>
+                                    <a href="../activo/depreciacionComprados.php">Depereciación Comprados</a>
+                                </li>
+                                <li>
+                                    <a href="../activo/depreciacionDonados.php">Depeciación Donados</a>
                                 </li>
                                 <li>
                                     <a href="#">Second Level Item</a>
