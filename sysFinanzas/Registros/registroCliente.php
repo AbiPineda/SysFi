@@ -156,7 +156,7 @@ input#miArchivo{
                                                           
                                                             <div class="input-group">
 
-                                                                <input name="imagenConstancia" type="file" id="miArchivo" style="color: transparent" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
+                                                                <input name="imagenConstancia" type="file" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
                                                             </div>
                                                         </div>
                                                         <!-- /.form-group -->
@@ -174,7 +174,7 @@ input#miArchivo{
                                                           
                                                             <div class="input-group">
 
-                                                                <input name="imagenRemesa" type="file"  id="miArchivo" style="color: transparent" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
+                                                                <input name="imagenRemesa" type="file" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
                                                             </div>
                                                         </div>
                                                         <!-- /.form-group -->
@@ -192,7 +192,7 @@ input#miArchivo{
                                                           
                                                             <div class="input-group">
 
-                                                                <input name="imagenRecibo" type="file"  id="miArchivo" style="color: transparent" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
+                                                                <input name="imagenRecibo" type="file" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
                                                             </div>
                                                         </div>
                                                         <!-- /.form-group -->
@@ -218,19 +218,19 @@ input#miArchivo{
 
                                                     <label class="col-md-3 control-label">Nombre Completo:</label>
                                                     <div class="col-md-5">
-                                                        <input type="text" class="form-control" name="tiempo" placeholder="Ej. Juana Maria Lopéz Arias" required="">
+                                                        <input type="text" class="form-control" name="nombreR1" placeholder="Ej. Juana Maria Lopéz Arias" required="">
                                                     </div>
                                                     
                                                     <label class="col-md-1 control-label">Telefono:</label>
                                                     <div class="col-md-2">
 
-                                                        <input type="text" class="form-control" name="tel" id="telefonoRef1"  placeholder="9999-9999" required="">
+                                                        <input type="text" class="form-control" name="telefonoRef1" id="telefonoRef1"  placeholder="9999-9999" required="">
                                                     </div>
                                                     <br>
                                                     <br>
                                                     <label class="col-md-3 control-label">Lugar de Trabajo:</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="trabajo" placeholder="Ej. Ministerio de Educación, San Vicente" required="">
+                                                        <input type="text" class="form-control" name="trabajoR1" placeholder="Ej. Ministerio de Educación, San Vicente" required="">
                                                     </div>
                                                     <br>
                                                     <br>
@@ -238,19 +238,19 @@ input#miArchivo{
                                                       <br>
                                                     <label class="col-md-3 control-label">Nombre Completo:</label>
                                                     <div class="col-md-5">
-                                                        <input type="text" class="form-control" name="tiempo" placeholder="Ej. Juana Maria Lopéz Arias" required="">
+                                                        <input type="text" class="form-control" name="nombreR2" placeholder="Ej. Juana Maria Lopéz Arias" required="">
                                                     </div>
                                                     
                                                     <label class="col-md-1 control-label">Telefono:</label>
                                                     <div class="col-md-2">
 
-                                                        <input type="text" class="form-control" name="tel" id="telefonoRef1"  placeholder="9999-9999" required="">
+                                                        <input type="text" class="form-control" name="telefonoRef2" id="telefonoRef2"  placeholder="9999-9999" required="">
                                                     </div>
                                                     <br>
                                                     <br>
                                                     <label class="col-md-3 control-label">Lugar de Trabajo:</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="trabajo" placeholder="Ej. Ministerio de Educación, San Vicente" required="">
+                                                        <input type="text" class="form-control" name="trabajoR2" placeholder="Ej. Ministerio de Educación, San Vicente" required="">
                                                     </div>
                                  
                                                     <br>
@@ -300,6 +300,14 @@ input#miArchivo{
                               $imagenR = addslashes(file_get_contents($_FILES['imagenRemesa']['tmp_name']));
                               $imagenRec = addslashes(file_get_contents($_FILES['imagenRecibo']['tmp_name']));
 
+                              $nombreR1 = $_REQUEST['nombreR1'];
+                              $telefonoRef1 = $_REQUEST['telefonoRef1'];
+                              $trabajoR1 = $_REQUEST['trabajoR1'];
+
+                              $nombreR2 = $_REQUEST['nombreR2'];
+                              $telefonoRef2 = $_REQUEST['telefonoRef2'];
+                              $trabajoR2 = $_REQUEST['trabajoR2'];
+
 
 
                              mysqli_query($conexion, "INSERT INTO tb_cliente(nombre_cliente,dir_cliente,dui,tel) VALUES('$nombre','$direccion','$dui','$telefono')");
@@ -311,7 +319,9 @@ input#miArchivo{
                                                 $id = $fila['id_cliente'];
                                                 }
                                                 
-                                                mysqli_query($conexion, "INSERT INTO Documentos(constancia,remesa,recibo,idcliente) VALUES('$imagenC','$imagenR','$imagenRec','$id')");
+                                                mysqli_query($conexion, "INSERT INTO documentos(constancia,remesa,recibo,idcliente) VALUES('$imagenC','$imagenR','$imagenRec','$id')");
+
+                                                mysqli_query($conexion, "INSERT INTO referencias(nombre1,telefono1,direccion1,nombre2,telefono2,direccion2,idcliente) VALUES('$nombreR1','$telefonoRef1','$trabajoR1','$nombreR2','$telefonoRef2','$trabajoR2','$id')");
                          
                          }
                          ?>
