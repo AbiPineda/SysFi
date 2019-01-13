@@ -200,8 +200,8 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                         <tr>
                             <td class="text-center" > <?php echo ($ano1 + $i); ?></td>
                             <td class="text-center" > <?php echo $valor; ?> </td>
-                            <td class="text-center" > <?php echo $depre; ?></td>
-                            <td class="text-center" > <?php echo $vn; ?> </td>
+                            <td class="text-center" > <?php echo round($depre, 2); ?></td>
+                            <td class="text-center" > <?php echo round($vn, 2); ?> </td>
                         </tr> 
                         <?php
                         $vn = $vn - $depre;

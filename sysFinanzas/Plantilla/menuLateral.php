@@ -118,10 +118,10 @@
                                     <a href="../activo/activosRegistrados.php">Activos Registrados</a>
                                 </li>
                                 <li>
-                                    <a href="../activo/depreciacionComprados.php">Depereciación Comprados</a>
+                                    <a href="../activo/depreciacionComprados.php">Depreciación Comprados</a>
                                 </li>
                                 <li>
-                                    <a href="../activo/depreciacionDonados.php">Depeciación Donados</a>
+                                    <a href="../activo/depreciacionDonados.php">Depreciación Donados</a>
                                 </li>
                                 <li>
                                     <a href="#">Second Level Item</a>
