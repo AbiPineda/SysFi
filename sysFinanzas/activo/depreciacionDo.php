@@ -48,7 +48,8 @@ encargado.nombre AS encargado,
 activo.precio AS precio,
 clasificacion.id_clasificacion as clasi,
 clasificacion.nombre as ncla,
-clasificacion.vidautil AS valor
+activo.tiempo_uso as tiempoMeses,
+clasificacion.tiempo_depreciacion AS meses
 FROM
 activo
 INNER JOIN usuario ON activo.idusuario = usuario.idusuario
@@ -67,7 +68,10 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                                                       $tipo = $fila['tipo'];
                                                       $encargado = $fila['encargado'];
                                                       $departamento = $fila['dep'];
-                                                      $veces = $fila['valor'];
+                                                      $meses = $fila['meses'];
+                                                      $tiempoUso = $fila['tiempoMeses'];
+
+                                                      $veces = $meses-$tiempoUso;
 
                                                      }
                                                        ?>
@@ -139,7 +143,22 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                             </td>
                         </tr>
                         <tr class="text-accent-1" >
-                            
+                           
+                            <td >
+                                <div class="input-field col m12">
+                                    <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Vida Util (Meses)<small></small> </label><br>
+                                    <input type="text" name="ver_valor" value="<?php echo $meses; ?>"min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
+
+                                </div>
+                            </td> 
+
+                            <td style="height:10px;">
+                                <div class="input-field col m12">
+                                    <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Tiempo de Uso (Meses)<small></small> </label><br>
+                                    <input type="text" name="ver_valor" value="<?php echo $tiempoUso; ?>" min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
+
+                                </div>
+                            </td>
                             
                         </tr>
 
@@ -150,7 +169,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
 
 
             <table id="ver_depre_tab" class="table table-striped table-bordered">
-                <caption>Depreciación </caption>
+                <caption>Metodo de Linea Recta - Depreciación en Meses </caption>
                 <thead>
                 <th class="text-center" >Año</th>
                 <th class="text-center">Valor del Activo</th>

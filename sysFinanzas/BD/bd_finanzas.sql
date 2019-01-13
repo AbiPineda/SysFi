@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-01-2019 a las 05:24:13
+-- Tiempo de generación: 13-01-2019 a las 23:37:11
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 5.6.39
 
@@ -79,14 +79,14 @@ CREATE TABLE `activo` (
 --
 
 INSERT INTO `activo` (`idactivo`, `idtipo`, `iddepartamento`, `idusuario`, `idencargado`, `correlativo`, `fecha_adquisicion`, `descripcion`, `estado`, `observaciones`, `precio`, `tiempo_uso`, `adquisicion`, `donador`) VALUES
-(1, 1, 8, 1, 2, '0001', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4, NULL, NULL),
-(2, 1, 8, 1, 2, '0002', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4, NULL, NULL),
-(3, 1, 8, 1, 1, '0003', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2, NULL, NULL),
-(4, 1, 8, 1, 1, '0004', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2, NULL, NULL),
-(5, 1, 8, 1, 2, '0005', '2018-12-01', 'ñañaña', 'ACTIVO', '', 5300, 1, NULL, NULL),
-(6, 1, 8, 1, 1, '0006', '2018-12-01', 'hello', 'ACTIVO', 'oha', 1200, 1, NULL, NULL),
-(7, 2, 9, 1, 2, '0007', '2019-01-08', 'COMPUTADORA HP 20-C205LA AIO ALL IN ONE 19,5\"\"\", PROCESADOR CELERONDC J3060, MEMORIA 4GB, DISCO DURO 1TB HDD,DVD, COLOR SNOW WHITE', 'ACTIVO', 'Uso solo para Departamento de Ventas', 459, 1, NULL, NULL),
-(8, 2, 9, 1, 4, '0008', '2019-01-11', 'Disco duro de 500 GB y una memoria RAM de 4 GB. Diseñado para la tareas cotidianas básicas diarias. Intel® Celeron® N4000', 'ACTIVO', 'Uso solo para departamento de Ventas', 329, 2, '2', 'Negocios Valdez'),
+(1, 1, 8, 1, 2, '0001', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4, 'Comprado', NULL),
+(2, 1, 8, 1, 2, '0002', '2018-09-01', 'nose', 'ACTIVO', '', 1500, 4, 'Comprado', NULL),
+(3, 1, 8, 1, 1, '0003', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2, 'Comprado', NULL),
+(4, 1, 8, 1, 1, '0004', '2018-11-01', 'uy', 'ACTIVO', '', 3500, 2, 'Comprado', NULL),
+(5, 1, 8, 1, 2, '0005', '2018-12-01', 'ñañaña', 'ACTIVO', '', 5300, 1, 'Comprado', NULL),
+(6, 1, 8, 1, 1, '0006', '2018-12-01', 'hello', 'ACTIVO', 'oha', 1200, 1, 'Comprado', NULL),
+(7, 2, 9, 1, 2, '0007', '2019-01-08', 'COMPUTADORA HP 20-C205LA AIO ALL IN ONE 19,5\"\"\", PROCESADOR CELERONDC J3060, MEMORIA 4GB, DISCO DURO 1TB HDD,DVD, COLOR SNOW WHITE', 'ACTIVO', 'Uso solo para Departamento de Ventas', 459, 1, 'Comprado', NULL),
+(8, 2, 9, 1, 4, '0008', '2019-01-11', 'Disco duro de 500 GB y una memoria RAM de 4 GB. Diseñado para la tareas cotidianas básicas diarias. Intel® Celeron® N4000', 'ACTIVO', 'Uso solo para departamento de Ventas', 329, 2, 'Comprado', ''),
 (9, 1, 8, 1, 3, '0009', '2019-01-11', 'Versión	LE\r\nTipo	DOHC, V8, CVTCS, VVEL DIG\r\nTransmisión	AT de 5 velocidades con modo manual\r\nDesplazamiento cc	5,552\r\nDiámetro x Carrera	98.0 x 92.0mm', 'ACTIVO', 'Uso solo para departamento de compras', 12500, 2, 'Donado', 'Nissan, El Salvador');
 
 -- --------------------------------------------------------
@@ -257,7 +257,10 @@ INSERT INTO `contable` (`id_contable`, `concepto1`, `concepto2`, `tipo`, `valor`
 (9, '2', '12548806', 'CXC', '1100', '2019-01-10', '21:06:09', NULL, 4, 185.48, 12.87, NULL, '6', 'EnProceso'),
 (10, 'Compra al CONTADO', '12548807', 'SALIDA', '6300', '2019-01-11', '00:37:16', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (11, 'Compra al CONTADO', '12548808', 'SALIDA', '18000', '2019-01-11', '00:41:07', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, 'Compra al CONTADO', '12548809', 'SALIDA', '595', '2019-01-11', '01:08:53', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(12, 'Compra al CONTADO', '12548809', 'SALIDA', '595', '2019-01-11', '01:08:53', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, '3', '12548810', 'CXP', '230', '2019-01-13', '02:48:47', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, '3', '12548811', 'CXP', '23', '2019-01-13', '03:48:15', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, '2', '12548812', 'CXP', '900', '2019-01-13', '04:14:35', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -336,7 +339,10 @@ INSERT INTO `detalle_compra` (`id_detalle`, `factura`, `articulo`, `codigo`, `ca
 (123, '12548802', 10, 'CM618', '1', '23', '23', 'COMPRA', '2019-01-04'),
 (124, '12548807', 1, 'LR12345664', '7', '900', '6300', 'COMPRA', '2019-01-11'),
 (125, '12548808', 1, 'LR12345664', '20', '900', '18000', 'COMPRA', '2019-01-11'),
-(126, '12548809', 9, 'NWZW273S', '5', '119', '595', 'COMPRA', '2019-01-11');
+(126, '12548809', 9, 'NWZW273S', '5', '119', '595', 'COMPRA', '2019-01-11'),
+(127, '12548810', 10, 'CM618', '10', '23', '230', 'COMPRA', '2019-01-13'),
+(128, '12548811', 10, 'CM618', '1', '23', '23', 'COMPRA', '2019-01-13'),
+(129, '12548812', 2, '7415300005014', '1', '900', '900', 'COMPRA', '2019-01-13');
 
 -- --------------------------------------------------------
 
@@ -357,7 +363,10 @@ CREATE TABLE `documentos` (
 --
 
 INSERT INTO `documentos` (`idDocumento`, `constancia`, `remesa`, `recibo`, `idcliente`) VALUES
-(1, '', '', '', 3);
+(1, '', '', '', 3),
+(2, '', '', '', 4),
+(3, '', '', '', 5),
+(4, '', '', '', 6);
 
 -- --------------------------------------------------------
 
@@ -469,7 +478,10 @@ INSERT INTO `factura` (`id_fac`, `factura`, `valor`, `fecha`) VALUES
 (92, '12548806', '1200', '2019-01-10'),
 (93, '12548807', '6300', '2019-01-11'),
 (94, '12548808', '18000', '2019-01-11'),
-(95, '12548809', '595', '2019-01-11');
+(95, '12548809', '595', '2019-01-11'),
+(96, '12548810', '230', '2019-01-13'),
+(97, '12548811', '23', '2019-01-13'),
+(98, '12548812', '900', '2019-01-13');
 
 -- --------------------------------------------------------
 
@@ -535,12 +547,12 @@ CREATE TABLE `inventario` (
 --
 
 INSERT INTO `inventario` (`idinventario`, `id_articulos`, `stock`, `stockMinimo`, `pv`, `cant`) VALUES
-(1, 2, 30, 5, 1000, 1),
+(1, 2, 31, 5, 1000, 1),
 (2, 1, 20, 5, 1200, 1),
 (3, 3, 13, 10, 950, 1),
 (5, 5, 30, 10, 1000, 1),
 (6, 9, 6, 5, 130, NULL),
-(7, 10, 10, 5, 30, NULL);
+(7, 10, 21, 5, 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -570,7 +582,10 @@ INSERT INTO `kardex` (`idkardex`, `factura`, `tipo`, `id_articulos`, `cantidad`,
 (3, '12548806', 'VENTA', 1, 1, 900, 900, -7, '2019-01-10'),
 (4, '12548807', 'COMPRA', 1, 7, 900, 6300, 0, '2019-01-11'),
 (5, '12548808', 'COMPRA', 1, 20, 900, 18000, 20, '2019-01-11'),
-(6, '12548809', 'COMPRA', 9, 5, 119, 595, 6, '2019-01-11');
+(6, '12548809', 'COMPRA', 9, 5, 119, 595, 6, '2019-01-11'),
+(7, '12548810', 'COMPRA', 10, 10, 23, 230, 20, '2019-01-13'),
+(8, '12548811', 'COMPRA', 10, 1, 23, 23, 21, '2019-01-13'),
+(9, '12548812', 'COMPRA', 2, 1, 900, 900, 31, '2019-01-13');
 
 -- --------------------------------------------------------
 
@@ -626,6 +641,15 @@ CREATE TABLE `referencias` (
   `direccion2` varchar(100) DEFAULT NULL,
   `idcliente` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `referencias`
+--
+
+INSERT INTO `referencias` (`idReferencia`, `nombre1`, `telefono1`, `direccion1`, `nombre2`, `telefono2`, `direccion2`, `idcliente`) VALUES
+(1, 'daniela', '2332-2323', 'nose', 'Miguel', '2343-3432', 'tampoco', 4),
+(2, 'daniela', '2332-2323', 'nose', 'Miguel', '2343-3432', 'tampoco', 5),
+(3, 'a', '1', 'a', 'w', '2', 'w', 6);
 
 -- --------------------------------------------------------
 
@@ -685,7 +709,10 @@ INSERT INTO `resumen_compra` (`id_resumen`, `id_proveedor`, `concepto`, `factura
 (8, 3, 'Compra al \"CREDITO\"', '12548802', 'COMPRA', '23', 'COMPRA', '2019-01-04', '21:25:04', 'CREDITO'),
 (9, 2, 'Compra al CONTADO', '12548807', 'COMPRA', '6300', 'COMPRA', '2019-01-11', '00:37:16', 'CONTADO'),
 (10, 2, 'Compra al CONTADO', '12548808', 'COMPRA', '18000', 'COMPRA', '2019-01-11', '00:41:07', 'CONTADO'),
-(11, 1, 'Compra al CONTADO', '12548809', 'COMPRA', '595', 'COMPRA', '2019-01-11', '01:08:53', 'CONTADO');
+(11, 1, 'Compra al CONTADO', '12548809', 'COMPRA', '595', 'COMPRA', '2019-01-11', '01:08:53', 'CONTADO'),
+(12, 3, 'Compra al CREDITO', '12548810', 'COMPRA', '230', 'COMPRA', '2019-01-13', '02:48:47', 'CREDITO'),
+(13, 3, 'Compra al CREDITO', '12548811', 'COMPRA', '23', 'COMPRA', '2019-01-13', '03:48:15', 'CREDITO'),
+(14, 2, 'Compra al CREDITO', '12548812', 'COMPRA', '900', 'COMPRA', '2019-01-13', '04:14:35', 'CREDITO');
 
 -- --------------------------------------------------------
 
@@ -708,7 +735,10 @@ CREATE TABLE `tb_cliente` (
 INSERT INTO `tb_cliente` (`id_cliente`, `nombre_cliente`, `dir_cliente`, `dui`, `tel`) VALUES
 (1, 'Juan Moz', 'Cedros', '78404023', '56464'),
 (2, 'Abi', 'Verapaz en la casa del chimilo', '2001221', '44547'),
-(3, 'Josefina Arminda Lopez', 'col. garcia', '34324234-2', 'aa');
+(3, 'Josefina Arminda Lopez', 'col. garcia', '34324234-2', 'aa'),
+(4, 'Abigail Henriquez', 'col. remaguiza', '12121212-1', '2323-2323'),
+(5, 'Abigail Henriquez', 'col. remaguiza', '12121212-1', '2323-2323'),
+(6, 'a', 'a', '12121212-1', '2323-2323');
 
 -- --------------------------------------------------------
 
@@ -1048,7 +1078,7 @@ ALTER TABLE `compra_tmp`
 -- AUTO_INCREMENT de la tabla `contable`
 --
 ALTER TABLE `contable`
-  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_contable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `departamento`
@@ -1066,13 +1096,13 @@ ALTER TABLE `detalle`
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `idDocumento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idDocumento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `encargado`
@@ -1084,7 +1114,7 @@ ALTER TABLE `encargado`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id_fac` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT de la tabla `factura_compra`
@@ -1108,7 +1138,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idkardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -1126,7 +1156,7 @@ ALTER TABLE `prov_tmp`
 -- AUTO_INCREMENT de la tabla `referencias`
 --
 ALTER TABLE `referencias`
-  MODIFY `idReferencia` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReferencia` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `resumen`
@@ -1138,13 +1168,13 @@ ALTER TABLE `resumen`
 -- AUTO_INCREMENT de la tabla `resumen_compra`
 --
 ALTER TABLE `resumen_compra`
-  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_resumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_cliente`
 --
 ALTER TABLE `tb_cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_activo`
