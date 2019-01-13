@@ -5,7 +5,7 @@
     include_once '../Plantilla/menuLateral.php';
     ?>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
 <head>
@@ -109,7 +109,7 @@ input#miArchivo{
                                 <div class="col-md-12" >
 
                                     <div class="col-md-12">
-                                        <form class="form-horizontal" role="form" autocomplete="off">
+                                        <form class="form-horizontal" role="form" autocomplete="off" enctype="multipart/form-data">
 
 
                                             <label class="col-md-1 control-label">Nombre:</label>
@@ -181,18 +181,15 @@ input#miArchivo{
 
                                                     </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <label class="container">Recibo de Luz
-                                                            <input type="checkbox" checked="checked">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </div>
+                                        
                                                     <div class="col-md-1">
                                                         <div class="form-group">
                                                           
                                                             <div class="input-group">
 
-                                                                <input name="imagenRecibo" type="file" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg"> 
+                                                                
+
+                                                                <input name="imagenRecibo" type="file" onChange="ver(form.file.value)" required accept="image/jpg,image/png,image/jpeg">
                                                             </div>
                                                         </div>
                                                         <!-- /.form-group -->
@@ -310,7 +307,7 @@ input#miArchivo{
 
 
 
-                             mysqli_query($conexion, "INSERT INTO tb_cliente(nombre_cliente,dir_cliente,dui,tel) VALUES('$nombre','$direccion','$dui','$telefono')");
+                             mysqli_query($conexion, "INSERT INTO tb_cliente(nombre_cliente,dir_cliente,dui,tel,imagen) VALUES('$nombre','$direccion','$dui','$telefono',' $imagenC')");
                          
                               $sacar = mysqli_query($conexion, "SELECT* FROM tb_cliente");
                                             while ($fila = mysqli_fetch_array($sacar)) {
@@ -319,7 +316,7 @@ input#miArchivo{
                                                 $id = $fila['id_cliente'];
                                                 }
                                                 
-                                                mysqli_query($conexion, "INSERT INTO documentos(constancia,remesa,recibo,idcliente) VALUES('$imagenC','$imagenR','$imagenRec','$id')");
+                                                mysqli_query($conexion, "INSERT INTO documentos(idcliente,imgConstancia,imgRemesa,imgRecibo) VALUES('$imagenC','$imagenR','$imagenRec','$id')");
 
                                                 mysqli_query($conexion, "INSERT INTO referencias(nombre1,telefono1,direccion1,nombre2,telefono2,direccion2,idcliente) VALUES('$nombreR1','$telefonoRef1','$trabajoR1','$nombreR2','$telefonoRef2','$trabajoR2','$id')");
                          

@@ -155,7 +155,7 @@ input {
                     </table>
                 </div>
             </div>
-            <button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='invetarioPDF.php'"><i class="fa fa-print fa-2"></i></button>
+            <button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='../Reportes/activos.php'"><i class="fa fa-print fa-2"></i></button>
 
         </div>
     </div>
