@@ -45,6 +45,7 @@ departamento.nombre AS dep,
 tipo_activo.idclasificacion,
 tipo_activo.nombre AS tipo,
 encargado.nombre AS encargado,
+encargado.apellidos,
 activo.precio AS precio,
 clasificacion.id_clasificacion as clasi,
 clasificacion.nombre as ncla,
@@ -63,15 +64,22 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                                     while ($fila = mysqli_fetch_array($sacar)) {
                                                       $modificar=$fila['id'];
                                                       $clasificacion = $fila['ncla'];
-                                                      $fecha = $fila['fecha'];
+                                                      $fecha1 = $fila['fecha'];
+                                                        $partes = explode('-', $fecha1);
+                                                $fecha = "{$partes[2]}-{$partes[1]}-{$partes[0]}";
+
+
+
                                                       $precio = $fila['precio'];
                                                       $tipo = $fila['tipo'];
                                                       $encargado = $fila['encargado'];
+                                                      $apellidos = $fila['apellidos'];
                                                       $departamento = $fila['dep'];
                                                       $meses = $fila['meses'];
                                                       $tiempoUso = $fila['tiempoMeses'];
 
                                                       $veces = $meses-$tiempoUso;
+
 
                                                      }
                                                        ?>
@@ -91,14 +99,14 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                                  <div class="input-field col m12">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         <label for="textarea1"  class="active" style="font-size:16px">Clasificacion</label><br>
-                                        <input type="text" id="ver_cod_depre" name="ver_cod_depre" value="<?php echo $clasificacion ?>"  minlength="8"  readonly=""   >
+                                        <input type="text" id="ver_cod_depre" name="ver_cod_depre" value="<?php echo $clasificacion ?>"  minlength="8" class="text-center validate" readonly=""   >
 
                             </div></td>
                             <td style="height:10px;"><div class="col m12">
                                     <div class="input-field col m12">
                                         <i class="fa fa-calendar prefix" aria-hidden="true"></i>
                                         <label for="fecha_pub"  class="active" style="font-size:16px">Fecha Adquisición</label><br>
-                                        <input type="text" name="ver_fecha_depre" value="<?php echo $fecha?>"  id="ver_fecha_depre" readonly=""   >
+                                        <input type="text" name="ver_fecha_depre" value="<?php echo $fecha?>"  id="ver_fecha_depre" class="text-center validate" readonly=""   >
                                     </div>
                                 </div></td>
                         </tr>
@@ -129,9 +137,10 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
 
                             <td style="height:10px;">
                                 <div class="input-field col m12">
+                                    
                                     <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Encargado<small></small> </label><br>
-                                    <input type="text" name="ver_valor" value="<?php echo $encargado; ?>" min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
-
+                                    <input type="text" name="ver_valor" value="<?php echo $encargado . " " . $apellidos; ?>" step="any" id="ver_valor"  class="text-center validate" readonly="">
+                                   
                                 </div>
                             </td>
                             <td >
@@ -198,7 +207,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                     for ($i = 0; $i < $veces; $i++) {
                         ?>
                         <tr>
-                            <td class="text-center" > <?php echo ($ano1 + $i); ?></td>
+                            <td class="text-center" > <?php echo ($ano1 + $i+1); ?></td>
                             <td class="text-center" > <?php echo $valor; ?> </td>
                             <td class="text-center" > <?php echo round($depre, 2); ?></td>
                             <td class="text-center" > <?php echo round($vn, 2); ?> </td>

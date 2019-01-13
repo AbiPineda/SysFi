@@ -71,17 +71,23 @@ departamento.nombre AS dep,
 tipo_activo.idclasificacion,
 tipo_activo.nombre AS tipo,
 encargado.nombre AS encargado,
+encargado.apellidos,
 activo.precio AS precio,
 clasificacion.id_clasificacion AS clasi,
 clasificacion.nombre AS ncla,
-activo.correlativo
+departamento.correlativo AS coDepartamento,
+clasificacion.correlativo AS coClasificacion,
+tipo_activo.correlativo AS CoTipo,
+activo.correlativo AS coActivo,
+institucion.correlativo as coInstitucion
 FROM
 activo
 INNER JOIN usuario ON activo.idusuario = usuario.idusuario
 INNER JOIN departamento ON activo.iddepartamento = departamento.id_departamento
 INNER JOIN tipo_activo ON activo.idtipo = tipo_activo.id_tipo
 INNER JOIN encargado ON activo.idencargado = encargado.id_encargado
-INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasificacion
+INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasificacion ,
+institucion
 WHERE tipo_activo.id_tipo=activo.idtipo and activo.iddepartamento=departamento.id_departamento
 and encargado.id_encargado=activo.idencargado and activo.adquisicion = 'Donado'
  GROUP BY activo.idactivo 
@@ -98,15 +104,12 @@ and encargado.id_encargado=activo.idencargado and activo.adquisicion = 'Donado'
       <tr>
                           
                           
-                           <td><?php echo $fila['correlativo']; ?></td>
+                           <td nowrap><?php echo $fila['coInstitucion'] . " " . $fila['coDepartamento'] . " " . $fila['coClasificacion'] . " " . $fila['CoTipo'] . " " . $fila['coActivo']; ?></td>
                            
                             <td><?php echo $fila['ncla']; ?></td>
                               <td><?php echo $fila['dep']; ?></td>
                               <td><?php echo $fila['precio'] ; ?></td>
-                              
-                                  
-
-                                  <td><?php echo $fila['encargado']; ?></td>
+                                <td><?php echo $fila['encargado'] . " " . $fila['apellidos']; ?></td>
                                
                                   
         <td class="center">
