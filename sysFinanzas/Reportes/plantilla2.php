@@ -12,8 +12,8 @@
 	$fecha_actual2=date("d-m-Y");
 	$hora=date("H:i:s");
 			$this->Image('images/Logo-prado.png', 5, 3, 60 );
-			$this->SetFont('Arial','B',15);
-			$this->Ln(3);
+			$this->SetFont('Arial','B',14);
+			$this->Ln(2);
 			$this->SetX(70);
 			$this->Cell(100,10, utf8_decode('ALMACENES PRADO DE S.A DE C.V '),0,1,'C');
 

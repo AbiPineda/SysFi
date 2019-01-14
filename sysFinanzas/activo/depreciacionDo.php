@@ -186,6 +186,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                 <th class="text-center">Valor Neto</th>
                 </thead>
                 <tbody>
+                    <a href="../Reportes/detalleDepreDonados.php?ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm">Imprimir</a>
                     <?php
         
                     if ($fila['clasi'] == "1")

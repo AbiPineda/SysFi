@@ -2,7 +2,7 @@
 	include 'pantilla3.php';
 	include '../conexion/php_conexion.php';
 
-	 $sacar = mysqli_query($conexion, "SELECT
+	  $sacar = mysqli_query($conexion, "SELECT
 activo.fecha_adquisicion AS fecha,
 activo.idactivo AS id,
 usuario.nombre AS nombreUser,
@@ -14,13 +14,11 @@ encargado.apellidos,
 activo.precio AS precio,
 clasificacion.id_clasificacion AS clasi,
 clasificacion.nombre AS ncla,
- 
 departamento.correlativo AS coDepartamento,
 clasificacion.correlativo AS coClasificacion,
 tipo_activo.correlativo AS CoTipo,
 activo.correlativo AS coActivo,
 institucion.correlativo as coInstitucion
-
 FROM
 activo
 INNER JOIN usuario ON activo.idusuario = usuario.idusuario
@@ -30,7 +28,7 @@ INNER JOIN encargado ON activo.idencargado = encargado.id_encargado
 INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasificacion ,
 institucion
 WHERE tipo_activo.id_tipo=activo.idtipo and activo.iddepartamento=departamento.id_departamento
-and encargado.id_encargado=activo.idencargado and activo.adquisicion = 'Comprado'
+and encargado.id_encargado=activo.idencargado and activo.adquisicion = 'Donado'
  GROUP BY activo.idactivo");
                                            
      
@@ -42,8 +40,9 @@ and encargado.id_encargado=activo.idencargado and activo.adquisicion = 'Comprado
 	$pdf->AddPage('L','Letter');
 
 	$pdf->SetFont('Arial','B',12);
-	$pdf->Cell(95,6,utf8_decode('Lista de depreciación de activos comprados.'),0,0,'C');
-	
+	$pdf->Cell(95,6,utf8_decode('Lista de depreciación de activos donados.'),0,0,'C');
+
+
 
 	$pdf->Ln(10);
 
@@ -56,6 +55,7 @@ and encargado.id_encargado=activo.idencargado and activo.adquisicion = 'Comprado
 	$pdf->Cell(35,6,utf8_decode('DEPARTAMENTO'),1,0,'C',1);
     $pdf->Cell(20,6,utf8_decode('PRECIO'),1,0,'C',1);
 	$pdf->Cell(55,6,utf8_decode('ENCARGADO'),1,1,'C',1);
+
 	while ($fila = mysqli_fetch_array($sacar)) {
                $modificar=$fila['id']; 
 
