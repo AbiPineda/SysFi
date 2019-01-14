@@ -5,7 +5,9 @@ include_once '../Plantilla/menuLateral.php';
 
 $modi = $_GET['ir'];
 ?>
-
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -59,7 +61,7 @@ $modi = $_GET['ir'];
 
                                             <label class="col-md-2 control-label">DUI:</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control" name="dui" id="dui" value="<?php echo $dui; ?>" >
+                                                <input type="text" class="form-control" name="dui" id="dui" value="<?php echo $dui; ?>"  placeholder="99999999-9" >
                                             </div>
 
 
@@ -118,9 +120,14 @@ $modi = $_GET['ir'];
 
 
 
+<script type="text/javascript">
+                    $("#telefono").mask("0000-0000");
+                    $("#dui").mask("00000000-0");
+                    $("#nit").mask("0000-000000-000-0");
 
+                </script>
 <?php
-include_once '../Plantilla/inferior.php';
+
 
 
 if (isset($_REQUEST['btnEnviar'])) {
@@ -140,4 +147,10 @@ if (isset($_REQUEST['btnEnviar'])) {
           location.href ='registroEncargado.php';
         </script>";
 }
+
+
+
+include_once '../Plantilla/inferior.php';
 ?>
+
+ 

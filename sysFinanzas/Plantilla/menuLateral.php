@@ -1,17 +1,7 @@
  <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
+                        
                         <li>
                             <a href="#"><i class="fa fa-users"></i> Clientes<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -19,17 +9,9 @@
                                     <a href="../Registros/registroCliente.php">Registro de Cliente</a>
                                 </li>
                                 <li>
-                                    <a href="notifications.html">Notifications</a>
+                                    <a href="../Registros/Clientes.php">Clientes</a>
                                 </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -124,9 +106,7 @@
                                 <li>
                                     <a href="../activo/depreciacionDonados.php">Depreciación Donados</a>
                                 </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
+                               
                                 <li>
                                     <a href="#">Registros <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">

@@ -35,67 +35,36 @@ $modi = $_GET['ir'];
 
                                                                                 <?php
                                         include_once '../conexion/php_conexion.php';
-                                        $sacar = mysqli_query($conexion, "SELECT*FROM articulos WHERE idarticulos='$modi'");
+                                        $sacar = mysqli_query($conexion, "SELECT
+articulos.codigo,
+articulos.nombre,
+inventario.pv,
+articulos.idarticulos
+FROM
+articulos
+INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos WHERE idarticulos='$modi'");
                                         while ($fila = mysqli_fetch_array($sacar)) {
                                             $modificar = $fila['idarticulos'];
                                             $codigo = $fila['codigo'];
                                             $nombre = $fila['nombre'];
-                                            $cantidad = $fila['cantidad'];
-                                            $valor = $fila['valor'];
-                                            $marca = $fila['marca'];
+                                             $pv = $fila['pv'];
 
 
-
-                                            $sacar1 = mysqli_query($conexion, "SELECT*FROM inventario, articulos WHERE idinventario='$modi' and id_articulos=idarticulos");
-                                            while ($fila = mysqli_fetch_array($sacar1)) {
-                                                $modificar = $fila['idinventario'];
-                                                $stock = $fila['stock'];
                                                 ?>
                                                 <label class="col-md-1 control-label">Código:</label>
                                                 <div class="col-md-2">
-                                                    <input type="text" class="form-control" name="codigo" value="<?php echo $codigo; ?>">
+                                                    <input type="text" class="form-control" name="codigo" value="<?php echo $codigo; ?>" autocomplete="off">
                                                 </div>
 
                                                 <label class="col-md-1 control-label">Nombre:</label>
                                                 <div class="col-md-5">
-                                                    <input type="text" class="form-control" name="nombre" value="<?php echo $nombre; ?>">
+                                                    <input type="text" class="form-control" name="nombre" value="<?php echo $nombre; ?>" autocomplete="off">
                                                 </div>
 
-                                                <div class="col-md-12">
-                                                    <br>
-                                                    <div class="panel panel-green">
-                                                        <br>
-
-                                                        <label class="col-md-1 control-label">Marca:</label>
-                                                        <div class="col-md-2">
-                                                            <input type="text" class="form-control" name="marca" value="<?php echo $marca; ?>">
-                                                        </div>
-
-
-                                                        <label class="col-md-1 control-label">Cantidad:</label>
-                                                        <div class="col-md-2">
-
-                                                            <input type="number" min="0" class="form-control" name="cantidad" value="<?php echo $cantidad; ?>">
-                                                        </div>
-
-                                                        <label class="col-md-1 control-label">Valor:</label>
-                                                        <div class="col-md-2">
-
-                                                            <input type="number" min="0" class="form-control" name="valor" value="<?php echo $valor; ?>">
-                                                        </div>
-
-
-
-                                                        <label class="col-md-1 control-label">Stock:</label>
-                                                        <div class="col-md-2">
-
-                                                            <input type="number" min="0" class="form-control" name="stock" value="<?php echo $stock; ?>">
-                                                        </div>
-
-                                                        <br>
-                                                        <br>
-
-                                                    </div>
+                                                <label class="col-md-1 control-label">Precio:</label>
+                                                <div class="col-md-2">
+                                                    <input type="text" class="form-control" name="pv" value="<?php echo $pv; ?>" autocomplete="off">
+                                                </div>
 
 
                                                 </div>
@@ -115,7 +84,7 @@ $modi = $_GET['ir'];
                                         
         <?php
     }
-}
+
 ?>
                              
                             </div>
@@ -150,18 +119,12 @@ if (isset($_REQUEST['btnEnviar'])) {
 
     $codigo = $_REQUEST['codigo'];
     $nombre = $_REQUEST['nombre'];
-    $cantidad = $_REQUEST['cantidad'];
-    $valor = $_REQUEST['valor'];
-    $marca = $_REQUEST['marca'];
+    
+    $pv = $_REQUEST['pv'];
+    
+    mysqli_query($conexion, "UPDATE articulos INNER JOIN inventario ON inventario.id_articulos = articulos.idarticulos SET codigo='$codigo',nombre='$nombre',pv='$pv'WHERE idarticulos='$modi'");
 
-    $stock = $_REQUEST['stock'];
-
-
-
-    mysqli_query($conexion, "UPDATE articulos SET codigo='$codigo',nombre='$nombre',cantidad='$cantidad',valor='$valor',marca='$marca' WHERE idarticulos='$modi'");
-
-    mysqli_query($conexion, "UPDATE inventario SET stock='$stock' WHERE idinventario='$modi'");
-
+    
     echo "<script>
           location.href ='InventarioArticulos.php';
         </script>";

@@ -3,6 +3,24 @@
 include_once '../conexion/php_conexion.php';
 include_once '../Plantilla/encabezado.php';
 include_once '../Plantilla/menuLateral.php';
+ if (isset($_REQUEST['btnGuardar'])) {
+                include_once '../conexion/php_conexion.php';
+
+                $proveedor = $_REQUEST['proveedor'];
+                $contacto = $_REQUEST['contacto'];
+                $direccion = $_REQUEST['direccion'];
+                $dui = $_REQUEST['dui'];
+                $nit = $_REQUEST['nit'];
+                $telefono = $_REQUEST['telefono'];
+
+                $estado = "s";
+
+
+                mysqli_query($conexion, "INSERT INTO proveedor(proveedor,contacto,direccion,dui,nit,telefono,estado) VALUES('$proveedor','$contacto','$direccion','$dui','$nit','$telefono','$estado')");
+              echo '<script>location.href ="registroProveedor.php";</script>';
+ }
+ else
+ {
 ?>
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
@@ -116,7 +134,10 @@ include_once '../Plantilla/menuLateral.php';
                 <!-- /.container-fluid -->
             </div>
             <!-- /#page-wrapper FIN CONTENIDOOOOOOOOOOOOOOOOOOOOOOOO -->
-            
+            <?php
+
+                }
+                ?>
             
               <div class="col-md-12">
                 <br>
@@ -202,21 +223,7 @@ include_once '../Plantilla/menuLateral.php';
 
 
             <?php
-            if (isset($_REQUEST['btnGuardar'])) {
-                include_once '../conexion/php_conexion.php';
-
-                $proveedor = $_REQUEST['proveedor'];
-                $contacto = $_REQUEST['contacto'];
-                $direccion = $_REQUEST['direccion'];
-                $dui = $_REQUEST['dui'];
-                $nit = $_REQUEST['nit'];
-                $telefono = $_REQUEST['telefono'];
-
-                $estado = "s";
-
-
-                mysqli_query($conexion, "INSERT INTO proveedor(proveedor,contacto,direccion,dui,nit,telefono,estado) VALUES('$proveedor','$contacto','$direccion','$dui','$nit','$telefono','$estado')");
-            }
+           
             ?>
 
 
