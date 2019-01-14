@@ -105,21 +105,24 @@ margin-bottom: 200%;
           <input type="text" class="form-control" id="valor" name="valor" disabled>
           <br>
           
-         <input type="text" class="form-control" id="prima" name="prima" placeholder="Ingrese Prima ($)">
+          <input type="number" min="1" class="form-control" id="prima" name="prima" placeholder="Ingrese Prima ($)" required="" >
          <br>
-         <input type="text" class="form-control" id="interes" name="interes" placeholder="Interes (%)">
+         <input type="number" min="1" class="form-control" id="interes" name="interes" placeholder="Interes (%)" required="">
          <br>
          <div class="input-group-append">
       <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
         </div> 
        </div>
-           </div></form>
-
-
-             <div class="row mb-12" style="float: right; margin-right: 10px; margin-top: 15px;">
+           </div>
+       
+       <div class="row mb-12" style="float: right; margin-right: 10px; margin-top: 15px;">
                     <button type="button" class="btn btn-primary" name="btnGuardar" id="btnGuardar" onClick="agregarTabla()">  <i class="fa fa-shopping-cart"></i> Consultar Articulo</button>
              
                 </div>
+       </form>
+
+
+             
                               
                                  
                                      <br>      
@@ -238,5 +241,7 @@ function myFunction() {
   }
 }
 </script>       
+
+
 
               

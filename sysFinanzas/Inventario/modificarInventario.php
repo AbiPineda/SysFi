@@ -99,6 +99,12 @@ $modi = $_GET['ir'];
 
 
                                                 </div>
+                                                <div class="form-group" align="center" >
+                                            <div class="col-md-12">
+                                                <br>
+                                                <button type="submit" class="btn btn-primary btn-lg" name="btnEnviar">Guardar Articulo</button>
+                                            </div>
+                                        </div>
                                     </form>       
                                 </div>
 
@@ -106,12 +112,7 @@ $modi = $_GET['ir'];
 
 
 
-                                        <div class="form-group" align="center" >
-                                            <div class="col-md-12">
-                                                <br>
-                                                <button type="submit" class="btn btn-primary btn-lg" name="btnEnviar">Guardar Articulo</button>
-                                            </div>
-                                        </div>
+                                        
         <?php
     }
 }

@@ -88,9 +88,6 @@ if (isset($_REQUEST['btnGuardar'])) {
                                             </div>
 
 
-
-
-
                                             <div class="form-group" align="center" >
                                                 <div class="col-md-12">
                                                     <br>
@@ -153,7 +150,8 @@ if (isset($_REQUEST['btnGuardar'])) {
                                 <thead>
                                     <tr>
                                         
-                                        <th>NOMBRE DE ENCARGADO</th>
+                                        <th>NOMBRE</th>
+                                        <th>APELLIDOS</th>
                                         <th>DUI</th>                                           
                                         <th>NIT</th>
                                         <th></th>
@@ -175,8 +173,8 @@ if (isset($_REQUEST['btnGuardar'])) {
 
 
                                         <tr>
-                                            <td><?php echo $nombre . " " . $apellidos; ?></td>
-                                          
+                                            <td><?php echo $nombre; ?></td>
+                                          <td><?php echo $apellidos; ?></td>
                                             <td><?php echo $dui; ?></td>
                                             <td><?php echo $nit; ?></td>
                                            

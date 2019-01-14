@@ -88,6 +88,12 @@ include_once '../Plantilla/menuLateral.php';
 
 
                                         </div>
+                                         <div class="form-group" align="center" >
+                                    <div class="col-md-12">
+                                        <br>
+                                        <button type="submit" class="btn btn-outline btn-success btn-lg btn-block" name="btnGuardar">Guardar Proveedor</button>
+                                    </div>
+                                </div>
                                     </form>
                                 </div>
 
@@ -95,12 +101,7 @@ include_once '../Plantilla/menuLateral.php';
 
 
 
-                                <div class="form-group" align="center" >
-                                    <div class="col-md-12">
-                                        <br>
-                                        <button type="submit" class="btn btn-outline btn-success btn-lg btn-block" name="btnGuardar">Guardar Proveedor</button>
-                                    </div>
-                                </div>
+                               
                                 </form>
                             </div>
 

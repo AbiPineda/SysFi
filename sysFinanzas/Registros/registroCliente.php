@@ -307,7 +307,7 @@ input#miArchivo{
 
 
 
-                             mysqli_query($conexion, "INSERT INTO tb_cliente(nombre_cliente,dir_cliente,dui,tel,imagen) VALUES('$nombre','$direccion','$dui','$telefono',' $imagenC')");
+                             mysqli_query($conexion, "INSERT INTO tb_cliente(nombre_cliente,dir_cliente,dui,tel) VALUES('$nombre','$direccion','$dui','$telefono')");
                          
                               $sacar = mysqli_query($conexion, "SELECT* FROM tb_cliente");
                                             while ($fila = mysqli_fetch_array($sacar)) {
@@ -316,7 +316,7 @@ input#miArchivo{
                                                 $id = $fila['id_cliente'];
                                                 }
                                                 
-                                                mysqli_query($conexion, "INSERT INTO documentos(idcliente,imgConstancia,imgRemesa,imgRecibo) VALUES('$imagenC','$imagenR','$imagenRec','$id')");
+//                                                mysqli_query($conexion, "INSERT INTO documentos(idcliente,imgConstancia,imgRemesa,imgRecibo) VALUES('$imagenC','$imagenR','$imagenRec','$id')");
 
                                                 mysqli_query($conexion, "INSERT INTO referencias(nombre1,telefono1,direccion1,nombre2,telefono2,direccion2,idcliente) VALUES('$nombreR1','$telefonoRef1','$trabajoR1','$nombreR2','$telefonoRef2','$trabajoR2','$id')");
                          
