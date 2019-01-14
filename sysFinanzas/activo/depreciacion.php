@@ -18,6 +18,7 @@
                              DEPRECIACION
                         </div>
                         <div class="panel-body">
+
              <div class="col-md-8">
              <div class="alert alert-default" align="center">                           
                             
@@ -170,6 +171,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
 
 
             <table id="ver_depre_tab" class="table table-striped table-bordered">
+                
                 <caption>Metodo de Linea Recta - Depreciación Anual</caption>
                 <thead>
                 <th class="text-center" >Año</th>
@@ -178,6 +180,8 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                 <th class="text-center">Valor Neto</th>
                 </thead>
                 <tbody>
+                    
+                    <a href="../Reportes/detalleDepreciacion.php?ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm">Imprimir</a>
                     <?php
         
                     if ($fila['clasi'] == "1")
