@@ -7,9 +7,9 @@
 		function Header()
 		{
 			$this->Image('images/Logo-prado.png', 5, 3, 60 );
-			$this->SetFont('Arial','B',11);
+			$this->SetFont('Arial','B',15);
 			$this->Ln(3);
-			$this->SetX(65);
+			$this->SetX(70);
 			$this->Cell(100,5, utf8_decode('ALMACENES PRADO DE S.A DE C.V '),0,1,'C');
 		
 			

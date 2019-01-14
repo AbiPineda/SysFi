@@ -48,6 +48,7 @@
                                 <li>
                                     <a href="../carteraPagos/lista_Proveedores.php">Cartera pago a proveedores</a>
                                 </li>
+                        
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -61,7 +62,7 @@
                                     <a href="../Inventario/InventarioArticulos.php">Inventario</a>
                                 </li>
                                 <li>
-                                    <a href="notifications.html">Notifications</a>
+                                    <a href="../Reportes/ArticulosExistencia.php" target="_blank">Listado Productos Existentes</a>
                                 </li>
                                 
                             </ul>
@@ -102,7 +103,7 @@
                                     <a href="../Registros/registroProveedor.php">Registrar Proveedor</a>
                                 </li>
                                 <li>
-                                    <a href="../Reportes/proveedor.php" target="blank">Listado Proveedor</a>
+                                    <a href="../Reportes/proveedor.php" target="_blank">Listado Proveedor</a>
                                 </li>
                                 
                                 

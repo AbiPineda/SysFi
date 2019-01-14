@@ -85,7 +85,9 @@ abono.cuenta = $cxp;
 
            $abono2=mysqli_query($conexion,"SELECT
 abono.id_abono,
-abono.cuenta
+abono.cuenta,
+abono.proximo_pago
+
 FROM
 abono
 WHERE
@@ -96,13 +98,25 @@ abono.cuenta = $cxp;
    // $a=mysqli_fetch_array($abono);
 
 	$pdf->Cell(60,6,utf8_decode('FECHA'),1,0,'C',1);
-	$pdf->Cell(90,6,utf8_decode('OBSERVACION'),1,0,'C',1);
-	$pdf->Cell(30,6,utf8_decode('VALOR'),1,1,'C',1);
+	$pdf->Cell(80,6,utf8_decode('OBSERVACION'),1,0,'C',1);
+	$pdf->Cell(25,6,utf8_decode('VALOR'),1,1,'C',1);
 
 $totaB=0;
 
   $abo2 = mysqli_fetch_array($abono2);
 
+  //mora
+ $aa=date("Y", strtotime($abo2['proximo_pago']));
+ $mm=date("m", strtotime($abo2['proximo_pago']));
+ $dd=date("d", strtotime($abo2['proximo_pago']));
+
+
+
+$fecha2=$aa.''.$mm.''.$dd;
+ $fecha3=date('Ymd'); 
+
+ $mora=($fecha2-$fecha3);
+//fin
 
 
 if(!empty($abo2)){
@@ -111,8 +125,8 @@ if(!empty($abo2)){
 	while ($abo = mysqli_fetch_array($abono)) {
 
                  $pdf->Cell(60,6, utf8_decode($abo['fecha'].' '.$abo['hora']),1,0,'C');   
-                 $pdf->Cell(90,6, utf8_decode($abo['nota']),1,0,'C'); 
-                 $pdf->Cell(30,6, utf8_decode('$'.$abo['valor']),1,1,'C'); 
+                 $pdf->Cell(80,6, utf8_decode($abo['nota']),1,0,'C'); 
+                 $pdf->Cell(25,6, utf8_decode($abo['valor']),1,1,'C'); 
 
 $totaB+=$abo['valor'];
 	}
@@ -123,9 +137,8 @@ $totaB+=$abo['valor'];
     $pdf->Ln(3);
 
 
-	$pdf->SetTextColor(0, 0, 205);
-
-                   $pdf->Cell(40,10,'Total Deuda:'.' $'.$valor,0,0,'L'); 
+	
+                   $pdf->Cell(40,10,'Total Deuda:'.' '.$valor,0,0,'L'); 
       			$pdf->Cell(60);
 $faltante=$valor - $totaB;
 
@@ -136,12 +149,40 @@ if ($faltante==0) {
 }else{
  $pdf->SetTextColor(255, 0, 0);
 
-      $pdf->Cell(50,10,'Saldo Faltante:'.' $'.$faltante,0,1,'L'); 
+      $pdf->Cell(50,10,'Saldo Faltante:'.' '.$faltante,0,1,'L'); 
 
        }
 
- 
+       //mora
+       
+       if(!empty($abo2)){
+        if($mora<=0){
 
+                        //$pdf->Cell(170,10,'MORA: '.$mora,1,1,'C'); 
+
+ $mora2=($fecha3-$fecha2);
+ //$td=date('t');
+    $fecha_i=$abo2['proximo_pago'];
+
+$fecha_f=date('Y-m-d'); ;
+  $dias = (strtotime($fecha_i)-strtotime($fecha_f))/86400;
+  $dias   = abs($dias); $dias = floor($dias);  
+
+
+  $pdf->Ln(5);
+$pdf->SetTextColor(0, 0, 205);
+              $pdf->Cell(170,10,'MORA: '.'Dias desde el vencimiento: '.$dias.' Dias',1,1,'C'); 
+
+
+       }else {
+        $pdf->SetTextColor(0, 0, 205);
+
+
+              $pdf->Cell(170,10,'PAGO AL DIA',1,1,'C'); 
+       }
+     }
+
+       //
 
 
 

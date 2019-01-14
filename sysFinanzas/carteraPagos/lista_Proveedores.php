@@ -100,7 +100,7 @@
 </table>
 </div>
 </div>
-<a href="../Reportes/carteraproveedor.php" target="_blank" class="btn btn-warning btn-circle btn-lg"><i class="fa fa-print fa-2"></i></a>
+<a href="../Reportes/carteraproveedor2.php" target="_blank" class="btn btn-warning btn-circle btn-lg"><i class="fa fa-print fa-2"></i></a>
 
 
 </div>
