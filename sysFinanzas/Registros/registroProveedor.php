@@ -215,7 +215,7 @@ include_once '../Plantilla/menuLateral.php';
                             </table>
                         </div>
 
-                          <button class="btn btn-warning btn-circle btn-lg"><i class="fa fa-print fa-2"></i></button>
+                          <a href="../Reportes/proveedor.php" target="_blank"><button class="btn btn-warning btn-circle btn-lg"><i class="fa fa-print fa-2"></i></button></a>
                     </div>
                     
                 </div>
