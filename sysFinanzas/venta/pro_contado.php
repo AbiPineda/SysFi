@@ -204,7 +204,12 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
             </div>
                         <!--fin pureba-->
                         <div class="panel-body">
-                        <center><button onclick="imprimir();" class="btn btn-default"><i class=" fa fa-print "></i> Imprimir</button></center><br>
+<center>
+
+    <button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='../Reportes/factura.php'"><i class="fa fa-print fa-2">
+
+</center><br>
+
                         <?php if ($_GET['pago']=='CONTADO') { }else{?>
                         <center> <button type="submit" class="btn btn-primary" onclick="location.href='./contrato.php?ir=<?php echo $id_cliente;?>&fac=<?php echo $factura;?>'">Contrato</button></center><br>
                         <?php }?>
