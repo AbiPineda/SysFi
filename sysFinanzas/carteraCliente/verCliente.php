@@ -68,7 +68,7 @@
                                             <th>Cuota</th>
                                             <th>Historial</th> 
                                             <th>Abonar</th> 
-                                            <th>Contrato</th> 
+                                            <th>Contrato y garantía</th> 
                                         </tr>
                                     </thead>
                                     <tbody class="buscar">
@@ -123,6 +123,7 @@
 
             <td class="center">
             <a href="../Reportes/contrato.php?x=<?php echo $id; ?>&ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm">Contrato</a>
+            <a href="../Reportes/garantia.php?x=<?php echo $id; ?>&ir=<?php echo $modi; ?>"class="btn btn-warning btn-sm">Garantia</a>
         </td> 
       
       </tr>
