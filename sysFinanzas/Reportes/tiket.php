@@ -61,11 +61,13 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','B',8);    //Letra Arial, negrita (Bold), tam. 20
 $textypos = 5;
 $pdf->setY(2);
-$pdf->setX(2);
+$pdf->setX(7);
 $pdf->Cell(5,$textypos," AlMACENES PRADO");
 	$pdf->Ln(5);
+	$pdf->setX(13);
 $pdf->Cell(5,$textypos,"SAN VICENTE");
 $pdf->Ln(5);
+$pdf->setX(1);
 $pdf->Cell(5,$textypos,"TIKET #: $id");
 $pdf->SetFont('Arial','',5);    //Letra Arial, negrita (Bold), tam. 20
 
@@ -75,7 +77,7 @@ $pdf->Cell(5,$textypos,'======================================');
 	$pdf->Ln(5);
 $pdf->setX(2);
 
-$pdf->Cell(5,5,'FECHA:    '.$row['fecha']);
+$pdf->Cell(5,5,'FECHA:    '.$row['fecha']=date("d-m-Y"));
 	$pdf->Ln(5);
 $pdf->setX(2);
 $pdf->Cell(5,5,'CLIENTE: '.$row['nombre_cliente']);
@@ -102,10 +104,10 @@ $pdf->Ln(5);
 	$pdf->Cell(5,$textypos,'CUOTA:                    '.$con);
 	$pdf->Ln(5);
 	$pdf->setX(2);
-	$pdf->Cell(5,$textypos,'PROXIMA CUOTA:  '.$row['proximo_pago']);
+	$pdf->Cell(5,$textypos,'PROXIMA CUOTA:  '.$row['proximo_pago']=date("d-m-Y"));
 $pdf->Ln(5);
 	$pdf->setX(2);
-	$pdf->Cell(5,$textypos,'SALDO FALTANTE: '.$deuda);
+	$pdf->Cell(5,$textypos,'NUEVO SALDO: '.$deuda);
 
 $total =0;
 $off = $textypos+6;
