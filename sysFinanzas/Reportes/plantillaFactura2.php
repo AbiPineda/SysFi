@@ -13,7 +13,7 @@
 			$this->Cell(100,5, utf8_decode('ALMACENES PRADO DE S.A DE C.V '),0,1,'C');
 			$this->SetX(45);
 			$this->SetFont('Arial','B',10);
-			$this->Cell(100,5, utf8_decode('FACTURA CONSUMIDOR FINAL'),0,1,'C');
+			$this->Cell(100,5, utf8_decode('SUCURSAL DE SAN VICENTE'),0,1,'C');
 			$this->Cell(1);
 			
 			
