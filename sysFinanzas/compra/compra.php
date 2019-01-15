@@ -4,6 +4,11 @@ include_once '../funciones.php';
 include_once '../Plantilla/encabezado.php';
   include_once '../Plantilla/menuLateral.php';
 $fecha=date('Y-m-d');
+if(!empty($_GET['delx'])){
+        $id=$_GET['delx'];
+        mysql_query("DELETE FROM prov_tmp WHERE proveedor='$id'");
+        header('location:compra.php');
+    }
 ?>
 
         <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
@@ -18,7 +23,13 @@ $fecha=date('Y-m-d');
                              NUEVA COMPRA
                         </div>
                         <div class="panel-body">
-             <div class="col-md-8">
+                             <div class="row">
+                                  <div class="col-md-6">
+                                        <br><br><br><br>
+                                        <div class="panel panel-green">
+                                            <br>
+                                             
+             
 			 <div class="alert alert-default" align="center">                           
                             <form name="form2" action="" method="post">
                                      <div class="input-group">
@@ -36,17 +47,15 @@ $fecha=date('Y-m-d');
                                     </div>
                                 </form>
                     </div>
+              
+                                              
                  
-                </div>
-                <div class="col-md-4">
-                         <div class="panel-body" align="center">                                                                                 
-                            <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus fa-2x"></i>
-                            </button>
-                            </button>
-                                                                                                            
-                  </div>
-                </div>
-                 <div class="col-md-12">
+                
+                                        </div>
+                                  </div>
+                            
+              
+                 
                     <?php
                     if(!empty($_POST['fecha'])){
                         $fecha=limpiar($_POST['fecha']);
@@ -85,11 +94,10 @@ $fecha=date('Y-m-d');
                         }
                     }                                                           
                 ?>
-                 <!-- /. ROW  -->
-            </div>
                
-            <div class="row">
-                <div class="col-md-12">
+               
+           
+            
                         <?php 
                                 $neto=0;$item=0;
                                 $pa=mysqli_query($conexion,"SELECT * FROM prov_tmp, proveedor WHERE prov_tmp.proveedor=proveedor.idproveedor");                
@@ -110,38 +118,57 @@ $fecha=date('Y-m-d');
                                    
                                     
                             ?>
+                     <div class="row">
                                 <div class="col-md-6">
+                                        <br>
+                                        <div class="panel panel-green">
+                                             <div class="panel-heading">
+                                 DATOS DEL PROVEEDOR
+                             </div>
+                                            <br>
                                     <form class="form-horizontal" role="form">
 
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Nombre:</label>
-                                            <div class="col-md-10">
+                                            <label class="col-md-3 control-label">Nombre:</label>
+                                            <div class="col-md-8">
                                                 <input type="text" class="form-control" readonly="" value="<?php echo $row['proveedor']; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">Precedencia:</label>
-                                            <div class="col-md-9">
+                                            <label class="col-md-3 control-label">Procedencia: </label>
+                                            <div class="col-md-8">
                                                 <input type="text" class="form-control" disabled="" value="<?php echo $row['direccion']; ?>" name="dir">
                                             </div>
                                         </div>
-                                    </form>
-                            </div>
-                             <div class="col-md-6">
-                                    <form class="form-horizontal" role="form">
-
+                                  
+                          
+                            
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Fecha:</label>
-                                                <div class="input-group m-t-10">
+                                            <label class="col-md-3 control-label">Fecha:</label>
+                                                <div class="col-md-8">
                                                     <input type="email" id="example-input2-group2" value="<?php echo $row['fecha']; ?>" name="example-input2-group2" class="form-control" disabled="">
                                                     
                                             </div>
                                             </div>
+                                        
+                                            
+                                        <div class="form-group" align="center">
+                                            <div class="col-md-12">
+                                                 <a href="compra.php?delx=<?php echo $row['id']; ?>"  class="btn btn-danger" title="Eliminar">
+                                            <i class="fa fa-times" ></i>
+                                        </a>
+                                            </div>
+                                              
                                         </div>
-                                       
                                     </form>
                             </div>
-                                                                                                        
+                                          </div>
+                </div>
+                              
+                             </div>
+                        </div>
+                        </div>
+                 
                             <?php } ?>
                        
 <div class="col-md-12">
