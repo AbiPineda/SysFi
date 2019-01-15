@@ -246,6 +246,12 @@ if (!empty($_POST['buscar'])) {
         echo mensajes('El Producto que Busca no se encuentra Registrado en la Base de Datos', 'rojo');
     }
 }
+
+
+//***********************eliminar de la tabla*****************
+
+
+////*************************
 ?>
                             <!--//////<?php
 //////                    $descuento=''; 
@@ -319,10 +325,11 @@ if (!empty($_POST['buscar'])) {
                                             </td>
                                             <td><div align="right"><strong><?php echo '$' . formato($importe); ?></div></strong></td>                                
                                             <td>
-                                            <center>                           
-                                                <a href="Vis_ventas.php.php?del=<?php echo $row['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
+                                            <center> 
+                                                <a href="../venta/EliminarArticulo.php?del=<?php echo $row['idarticulos']; ?>"   class="btn btn-danger" title="Eliminar">
                                                     <i class="fa fa-times" ></i>
                                                 </a>
+                                                    
                                             </center>
                                             </td>
                                             </tr>
