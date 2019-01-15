@@ -59,7 +59,7 @@ $pdf->SetFont('Arial','B',8);    //Letra Arial, negrita (Bold), tam. 20
 $textypos = 5;
 $pdf->setY(2);
 $pdf->setX(2);
-$pdf->Cell(5,$textypos,"AlMACENES PRADO");
+$pdf->Cell(5,$textypos," AlMACENES PRADO");
 	$pdf->Ln(5);
 $pdf->Cell(5,$textypos,"SAN VICENTE");
 $pdf->Ln(5);
