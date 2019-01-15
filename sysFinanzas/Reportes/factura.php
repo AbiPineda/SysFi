@@ -2,7 +2,8 @@
 	include 'plantillaFactura2.php';
 	include '../conexion/php_conexion.php';
 
-	//$id = $_GET['x'];
+	$idcliente = $_GET['ir'];
+        $factura=$_GET['fac'];
 
 	
 
@@ -11,24 +12,24 @@
 	$pdf = new PDF();
 	$pdf->AliasNbPages();
 	$pdf->AddPage('L','A5');
-
-
+$clientecito= mysqli_query($conexion,"SELECT*FROM tb_cliente WHERE id_cliente='$idcliente'");
+while ($m= mysqli_fetch_array($clientecito)){
 	$pdf->SetFillColor(249,249,249);
     $pdf->SetFont('Arial','B',11);
     $pdf->Cell(25,6,utf8_decode('NOMBRE:'),0,0,'L',1);
     $pdf->SetFont('Arial','',11);
-    $pdf->Cell(70,6, utf8_decode(''),1,1,'L');
+    $pdf->Cell(70,6, utf8_decode($m['nombre_cliente']),1,1,'L');
     $pdf->SetFillColor(249,249,249);
     $pdf->SetFont('Arial','B',11);
     $pdf->Cell(25,6,utf8_decode('DUI:'),0,0,'L',1);
     $pdf->SetFont('Arial','',11);
-    $pdf->Cell(70,6, utf8_decode(''),1,1,'L');
+    $pdf->Cell(70,6, utf8_decode($m['dui']),1,1,'L');
     $pdf->SetFillColor(249,249,249);
     $pdf->SetFont('Arial','B',11);
     $pdf->Cell(25,6,utf8_decode('DIRECCIÓN:'),0,0,'L',1);
     $pdf->SetFont('Arial','',11);
-    $pdf->Cell(70,6, utf8_decode(''),1,1,'L');
-
+    $pdf->Cell(70,6, utf8_decode($m['dir_cliente']),1,1,'L');
+}
     $pdf->SetXY(110,30);
     $pdf->SetFillColor(249,249,249);
     $pdf->SetFont('Arial','B',11);
