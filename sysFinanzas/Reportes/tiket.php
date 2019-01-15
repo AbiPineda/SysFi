@@ -3,6 +3,9 @@ include "fpdf/fpdf.php";
 	include '../conexion/php_conexion.php';
 
 	$id = $_GET['x'];
+	$totaB=0;
+	$deuda=0;
+	$valord=0;
 
 	$sacar1 = mysqli_query($conexion, "SELECT
 abono.id_abono,
@@ -41,7 +44,7 @@ abono.valor
 FROM
 abono
 WHERE
-abono.cuenta = 15
+abono.cuenta = $cuenta
 ");
 	$con=0;
 
@@ -68,7 +71,7 @@ $pdf->SetFont('Arial','',5);    //Letra Arial, negrita (Bold), tam. 20
 
 $textypos+=6;
 $pdf->setX(2);
-$pdf->Cell(5,$textypos,'=========================================================');
+$pdf->Cell(5,$textypos,'======================================');
 	$pdf->Ln(5);
 $pdf->setX(2);
 
@@ -85,9 +88,9 @@ $pdf->Cell(5,5,'MONTO VENTA:    '.$row['valor2']);
 	$pdf->Ln(5);
 	$pdf->setX(2);
 
-	$pdf->Cell(5,5,'=========================================================');
-
-$deuda=($row['valor2'])-$totaB;
+	$pdf->Cell(5,5,'======================================');
+$valord=$row['valor2'];
+$deuda=($valord-$totaB);
 
 $pdf->SetFont('Arial','',7);    //Letra Arial, negrita (Bold), tam. 20
 
