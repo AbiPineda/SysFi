@@ -57,15 +57,21 @@ while ($w= mysqli_fetch_array($facturita)){
     $pdf->Cell(65,6,utf8_decode('DESCRIPCIÓN'),1,0,'C',1);
     $pdf->Cell(30,6,utf8_decode('PRECIO UNITARIO'),1,0,'C',1);
     $pdf->Cell(35,6,utf8_decode('VENTAS GRAVADAS'),1,1,'C',1);
-
+}
     $pdf->SetFont('Arial','',9);
    // $pdf->MultiCell(20,6, utf8_decode('Tolerancia Post-Ingesta 75grs. de Glucosa 2hrs.'),1,'L',0,0,0);
    // $pdf->MultiCell(65,6, utf8_decode('Tolerancia Post-Ingesta 75grs. de Glucosa 2hrs.'),1,'L',0,0);
-    $pdf->Cell(20,6, utf8_decode($w['cantidad']),1,0,'C');
-    $pdf->Cell(65,6, utf8_decode($w['nombre']),1,0,'C');
-    $pdf->Cell(30,6, utf8_decode($w['pUni']),1,0,'C');
-    $pdf->Cell(35,6, utf8_decode($w['importe']),1,1,'C');
-}
+$facturita1= mysqli_query($conexion,"SELECT c.concepto1, c.valor, c.fecha,d.valor as pUni,d.cantidad, a.nombre,d.importe
+    FROM contable c INNER JOIN detalle d ON d.factura=c.concepto2
+INNER JOIN articulos a ON a.idarticulos=d.articulo WHERE d.factura='$factura'");
+
+    while ($rw = $facturita1->fetch_assoc()) {
+    $pdf->Cell(20,6, utf8_decode($rw['cantidad']),1,0,'C');
+    $pdf->Cell(65,6, utf8_decode($rw['nombre']),1,0,'C');
+    $pdf->Cell(30,6, utf8_decode($rw['pUni']),1,0,'C');
+    $pdf->Cell(35,6, utf8_decode($rw['importe']),1,1,'C');
+    }
+    $pdf->Ln(10);
 $pdf->Cell(35,6,utf8_decode('Total'),1,1,'C',1);
 $pdf->Cell(35,6, utf8_decode($total),1,0,'L');
 	$pdf->SetFont('Arial','',10);
