@@ -206,7 +206,7 @@ if(!empty($_GET['valor_recibido']) and !empty($_GET['neto'])){
                         <div class="panel-body">
 <center>
 
-    <button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='../Reportes/factura.php'"><i class="fa fa-print fa-2">
+    <button type="submit" class="btn btn-warning btn-circle btn-lg" onclick="location.href='../Reportes/factura.php?ir=<?php echo $id_cliente;?>&fac=<?php echo $factura;?>'"><i class="fa fa-print fa-2">
 
 </center><br>
 
