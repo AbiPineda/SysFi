@@ -3,35 +3,33 @@
 	include '../conexion/php_conexion.php';
 
 	$modi = $_GET['ir'];
+
 	
-	$sacar = mysqli_query($conexion, "SELECT*FROM tb_cliente INNER JOIN contable ON tb_cliente.id_cliente=contable.concepto1 WHERE contable.concepto1='$modi' AND tipo='CXC'");
+$sacar = mysqli_query($conexion, "SELECT
+tb_cliente.nombre_cliente,
+tb_cliente.dir_cliente,
+resumen.factura,
+articulos.nombre,
+factura.fecha
+FROM
+resumen
+INNER JOIN tb_cliente ON resumen.id_clientes = tb_cliente.id_cliente
+INNER JOIN factura ON resumen.factura = factura.factura
+INNER JOIN detalle ON detalle.factura = factura.factura
+INNER JOIN articulos ON detalle.articulo = articulos.idarticulos
+WHERE tb_cliente.id_cliente='$modi'");
+
 			while ($fila = mysqli_fetch_array($sacar)) {
-			    $modificar = $fila['id_cliente'];
+			  
 			    $nombreCliente = $fila['nombre_cliente'];
-			    $valor=$fila['valor'];
-			    $dui = $fila['dui'];
-			    $interes=$fila['interes'];
+			    $dire=$fila['dir_cliente'];
+			    $nombreArticulo=$fila['nombre'];
+			    $numFactura=$fila['factura'];
+			    date_default_timezone_set('America/El_Salvador');
+			    $fech=$fila['fecha']=date("d-m-Y");
+			   
 
-
-			    $micadena=strval($valor);
-
-			}
-    
-
-     $sacar2 = mysqli_query($conexion, "SELECT * FROM institucion");
-     while ($fila = mysqli_fetch_array($sacar2)) {
-				 $id=$fila['idInstitucion'];
-				 $nomInstitucion=$fila['nombre']; 
-                 $abre=$fila['abreviatura']; 
-                 $dire=$fila['direccion'];  
-                 $idtribu=$fila['ideTributaria'];                                
-	}	 
-     $fecha_actual=date("Y-m-d");
-     $dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
-     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");                             
-
-	
-	
+			} 
 	
 	$pdf = new PDF();
 	$pdf->AliasNbPages();
@@ -49,19 +47,19 @@
 	$pdf->SetFont('Arial','B',11);
 	$pdf->SetX(22);
 	$pdf->Cell(60,6,utf8_decode('PRODUCTO'),1,0,'L',0);
-	$pdf->Cell(100,6,utf8_decode(''),1,1,'L',0);
+	$pdf->Cell(100,6,utf8_decode($nombreArticulo),1,1,'L',0);
 	$pdf->SetX(22);
 	$pdf->Cell(60,6,utf8_decode('FACTURA'),1,0,'L',0);
-	$pdf->Cell(100,6,utf8_decode(''),1,1,'L',0);
+	$pdf->Cell(100,6,utf8_decode($numFactura),1,1,'L',0);
 	$pdf->SetX(22);
 	$pdf->Cell(60,6,utf8_decode('FECHA DE COMPRA'),1,0,'L',0);
-	$pdf->Cell(100,6,utf8_decode(''),1,1,'L',0);
+	$pdf->Cell(100,6,utf8_decode($fech),1,1,'L',0);
 	$pdf->SetX(22);
 	$pdf->Cell(60,6,utf8_decode('NOMBRE'),1,0,'L',0);
-	$pdf->Cell(100,6,utf8_decode(''),1,1,'L',0);
+	$pdf->Cell(100,6,utf8_decode($nombreCliente),1,1,'L',0);
 	$pdf->SetX(22);
 	$pdf->Cell(60,6,utf8_decode('DIRECCIÓN'),1,0,'L',0);
-	$pdf->Cell(100,6,utf8_decode(''),1,1,'L',0);
+	$pdf->Cell(100,6,utf8_decode($dire),1,1,'L',0);
  
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(190,5, utf8_decode('Será responsabilidad del cliente el presentar la factura como el presente certificado para hacer valer la garantía, como'),0,1,'L');
