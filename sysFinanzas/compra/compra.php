@@ -286,9 +286,9 @@ INNER JOIN proveedor ON proveedor.idproveedor=articulos.idproveedor WHERE provee
                                 <td><div align="right"><?php echo '$'.formato($importe); ?></div></td>                                
                                 <td>
                                     <center>                           
-                                        <a href="index.php?del=<?php echo $rows['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
-                                            <i class="fa fa-times" ></i>
-                                        </a>
+                                         <a href="../compra/EliminarArticuloCompra.php?del=<?php echo $row['idarticulos']; ?>"   class="btn btn-danger" title="Eliminar">
+                                                    <i class="fa fa-times" ></i>
+                                                </a>
                                     </center>
                                 </td>
                             </tr>                                                       
