@@ -154,7 +154,7 @@ if(!empty($_GET['delx'])){
                                             
                                         <div class="form-group" align="center">
                                             <div class="col-md-12">
-                                                 <a href="compra.php?delx=<?php echo $row['id']; ?>"  class="btn btn-danger" title="Eliminar">
+                                                <a href="../compra/EliminarProveedor.php?del=<?php echo $row['idproveedor']; ?>"  class="btn btn-danger" title="Eliminar">
                                             <i class="fa fa-times" ></i>
                                         </a>
                                             </div>
@@ -286,7 +286,7 @@ INNER JOIN proveedor ON proveedor.idproveedor=articulos.idproveedor WHERE provee
                                 <td><div align="right"><?php echo '$'.formato($importe); ?></div></td>                                
                                 <td>
                                     <center>                           
-                                        <a href="index.php?del=<?php echo $rows['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
+                                        <a href="../compra/EliminarArticulo.php?del=<?php echo $rows['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
                                             <i class="fa fa-times" ></i>
                                         </a>
                                     </center>

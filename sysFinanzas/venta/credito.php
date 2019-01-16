@@ -130,6 +130,14 @@ $fecha = date('Y-m-d');
 
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                             <center>                           
+                                                 <a href="../venta/EliminarClienteC.php?del=<?php echo $row['id_cliente']; ?>"  class="btn btn-danger" title="Eliminar">
+                                            <i class="fa fa-times" ></i>
+                                        </a>
+                                    </center>
+                                            
+                                        </div>
 
 
                                     </form>
@@ -332,7 +340,7 @@ $fecha = date('Y-m-d');
                                     <td><div align="right"><strong><?php echo '$' . formato($importe); ?></div></strong></td>                                
                                     <td>
                                     <center>                           
-                                        <a href="credito.php?del=<?php echo $row['id_articulo']; ?>"  class="btn btn-danger" title="Eliminar">
+                                        <a href="../venta/EliminarArticuloC.php?del=<?php echo $row['idarticulos']; ?>"  class="btn btn-danger" title="Eliminar">
                                             <i class="fa fa-times" ></i>
                                         </a>
                                     </center>

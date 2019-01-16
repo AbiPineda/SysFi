@@ -126,6 +126,14 @@ if (mysqli_num_rows($ocultar) > 0) {
                                                             </span>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <center> 
+                                                            <a href="../venta/EliminarCliente.php?del=<?php echo $row['id_cliente']; ?>"   class="btn btn-danger" title="Eliminar">
+                                                    <i class="fa fa-times" ></i>
+                                                </a>
+                                                    
+                                            </center>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div> 
