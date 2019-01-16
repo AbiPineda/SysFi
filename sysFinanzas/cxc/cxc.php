@@ -476,7 +476,6 @@ input[type=text] {
                 <a href="../carteraCliente/lista_clientes.php">
                     <button type="button" class="btn btn-primary"><i class="fa fa-arrow-left fa-2x" title="Regresar"></i>
                     </button></a>
-               
 <?php
 if ($estadoA!=null) {
     
@@ -717,11 +716,13 @@ while ($row = mysqli_fetch_array($sql)) {
                                         <tr>
                                             <td><center><?php echo $row['fecha'] . ' - ' . $row['hora']; ?></center></td>
                                     <td><?php echo $row['nota']; ?></td>
+
+                                    <?php $ida=$row['id_abono'] ?>
                                    
                                     <td><div align="right"><?php echo '$' . formato($row['valor']) ?></div></td>
 
                                     <td class="center">
-            <a href="../Reportes/facturaAbono.php?x=<?php echo $id;?>"class="btn btn-warning btn-sm">Factura</a>
+            <a href="../Reportes/tiket.php?x=<?php echo $ida;?>"class="btn btn-warning btn-sm" target="_blank">Factura</a>
                                        </td>
                                 
                                     </tr>
