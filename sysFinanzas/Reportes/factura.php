@@ -12,7 +12,7 @@
 	$pdf = new PDF();
 	$pdf->AliasNbPages();
 	$pdf->AddPage('L','A5');
-$clientecito= mysqli_query($conexion,"SELECT*FROM tb_cliente WHERE id_cliente='$idcliente'");
+$clientecito= mysqli_query($conexion,"SELECT*FROM tb_cliente WHERE id_expediente='$idcliente'");
 while ($m= mysqli_fetch_array($clientecito)){
 	$pdf->SetFillColor(249,249,249);
     $pdf->SetFont('Arial','B',11);
