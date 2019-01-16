@@ -332,9 +332,9 @@ $fecha = date('Y-m-d');
                                     <td><div align="right"><strong><?php echo '$' . formato($importe); ?></div></strong></td>                                
                                     <td>
                                     <center>                           
-                                        <a href="credito.php?del=<?php echo $row['id_articulo']; ?>"  class="btn btn-danger" title="Eliminar">
-                                            <i class="fa fa-times" ></i>
-                                        </a>
+                                        <a href="../venta/EliminarArticuloCredito.php?del=<?php echo $row['idarticulos']; ?>"   class="btn btn-danger" title="Eliminar">
+                                                    <i class="fa fa-times" ></i>
+                                                </a>
                                     </center>
                                     </td>
                                     </tr>
