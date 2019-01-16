@@ -6,25 +6,30 @@
      $modi = $_GET['ir'];
      
  ?>
+<head>
+    <style>
+        input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid rgb(25, 158, 218);
+  border-radius: 10px;
+}
 
+    </style>
+</head>
   <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <!--AQUI TODOO EL CONTENIDO-->
                     <div class="col-md-12">
-                        <br/>
+                        
                          <div class="panel panel-green">
                         <div class="panel-heading">
                              DEPRECIACION
                         </div>
-                        <div class="panel-body">
-             <div class="col-md-8">
-             <div class="alert alert-default" align="center">                           
-                            
-                    </div>
-                 
-                </div>
-               
+                        <div class="panel-body">   
                
             <div class="row">
                 <div class="col-md-12" >
@@ -84,15 +89,13 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                                                      }
                                                        ?>
                                             
-                          <br>
-                           <br>
+                        
                             
                          </div>
                            <div>
                 
                 <table id="no_imp" class="table table-striped table-bordered">
                     <tbody>
-
                         <tr class="text-accent-1">
                             
                             <td style="height:10px;" ><div class="col m12">
@@ -121,7 +124,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                             </td>
                              <td style="height:10px;">
                                 <div class="input-field col m12">
-                                    <i class="fa fa-usd prefix"></i> 
+                                    <i class="fa fa-info prefix"></i> 
                                     <label for="precioUnitario" style="font-size:16px">Tipo<small></small> </label><br>
                                     <input type="text" name="ver_valor" value="<?php echo $tipo; ?>" min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
                                 </div>
@@ -138,14 +141,14 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                             <td style="height:10px;">
                                 <div class="input-field col m12">
                                     
-                                    <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Encargado<small></small> </label><br>
+                                    <i class="fa fa-user prefix"></i> <label for="precioUnitario" style="font-size:16px">Encargado<small></small> </label><br>
                                     <input type="text" name="ver_valor" value="<?php echo $encargado . " " . $apellidos; ?>" step="any" id="ver_valor"  class="text-center validate" readonly="">
                                    
                                 </div>
                             </td>
                             <td >
                                 <div class="input-field col m12">
-                                    <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Departamento<small></small> </label><br>
+                                    <i class="fa fa-building-o prefix"></i> <label for="precioUnitario" style="font-size:16px">Departamento<small></small> </label><br>
                                     <input type="text" name="ver_valor" value="<?php echo $departamento; ?>"min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
 
                                 </div>
@@ -155,7 +158,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
                            
                             <td >
                                 <div class="input-field col m12">
-                                    <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Vida Util (Meses)<small></small> </label><br>
+                                    <i class="fa fa-calendar prefix"></i> <label for="precioUnitario" style="font-size:16px">Vida Util (Meses)<small></small> </label><br>
                                     <input type="text" name="ver_valor" value="<?php echo $meses; ?>"min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
 
                                 </div>
@@ -163,7 +166,7 @@ INNER JOIN clasificacion ON tipo_activo.idclasificacion = clasificacion.id_clasi
 
                             <td style="height:10px;">
                                 <div class="input-field col m12">
-                                    <i class="fa fa-usd prefix"></i> <label for="precioUnitario" style="font-size:16px">Tiempo de Uso (Meses)<small></small> </label><br>
+                                    <i class="fa fa-calendar prefix"></i> <label for="precioUnitario" style="font-size:16px">Tiempo de Uso (Meses)<small></small> </label><br>
                                     <input type="text" name="ver_valor" value="<?php echo $tiempoUso; ?>" min="0" step="any" id="ver_valor"  class="text-center validate" readonly="">
 
                                 </div>
