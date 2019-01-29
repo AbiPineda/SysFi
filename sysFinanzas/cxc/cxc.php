@@ -100,10 +100,54 @@ if ($row = mysqli_fetch_array($sql)) {
 } else {
     $total_inter=0;
 }
+
+
+
+
+   //MORA PARA ABI
+   //QUE COMIENCE EL JUEGO PRIMERA VALIDACION
+// VALIDAR QUE NO AYAN ABONOS 
+ $val_abonos=mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$id'");
+ if (mysqli_num_rows($val_abonos)>0) {
+     
+      $mora_ultima=mysqli_query($conexion, "SELECT*FROM abono WHERE cuenta='$id' ORDER BY id_abono DESC LIMIT 1");
+     while ($m= mysqli_fetch_array($mora_ultima)){
+         $fechaProximoPago=$m['proximo_pago'];
+         $Pago=$m['fecha'];
+     }
+  $fecha = date('Y-m-d');
+    $x = explode("-", $fecha);
+    $añox = $x[0];
+    $mesx = $x[1];
+    $diax = $x[2];
+    
+     $y = explode("-", $fechaProximoPago);
+    $añoy = $y[0];
+    $mesy = $y[1];
+    $diay = $y[2];
+
+    $fecha1 = mktime(0, 0, 0, "$mesy", "$diay", "$añoy");
+    $fecha2 = mktime(0, 0, 0, "$mesx", "$diax", "$añox");
+
+    $diferencia = $fecha2 - $fecha1;
+    $diasSinMora = $diferencia / (60 * 60 * 24);
+    if ($diasSinMora<0) {
+        $PagoMora="SIN MORA";
+    } else {
+        $uno=$cuota*0.05;
+        $valor= round($uno*$diasSinMora,2);
+        if ($valor==0) {
+            $PagoMora=0;
+        }else{
+           $PagoMora=$valor;
+        }
+        
+        
+    }
+}
+   
 ?>
-<script type="text/javascript">
- $('#factura1').modal('show');
-</script>
+
 <!-- Page Content CONTEDIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 
 <script type="text/javascript" src="../Highcharts-4.1.5/js/jquery-1.7.1.min.js"></script>
@@ -238,18 +282,19 @@ if (!empty($_POST['valor'])) {
         $nota = 'Sin Observaciones';
     }
     //calculo de interes por mes y abono a capital
-    $ver = mysql_query("SELECT valor, interes FROM contable WHERE id='$id'");
-    while ($filita = mysql_fetch_array($ver)) {
+    $ver = mysqli_query($conexion,"SELECT valor, interes,concepto2 FROM contable WHERE id_contable='$id'");
+    while ($filita = mysqli_fetch_array($ver)) {
         # code...
         $intCalculo = $filita['interes'];
         $monto = $filita['valor'];
+        $conce2=$filita['concepto2'];
     }
     //calculo de intereses por mes y abono a capital
-    $validar = mysql_query("SELECT * FROM abono WHERE cuenta='$id'");
-    if (mysql_num_rows($validar) > 0) {
+    $validar = mysqli_query($conexion,"SELECT * FROM abono WHERE cuenta='$id'");
+    if (mysqli_num_rows($validar) > 0) {
         # code...
-        $calculoValor = ($valor - (($monto - abonos_saldo($id)) * (($intCalculo / 100) / 12)));
-        $aboInteres = (($monto - abonos_saldo($id)) * (($intCalculo / 100) / 12));
+        $calculoValor = ($valor - (($monto - $abonos) * (($intCalculo / 100) / 12)));
+        $aboInteres = (($monto - $abonos) * (($intCalculo / 100) / 12));
     } else {
         $calculoValor = $valor - (($monto) * (($intCalculo / 100) / 12));
         $aboInteres = (($monto) * (($intCalculo / 100) / 12));
@@ -261,12 +306,17 @@ if (!empty($_POST['valor'])) {
 
 
 
-    mysql_query("INSERT INTO abono (cuenta,valor,fecha,hora,nota,usu,total_interes,proximo_pago,mora) VALUES ('$id','$calculoValor','$fecha','$hora','$nota','$usu','$aboInteres','$proxi','$mora')");
+    mysqli_query($conexion,"INSERT INTO abono (cuenta,valor,fecha,hora,nota,total_interes,proximo_pago,mora) VALUES ('$id','$calculoValor','$fecha','$hora','$nota','$aboInteres','$proxi','$mora')");
 
-    mysql_query("INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,usu,consultorio,clase) 
-                        VALUES ('Abono CXC No. $id','Sin Observaciones','ENTRADA','$calculoValor','$fecha','$hora','$usu','$id_almacen','CXC')");
-    echo mensajes("El Abono a la Cuenta por Cobrar No. " . $id . " por valor de " . $s . " " . formato($valor) . " ha sido registrado con exito", "verde");
-}
+    mysqli_query($conexion,"INSERT INTO contable (concepto1,concepto2,tipo,valor,fecha,hora,clase,observacion) 
+                        VALUES ('Abono CXC No. $id','$conce2','ENTRADA','$calculoValor','$fecha','$hora','CXC','Sin Observaciones')");
+    echo mensajes("El Abono a la Cuenta por Cobrar No. " . $id . " por valor de " ." $" . formato($valor) . " ha sido registrado con exito", "verde");
+        
+    echo "<script>
+          location.href ='cxc.php?id=$id';
+        </script>";
+    
+    }
 ?>
 <head>
     <style> 
@@ -321,7 +371,7 @@ input[type=text] {
         <!--fin de interese-->
         <div class="col-md-3">                                                                                          
             <label>Mora</label>
-            <input type="text" name="moraVer" value="<?php echo $verdaderaMora; ?>" autocomplete="off" class="form-control">
+            <input type="text" name="moraVer" value="<?php echo $PagoMora; ?>" autocomplete="off" class="form-control">
         </div>  
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -332,7 +382,7 @@ input[type=text] {
                
 <?php
 if ($deuda-$abonos <> 0) {
-    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#m"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
+    echo ' <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#abono"><i class="fa fa-plus fa-2x" title="Agregar Nuevo Abono"></i>
                                       </button>';
 }
 ?>        
@@ -341,9 +391,9 @@ if ($deuda-$abonos <> 0) {
         </div>
         <div class="col-md-4"></div>    
         <!--  Modals-->
-        <div class="modal fade" id="m<?php echo $deuda;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <!--<div class="modal fade" id="abono" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-            <form name="forms" method="post" action="">
+        <form name="forms" method="post" action="">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -367,8 +417,11 @@ if ($deuda-$abonos <> 0) {
                                 </div>  
                                 <div class="col-md-6">                                                                                          
                                     <label>Mora</label>
-                                    <input type="text" name="mora" autocomplete="off" class="form-control">
-                                </div>                                                                         
+                                    <input type="text" name="mora" value="<?php echo $PagoMora;?>" autocomplete="off" class="form-control">
+                                </div> 
+                                 <div class="col-md-6">                                                                                          
+                                     <label>Total a Pagar: <?php echo $cuota+$PagoMora;?></label>
+                                </div> 
                             </div> 
                         </div> 
                         <div class="modal-footer">
@@ -395,21 +448,21 @@ if ($deuda-$abonos <> 0) {
                                     <tr>
                                         <th>FECHA</th>
                                         <th>OBSERVACION</th>
-                                        <th>RESPONSABLE</th>                                                                                                                                 
+                                                                                                                                                                      
                                         <th><div align="right"><strong>VALOR</strong></div></th>                                                                                        
                                         <th></th>                                                                                       
                                     </tr>
                                 </thead>
                                 <tbody>
 <?php
-$sql = mysql_query("SELECT * FROM abono WHERE cuenta='$id'");
-while ($row = mysql_fetch_array($sql)) {
+$sql = mysqli_query($conexion,"SELECT * FROM abono WHERE cuenta='$id'");
+while ($row = mysqli_fetch_array($sql)) {
     ?>
                                         <tr>
-                                            <td><center><?php echo fecha($row['fecha']) . ' - ' . $row['hora']; ?></center></td>
+                                            <td><center><?php echo $row['fecha'] . ' - ' . $row['hora']; ?></center></td>
                                     <td><?php echo $row['nota']; ?></td>
-                                    <td><?php echo consultar('nom', 'persona', ' doc=' . $row['usu']); ?></td>
-                                    <td><div align="right"><?php echo $s . ' ' . formato($row['valor']) ?></div></td>
+                                   
+                                    <td><div align="right"><?php echo '$' . formato($row['valor']) ?></div></td>
                                     <td></td>
                                     </tr>
 <?php } ?>                                                              
@@ -424,9 +477,6 @@ while ($row = mysql_fetch_array($sql)) {
         <!-- /. ROW  --> 
         <!-- /. ROW  -->
     </div>
-    <script type="text/javascript">
- $('#MiModal').modal('show');
-</script>
 </div>
 <!-- /#page-wrapper FIN CONTENIDOOOOOOOOOOOOOOOOOOOOOOOO -->
 

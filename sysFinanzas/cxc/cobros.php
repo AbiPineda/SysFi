@@ -86,7 +86,7 @@ $fecha=date('Y-m-d');
                                               while ($roww = mysqli_fetch_array($cliente)) {
                                                           $c_nombre=$roww['nombre_cliente'];
                                                           
-                                                        
+                                              } 
                                                     if($row['tipo']=='CXC'){
                                                       $c_nombre;
                                                     }
@@ -114,7 +114,7 @@ $fecha=date('Y-m-d');
                                                 </center>
                                             </td>
                                         </tr> 
-                                                    <?php }} ?>                                                                             
+                                                    <?php } ?>                                                                             
                                     </tbody>
                                 </table>
                             </div>
